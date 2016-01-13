@@ -1,2 +1,2 @@
 # TensorParallel
-Framework for distributed data parallel models in TensorFlow
+A distributed data-parallel framework based on TensorFlow
