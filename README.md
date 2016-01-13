@@ -6,6 +6,7 @@ example
 model = Sequential()
 model.add(Linear())
 model.add(RELU())
+model.add(Linear())
 model.add(Softmax())
 
 data = DataIterators()
