@@ -1,4 +1,4 @@
-# TensorParallel
+# Menci
 A distributed data-parallel framework based on TensorFlow
 
 example
