@@ -59,14 +59,13 @@ class Conv2D(Template):
     def _variables(self):
         return self.W, self.b
 
-
+# TODO
 class Conv2D_Transpose(Template):
     pass
 
-
+# TODO
 class AvgPooling(Template):
     pass
-
 
 
 class MaxPooling(Template):
