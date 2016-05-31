@@ -1,7 +1,7 @@
 # TensorGraph
 A data-parallel framework based on TensorFlow
 
-<img src="item_lstm.png" height="250">
+<img src="graph.png" height="250">
 
 example
 ```python
