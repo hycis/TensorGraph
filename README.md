@@ -1,5 +1,7 @@
 # TensorGraph
-A distributed data-parallel framework based on TensorFlow
+A data-parallel framework based on TensorFlow
+
+<img src="item_lstm.png" height="250">
 
 example
 ```python
