@@ -21,11 +21,9 @@ start2 = StartNode(input_vars=[y2])
 
 h1 = HiddenNode(prev=[start1, start2],
                 input_merge_mode=Concat(),
-                layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()],
-                )
+                layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()])
 h2 = HiddenNode(prev=[start2],
-                layers=[Linear(y2_dim, y2_dim), RELU()]
-                )
+                layers=[Linear(y2_dim, y2_dim), RELU()])
 h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
