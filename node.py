@@ -1,4 +1,4 @@
-
+import tensorflow as tf
 
 
 class StartNode(object):
@@ -15,9 +15,9 @@ class HiddenNode(object):
         self.layers = layers
         self.input_vars = []
 
-
     def _fprop(self, mode):
         assert len(self.input_vars) > 0
+        assert mode in ['_train_fprop', '_test_fprop']
         if len(self.input_vars) == 1:
             out = getattr(self.layers[0], mode)(*self.input_vars)
         else:
@@ -34,13 +34,18 @@ class HiddenNode(object):
 
 
 class EndNode(object):
-    def __init__(self, prev):
+    def __init__(self, prev, outmode='sum'):
         assert isinstance(prev, list)
+        assert outmode in ['sum', 'concat']
+        self.outmode = outmode
         self.prev = prev
         self.input_vars = []
 
     def train_fprop(self):
-        return self.input_vars
+        if self.outmode == 'sum':
+            return [tf.add_n(self.input_vars)]
+        elif self.outmode == 'concat':
+            return [tf.concat(1, self.input_vars)]
 
     def test_fprop(self):
-        return self.input_vars
+        return self.train_fprop()

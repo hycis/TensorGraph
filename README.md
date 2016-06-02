@@ -1,5 +1,5 @@
 # TensorGraph
-A data-parallel framework based on TensorFlow
+A graph based on TensorFlow
 
 <img src="graph.png" height="250">
 
