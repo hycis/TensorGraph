@@ -1,12 +1,12 @@
 
-from node import StartNode, HiddenNode, EndNode
+from tensorgraph.node import StartNode, HiddenNode, EndNode
 import tensorflow as tf
-from layers.linear import Linear
-from layers.activation import RELU
-from layers.misc import Concat, Mean, Sum
-from graph import Graph
+from tensorgraph.layers.linear import Linear
+from tensorgraph.layers.activation import RELU
+from tensorgraph.layers.misc import Concat, Mean, Sum
+from tensorgraph.graph import Graph
 import numpy as np
-from data_iterator import SequentialIterator
+from tensorgraph.data_iterator import SequentialIterator
 
 
 y1_dim = 50
