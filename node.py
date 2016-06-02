@@ -23,20 +23,17 @@ class HiddenNode(object):
         self.layers = layers
         self.input_vars = []
 
-    def _fprop(self, mode, state):
-        assert len(self.input_vars) > 0
-        assert mode in ['_train_fprop', '_test_fprop']
-        for layer in self.layers:
-            state = getattr(layer, mode)(state)
-        return [state]
-
     def train_fprop(self):
         state = self.input_merge_mode._train_fprop(self.input_vars)
-        return self._fprop('_train_fprop', state)
+        for layer in self.layers:
+            state = layer._train_fprop(state)
+        return [state]
 
     def test_fprop(self):
         state = self.input_merge_mode._test_fprop(self.input_vars)
-        return self._fprop('_test_fprop', state)
+        for layer in self.layers:
+            state = layer._test_fprop(state)
+        return [state]
 
 
 class EndNode(object):
@@ -50,4 +47,4 @@ class EndNode(object):
         return [self.input_merge_mode._train_fprop(self.input_vars)]
 
     def test_fprop(self):
-        return self.train_fprop()
+        return [self.input_merge_mode._test_fprop(self.input_vars)]
