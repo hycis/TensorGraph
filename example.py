@@ -3,7 +3,7 @@ from node import StartNode, HiddenNode, EndNode
 import tensorflow as tf
 from layers.linear import Linear
 from layers.activation import RELU
-from layers.misc import Concat, Mean
+from layers.misc import Concat, Mean, Sum
 from graph import Graph
 import numpy as np
 from data_iterator import SequentialIterator
@@ -19,9 +19,16 @@ y2 = tf.placeholder('float32', [None, y2_dim])
 start1 = StartNode(input_vars=[y1])
 start2 = StartNode(input_vars=[y2])
 
-h1 = HiddenNode(prev=[start1, start2], layers=[Concat(), Linear(y1_dim+y2_dim, y2_dim), RELU()])
-h2 = HiddenNode(prev=[start2], layers=[Linear(y2_dim, y2_dim), RELU()])
-h3 = HiddenNode(prev=[h1, h2], layers=[Mean(), Linear(y2_dim, y1_dim), RELU()])
+h1 = HiddenNode(prev=[start1, start2],
+                input_merge_mode=Concat(),
+                layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()],
+                )
+h2 = HiddenNode(prev=[start2],
+                layers=[Linear(y2_dim, y2_dim), RELU()]
+                )
+h3 = HiddenNode(prev=[h1, h2],
+                input_merge_mode=Sum(),
+                layers=[Linear(y2_dim, y1_dim), RELU()])
 e1 = EndNode(prev=[h3])
 e2 = EndNode(prev=[h2])
 
@@ -44,9 +51,9 @@ with tf.Session() as sess:
     sess.run(init)
     for y1_batch, y2_batch in data:
         sess.run([o1, o2], feed_dict={y1:y1_batch, y2:y2_batch})
-        h1w = sess.run(h1.layers[1].W, feed_dict={y1:y1_batch, y2:y2_batch})
+        h1w = sess.run(h1.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
         h2w = sess.run(h2.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-        h3w = sess.run(h3.layers[1].W, feed_dict={y1:y1_batch, y2:y2_batch})
+        h3w = sess.run(h3.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
         print 'before optimize'
         print 'h1w', np.mean(h1w)
         print 'h2w', np.mean(h2w)
@@ -54,9 +61,9 @@ with tf.Session() as sess:
         sess.run(optimizer, feed_dict={y1:y1_batch, y2:y2_batch})
 
         print 'after optimize'
-        h1w = sess.run(h1.layers[1].W, feed_dict={y1:y1_batch, y2:y2_batch})
+        h1w = sess.run(h1.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
         h2w = sess.run(h2.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-        h3w = sess.run(h3.layers[1].W, feed_dict={y1:y1_batch, y2:y2_batch})
+        h3w = sess.run(h3.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
         print 'h1w', np.mean(h1w)
         print 'h2w', np.mean(h2w)
         print 'h3w', np.mean(h3w)

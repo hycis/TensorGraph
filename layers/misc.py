@@ -19,6 +19,11 @@ class Mean(Template):
         return tf.add_n(state_below) / len(state_below)
 
 
+class Sum(Template):
+    def _train_fprop(self, state_below):
+        return tf.add_n(state_below)
+
+
 class BatchNormalization(Template):
 
     def __init__(self, dim, layer_type, short_memory=0.01):
