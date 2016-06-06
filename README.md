@@ -1,6 +1,19 @@
 # TensorGraph
 A data-parallel framework based on TensorFlow
 
+As deep learning becomes more and more common and the architectures becoming more
+and more complicated, it seems that we need some easy to use framework to quickly
+build some models and that's why TensorGraph is born. It's a very simple and easy
+to use framework, but it allows you to build all kinds of imaginable models. The
+idea is simple,
+
+
+## transfer learning model
+
+## hierachical softmax
+
+## some monster model you can imagine
+
 <img src="graph.png" height="250">
 
 example
