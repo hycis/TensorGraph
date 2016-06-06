@@ -1,5 +1,5 @@
 import tensorflow as tf
-from layers.misc import Sum
+from layers.merge import Sum
 
 
 class StartNode(object):

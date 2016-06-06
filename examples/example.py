@@ -3,7 +3,7 @@ from tensorgraph.node import StartNode, HiddenNode, EndNode
 import tensorflow as tf
 from tensorgraph.layers.linear import Linear
 from tensorgraph.layers.activation import RELU
-from tensorgraph.layers.misc import Concat, Mean, Sum
+from tensorgraph.layers.merge import Concat, Mean, Sum
 from tensorgraph.graph import Graph
 import numpy as np
 from tensorgraph.data_iterator import SequentialIterator
