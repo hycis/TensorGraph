@@ -40,3 +40,8 @@ class Sigmoid(Template):
 class Tanh(Template):
     def _train_fprop(self, state_below):
         return tf.tanh(state_below)
+
+
+class Softmax(Template):
+    def _train_fprop(self, state_below):
+        return tf.nn.softmax(state_below)

@@ -9,7 +9,7 @@ class Template(object):
         '''Defines the forward propogation through the layer during testing,
            defaults to the same as train forward propogation
         '''
-        return self.train_fprop(*state_below)
+        return self._train_fprop(state_below)
 
     def _variables(self):
         '''Defines the trainable parameters in the layer
