@@ -2,11 +2,11 @@
 TensorGraph is a framework for building any imaginable models based on TensorFlow.
 
 
-
+-----
 TensorGraph has three types of nodes
 
 1. StartNode : for inputs to the graph
-2. HiddenNode : for putting layers and models inside
+2. HiddenNode : for putting sequential layers inside
 3. EndNode : for getting outputs from the model
 
 The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
