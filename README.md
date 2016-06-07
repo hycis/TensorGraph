@@ -15,7 +15,7 @@ The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
 <img src="draw/graph.png" height="250">
 
 ### Graph Example
-First Define the `StartNode`
+First define the `StartNode`
 ```python
 y1_dim = 50
 y2_dim = 100
@@ -27,7 +27,7 @@ y2 = tf.placeholder('float32', [None, y2_dim])
 s1 = StartNode(input_vars=[y1])
 s2 = StartNode(input_vars=[y2])
 ```
-Then Define the `HiddenNode`
+Then define the `HiddenNode`
 ```python
 h1 = HiddenNode(prev=[s1, s2],
                 input_merge_mode=Concat(),
@@ -46,8 +46,15 @@ e2 = EndNode(prev=[h2])
 Finally build the graph by putting `StartNodes` and `EndNodes` into `Graph`
 ```python
 graph = Graph(start=[start1, start2], end=[e1, e2])
+```
+Run train forward propogation to get symbolic output from train mode, the number
+of outputs from `graph.train_fprop` is the same as the number of `EndNodes` put
+into `Graph`
+```python
 o1, o2 = graph.train_fprop()
-
+```
+Finally build an optimizer to optimizer the objective function
+```python
 o1_mse = tf.reduce_mean((y1 - o1)**2)
 o2_mse = tf.reduce_mean((y2 - o2)**2)
 mse = o1_mse + o2_mse
