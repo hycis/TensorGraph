@@ -14,7 +14,8 @@ The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
 
 <img src="draw/graph.png" height="250">
 
-example
+### Graph Example
+First Define the `StartNode`
 ```python
 y1_dim = 50
 y2_dim = 100
@@ -23,10 +24,12 @@ learning_rate = 0.01
 
 y1 = tf.placeholder('float32', [None, y1_dim])
 y2 = tf.placeholder('float32', [None, y2_dim])
-start1 = StartNode(input_vars=[y1])
-start2 = StartNode(input_vars=[y2])
-
-h1 = HiddenNode(prev=[start1, start2],
+s1 = StartNode(input_vars=[y1])
+s2 = StartNode(input_vars=[y2])
+```
+Then Define the `HiddenNode`
+```python
+h1 = HiddenNode(prev=[s1, s2],
                 input_merge_mode=Concat(),
                 layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()])
 h2 = HiddenNode(prev=[start2],
@@ -34,10 +37,14 @@ h2 = HiddenNode(prev=[start2],
 h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
+```
+Then define the `EndNode`
+```python
 e1 = EndNode(prev=[h3])
 e2 = EndNode(prev=[h2])
-
-
+```
+Finally build the graph by putting `StartNodes` and `EndNodes` into `Graph`
+```python
 graph = Graph(start=[start1, start2], end=[e1, e2])
 o1, o2 = graph.train_fprop()
 
