@@ -60,3 +60,44 @@ o2_mse = tf.reduce_mean((y2 - o2)**2)
 mse = o1_mse + o2_mse
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 ```
+
+### Hierachical Softmax Example
+
+Below is another example for building a more powerful hierachical softmax
+<img src="draw/hsoftmax.png" height="250">
+```python
+## params
+x_dim = 50
+component_dim = 100
+batchsize = 32
+learning_rate = 0.01
+
+
+x_ph = tf.placeholder('float32', [None, x_dim])
+# the three components
+y1_ph = tf.placeholder('float32', [None, component_dim])
+y2_ph = tf.placeholder('float32', [None, component_dim])
+y3_ph = tf.placeholder('float32', [None, component_dim])
+
+# define the graph model structure
+start = StartNode(input_vars=[x_ph])
+
+h1 = HiddenNode(prev=[start], layers=[Linear(x_dim, component_dim), Softmax()])
+h2 = HiddenNode(prev=[h1], layers=[Linear(component_dim, component_dim), Softmax()])
+h3 = HiddenNode(prev=[h2], layers=[Linear(component_dim, component_dim), Softmax()])
+
+
+e1 = EndNode(prev=[h1], input_merge_mode=Sum())
+e2 = EndNode(prev=[h1, h2], input_merge_mode=Sum())
+e3 = EndNode(prev=[h1, h2, h3], input_merge_mode=Sum())
+
+graph = Graph(start=[start], end=[e1, e2, e3])
+
+o1, o2, o3 = graph.train_fprop()
+
+o1_mse = tf.reduce_mean((y1_ph - o1)**2)
+o2_mse = tf.reduce_mean((y2_ph - o2)**2)
+o3_mse = tf.reduce_mean((y3_ph - o3)**2)
+mse = o1_mse + o2_mse + o3_mse
+optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
+```
