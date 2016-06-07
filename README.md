@@ -4,6 +4,7 @@ TensorGraph is a framework for building any imaginable models based on TensorFlo
 
 
 TensorGraph has three types of nodes
+
 1. StartNode : for inputs to the graph
 2. HiddenNode : for putting layers and models inside
 3. EndNode : for getting outputs from the model
@@ -11,7 +12,7 @@ TensorGraph has three types of nodes
 The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](../examples/example.py) of building a tensor graph.
 
-<img src="graph.png" height="250">
+<img src="draw/graph.png" height="250">
 
 example
 ```python
