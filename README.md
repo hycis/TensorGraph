@@ -1,26 +1,11 @@
 # TensorGraph
 TensorGraph is a framework for building any imaginable models based on TensorFlow.
 
-<<<<<<< HEAD
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
 build some models and that's why TensorGraph is born. It's a very simple and easy
 to use framework, but it allows you to build all kinds of imaginable models. The
-idea is simple,
-
-
-## transfer learning model
-
-## hierachical softmax
-
-## some monster model you can imagine
-
-<img src="graph.png" height="250">
-=======
->>>>>>> 910317721d5117dd151f8f0292dcce198b15c746
-
------
-TensorGraph has three types of nodes
+idea is simple, TensorGraph has three types of nodes
 
 1. StartNode : for inputs to the graph
 2. HiddenNode : for putting sequential layers inside
@@ -126,7 +111,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 
 -----
 ### Transfer Learning Example
-Below is example on transfer learning.
+Below is an example on transfer learning which can be easily built with TensorGraph.
 
 <img src="draw/transferlearn.png" height="250">
 
