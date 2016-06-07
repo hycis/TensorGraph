@@ -57,7 +57,7 @@ into `Graph`
 ```python
 o1, o2 = graph.train_fprop()
 ```
-Finally build an optimizer to optimizer the objective function
+Finally build an optimizer to optimize the objective function
 ```python
 o1_mse = tf.reduce_mean((y1 - o1)**2)
 o2_mse = tf.reduce_mean((y2 - o2)**2)
