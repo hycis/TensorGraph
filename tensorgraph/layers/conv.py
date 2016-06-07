@@ -19,9 +19,6 @@ class MaxPooling(Template):
         self.stride = (1,) + stride + (1,)
         self.border_mode = border_mode
 
-        self.params = []
-
-
     def _train_fprop(self, state_below):
         return tf.nn.max_pool(state_below, ksize=self.poolsize,
                               strides=self.stride, padding=self.border_mode)
@@ -66,26 +63,3 @@ class Conv2D_Transpose(Template):
 # TODO
 class AvgPooling(Template):
     pass
-
-
-class MaxPooling(Template):
-    def __init__(self, poolsize=(2, 2), stride=(1,1), border_mode='SAME'):
-        '''
-        DESCRIPTION:
-            pooling layer
-        PARAM:
-            stride: two-dimensional tuple (a, b), the separation horizontally a
-                or vertically b between two pools
-            padding: "SAME" or "VALID"
-        '''
-
-        self.poolsize = (1,) + poolsize + (1,)
-        self.stride = (1,) + stride + (1,)
-        self.border_mode = border_mode
-
-        self.params = []
-
-
-    def _train_fprop(self, state_below):
-        return tf.nn.max_pool(state_below, ksize=self.poolsize,
-                              strides=self.stride, padding=self.border_mode)

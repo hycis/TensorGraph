@@ -8,7 +8,8 @@ class Dropout(Template):
     def __init__(self, dropout_below=0.5):
         '''
         PARAMS:
-            dropout_below(float): probability of the inputs from the layer below been masked out
+            dropout_below(float): probability of the inputs from the layer below
+            been masked out
         '''
         self.dropout_below = dropout_below
 
@@ -25,8 +26,8 @@ class Dropout(Template):
     def _train_fprop(self, state_below):
         """
         DESCRIPTION:
-            Applies dropout to the layer during training
-            With probability keep_prob, outputs the input element scaled up by 1 / keep_prob
+            Applies dropout to the layer during training with probability keep_prob,
+            outputs the input element scaled up by 1 / keep_prob
         PARAMS:
             keep_prob: probability of keeping the neuron active
         """
