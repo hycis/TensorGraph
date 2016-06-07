@@ -49,7 +49,7 @@ Finally build the graph by putting `StartNodes` and `EndNodes` into `Graph`
 ```python
 graph = Graph(start=[start1, start2], end=[e1, e2])
 ```
-Run train forward propogation to get symbolic output from train mode, the number
+Run train forward propagation to get symbolic output from train mode, the number
 of outputs from `graph.train_fprop` is the same as the number of `EndNodes` put
 into `Graph`
 ```python
