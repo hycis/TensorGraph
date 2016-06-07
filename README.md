@@ -79,7 +79,7 @@ learning_rate = 0.01
 
 
 x_ph = tf.placeholder('float32', [None, x_dim])
-# the three components
+# the three hierachical level
 y1_ph = tf.placeholder('float32', [None, component_dim])
 y2_ph = tf.placeholder('float32', [None, component_dim])
 y3_ph = tf.placeholder('float32', [None, component_dim])
@@ -125,7 +125,6 @@ learning_rate = 0.01
 
 x1_ph = tf.placeholder('float32', [None, x1_dim])
 x2_ph = tf.placeholder('float32', [None, x2_dim])
-# the three components
 y_ph = tf.placeholder('float32', [None, y_dim])
 
 # define the graph model structure
