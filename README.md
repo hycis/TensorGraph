@@ -109,7 +109,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 
 -----
 ### Transfer Learning Example
-Below is another example for transfer learning.
+Below is another example on transfer learning.
 
 <img src="draw/transferlearn.png" height="250">
 
