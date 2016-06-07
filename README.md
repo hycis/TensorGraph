@@ -12,9 +12,11 @@ TensorGraph has three types of nodes
 The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](../examples/example.py) of building a tensor graph.
 
+-----
+### Graph Example
+
 <img src="draw/graph.png" height="250">
 
-### Graph Example
 First define the `StartNode`
 ```python
 y1_dim = 50
@@ -60,11 +62,12 @@ o2_mse = tf.reduce_mean((y2 - o2)**2)
 mse = o1_mse + o2_mse
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 ```
-
+-----
 ### Hierachical Softmax Example
-
 Below is another example for building a more powerful hierachical softmax
+
 <img src="draw/hsoftmax.png" height="250">
+
 ```python
 ## params
 x_dim = 50
