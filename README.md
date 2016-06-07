@@ -64,8 +64,9 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 ```
 -----
 ### Hierachical Softmax Example
-Below is another example for building a more powerful hierachical softmax
-
+Below is another example for building a more powerful [hierachical softmax](examples/hierachical_softmax.py)
+whereby the lower hierachical softmax layer can be conditioned on all the upper
+hierachical softmax layers.
 <img src="draw/hsoftmax.png" height="250">
 
 ```python
