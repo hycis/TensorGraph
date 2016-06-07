@@ -2,11 +2,9 @@
 import tensorflow as tf
 
 
-
-
 class Merge(object):
     '''
-    Merge layers is used to merge the list of states from layer below into one state
+    Merge layer is used to merge the list of states from layer below into one state
     '''
     def _train_fprop(self, state_list):
         raise NotImplementedError()
