@@ -49,7 +49,7 @@ Finally build the graph by putting `StartNodes` and `EndNodes` into `Graph`
 ```python
 graph = Graph(start=[s1, s2], end=[e1, e2])
 ```
-Run train forward propagation to get symbolic output from train mode, the number
+Run train forward propagation to get symbolic output from train mode. The number
 of outputs from `graph.train_fprop` is the same as the number of `EndNodes` put
 into `Graph`
 ```python
@@ -104,5 +104,45 @@ o1_mse = tf.reduce_mean((y1_ph - o1)**2)
 o2_mse = tf.reduce_mean((y2_ph - o2)**2)
 o3_mse = tf.reduce_mean((y3_ph - o3)**2)
 mse = o1_mse + o2_mse + o3_mse
+optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
+```
+
+-----
+### Transfer Learning Example
+Below is another example for transfer learning.
+
+<img src="draw/transferlearn.png" height="250">
+
+```python
+## params
+x1_dim = 50
+x2_dim = 100
+shared_dim = 200
+y_dim = 100
+batchsize = 32
+learning_rate = 0.01
+
+
+x1_ph = tf.placeholder('float32', [None, x1_dim])
+x2_ph = tf.placeholder('float32', [None, x2_dim])
+# the three components
+y_ph = tf.placeholder('float32', [None, y_dim])
+
+# define the graph model structure
+s1 = StartNode(input_vars=[x1_ph])
+s2 = StartNode(input_vars=[x2_ph])
+
+h1 = HiddenNode(prev=[s1], layers=[Linear(x1_dim, shared_dim), RELU()])
+h2 = HiddenNode(prev=[s2], layers=[Linear(x2_dim, shared_dim), RELU()])
+h3 = HiddenNode(prev=[h1,h2], layers=[Linear(shared_dim, y_dim), Softmax()])
+
+
+e1 = EndNode(prev=[h3])
+
+graph = Graph(start=[s1, s2], end=[e1])
+
+o1, = graph.train_fprop()
+
+mse = tf.reduce_mean((y_ph - o1)**2)
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 ```
