@@ -3,15 +3,19 @@ TensorGraph is a framework for building any imaginable models based on TensorFlo
 
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
-build some models and that's why TensorGraph is born. It's a very simple and easy
+build these models and that's why TensorGraph is born. It's a very simple and easy
 to use framework, but it allows you to build all kinds of imaginable models. The
-idea is simple, TensorGraph has three types of nodes
+idea is simple, in TensorGraph, we defined three types of nodes
 
 1. StartNode : for inputs to the graph
 2. HiddenNode : for putting sequential layers inside
 3. EndNode : for getting outputs from the model
 
-The graph always starts with `StartNode` and ends with `EndNode`. Below shows an
+we put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
+together to build all kinds of imaginable architecture without worrying about how
+to design the forward propagation. We let the engine sort all out all the forward
+propagtions for you, so that you just focus on designing the architecture. The graph
+always starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](../examples/example.py) of building a tensor graph.
 
 -----
