@@ -13,7 +13,7 @@ idea is simple, in TensorGraph, we defined three types of nodes
 
 we put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
 together to build all kinds of imaginable architecture without worrying about how
-to design the forward propagation. We let the engine sort all out all the forward
+to design the forward propagation. We let the graph engine sort all out all the forward
 propagtions for you, so that you just focus on designing the architecture. The graph
 always starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](../examples/example.py) of building a tensor graph.
@@ -23,7 +23,7 @@ always starts with `StartNode` and ends with `EndNode`. Below shows an
 
 <img src="draw/graph.png" height="250">
 
-First define the `StartNode`
+First define the `StartNode` for putting the input placeholder
 ```python
 y1_dim = 50
 y2_dim = 100
@@ -35,7 +35,7 @@ y2 = tf.placeholder('float32', [None, y2_dim])
 s1 = StartNode(input_vars=[y1])
 s2 = StartNode(input_vars=[y2])
 ```
-Then define the `HiddenNode`
+Then define the `HiddenNode` for putting the sequential layers in each `HiddenNode`
 ```python
 h1 = HiddenNode(prev=[s1, s2],
                 input_merge_mode=Concat(),
@@ -46,7 +46,8 @@ h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
 ```
-Then define the `EndNode`
+Then define the `EndNode`. `EndNode` is important because the graph will base on
+the `EndNode` to back-trace the graph to perform node mergings.
 ```python
 e1 = EndNode(prev=[h3])
 e2 = EndNode(prev=[h2])
