@@ -11,11 +11,11 @@ idea is simple, in TensorGraph, we defined three types of nodes
 2. HiddenNode : for putting sequential layers inside
 3. EndNode : for getting outputs from the model
 
-we put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
-together to build all kinds of imaginable architecture without worrying about how
-to design the forward propagation. We let the graph engine sort all out all the forward
-propagtions for you, so that you just focus on designing the architecture. The graph
-always starts with `StartNode` and ends with `EndNode`. Below shows an
+We put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
+together to build all kinds of architectures without worrying about how to design 
+the forward propagation. We let the graph engine sort out all the forward propagations 
+for you, so that you just focus on designing the architecture. The graph always 
+starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](../examples/example.py) of building a tensor graph.
 
 -----
@@ -46,8 +46,8 @@ h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
 ```
-Then define the `EndNode`. `EndNode` is important because the graph will base on
-the `EndNode` to back-trace the graph to perform node mergings.
+Then define the `EndNode`. `EndNode` is used to back-trace the graph to perform 
+node mergings.
 ```python
 e1 = EndNode(prev=[h3])
 e2 = EndNode(prev=[h2])
@@ -116,7 +116,9 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 
 -----
 ### Transfer Learning Example
-Below is an example on transfer learning which can be easily built with TensorGraph.
+Below is an example on transfer learning with bi-modality inputs and merge at
+the middle layer with shared representation, in fact, TensorGraph can be used
+to build any number of modalities for transfer learning.
 
 <img src="draw/transferlearn.png" height="250">
 
