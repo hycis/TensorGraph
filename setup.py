@@ -9,7 +9,7 @@ setup(
     author_email='hyciswu@gmail.com',
     install_requires=['numpy>=1.7.1', 'scipy>=0.11',
                       'six>=1.9.0', 'tensorflow>=0.8.0',
-                      'scikit-learn>=0.17.1', 'pandas>=0.18.1'],
+                      'scikit-learn>=0.17', 'pandas>=0.18.1'],
     url='https://github.com/hycis/TensorGraph',
     license='Apache 2.0, see LICENCE',
     description='A missing package of tensorflow for building all kinds of models',
