@@ -4,19 +4,7 @@ TensorGraph is a framework for building any imaginable models based on TensorFlo
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
 build these models and that's why TensorGraph is born. It's a very simple and easy
-to use framework, but it allows you to build all kinds of imaginable models. The
-idea is simple, in TensorGraph, we defined three types of nodes
-
-1. StartNode : for inputs to the graph
-2. HiddenNode : for putting sequential layers inside
-3. EndNode : for getting outputs from the model
-
-We put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
-together to build all kinds of architectures without worrying about how to design
-the forward propagation. We let the graph engine sort out all the forward propagations
-for you, so that you just focus on designing the architecture. The graph always
-starts with `StartNode` and ends with `EndNode`. Below shows an
-[example](examples/example.py) of building a tensor graph.
+to use framework, but it allows you to build all kinds of imaginable models.
 
 -----
 ### Install
@@ -35,6 +23,21 @@ export PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH
 in order for the install to persist via export `PYTHONPATH`. Add `PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH` to your `.bashrc` for linux or
 `.bash_profile` for mac. While this method works, you will have to ensure that
 all the dependencies in [setup.py](setup.py) are installed.
+
+-----
+### How TensorGraph Works?
+In TensorGraph, we defined three types of nodes
+
+1. StartNode : for inputs to the graph
+2. HiddenNode : for putting sequential layers inside
+3. EndNode : for getting outputs from the model
+
+We put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
+together to build all kinds of architectures without worrying about how to design
+the forward propagation. We let the graph engine sort out all the forward propagations
+for you, so that you just focus on designing the architecture. The graph always
+starts with `StartNode` and ends with `EndNode`. Below shows an
+[example](examples/example.py) of building a tensor graph.
 
 -----
 ### Graph Example
