@@ -27,11 +27,14 @@ Then install tensorgraph via pip for bleeding edge version
 ```bash
 sudo pip install git+https://github.com/hycis/TensorGraph.git@master
 ```
-or simply
+or simply clone and add to PYTHONPATH.
 ```bash
 git clone https://github.com/hycis/TensorGraph.git
-export PYTHONPATH=./TensorGraph:$PYTHONPATH
+export PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH
 ```
+in order for the install to persist via export PYTHONPATH. Add `PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH` to your `.bashrc` for linux or
+`.bash_profile` for mac. While this method works, you will have to ensure that
+all the dependencies in [setup.py](setup.py) are installed.
 -----
 ### Graph Example
 
