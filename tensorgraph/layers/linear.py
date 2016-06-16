@@ -11,10 +11,8 @@ class Linear(Template):
         PARAM:
             prev_dim(int): dimension of previous layer
             this_dim(int): dimension of this layer
-            name(string): name of the layer
             W(tensor variable): Weight of 2D tensor matrix
             b(tensor variable): bias of 2D tensor matrix
-            params(list): a list of params in layer that can be updated
         """
 
         self.prev_dim = prev_dim
