@@ -21,9 +21,11 @@ starts with `StartNode` and ends with `EndNode`. Below shows an
 -----
 ### Install
 
-install via pip for bleeding edge version
+First you need to install [tensorflow](https://www.tensorflow.org/versions/r0.9/get_started/os_setup.html)
+
+Then install tensorgraph via pip for bleeding edge version
 ```bash
-pip install git+https://github.com/hycis/TensorGraph.git@master
+sudo pip install git+https://github.com/hycis/TensorGraph.git@master
 ```
 or simply
 ```bash
