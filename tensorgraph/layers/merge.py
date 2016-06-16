@@ -7,6 +7,8 @@ class Merge(object):
     Merge layer is used to merge the list of states from layer below into one state
     '''
     def _train_fprop(self, state_list):
+        '''state_list (list): list of states to be merged
+        '''
         raise NotImplementedError()
 
     def _test_fprop(self, state_list):
@@ -15,6 +17,7 @@ class Merge(object):
         '''
         return self._train_fprop(state_list)
 
+    @property
     def _variables(self):
         '''Defines the trainable parameters in the layer
         '''

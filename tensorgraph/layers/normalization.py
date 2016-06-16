@@ -59,5 +59,6 @@ class BatchNormalization(Template):
         Z = (state_below - self.moving_mean) / tf.sqrt(self.moving_var + self.epsilon)
         return self.gamma * Z + self.beta
 
+    @property
     def _variables(self):
-        return self.gamma, self.beta
+        return [self.gamma, self.beta]

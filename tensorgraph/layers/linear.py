@@ -31,5 +31,6 @@ class Linear(Template):
     def _train_fprop(self, state_below):
         return tf.matmul(state_below, self.W) + self.b
 
+    @property
     def _variables(self):
-        return self.W, self.b
+        return [self.W, self.b]

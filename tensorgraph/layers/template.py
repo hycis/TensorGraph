@@ -11,7 +11,9 @@ class Template(object):
         '''
         return self._train_fprop(state_below)
 
+    @property
     def _variables(self):
         '''Defines the trainable parameters in the layer
+           RETURN: list of Variables
         '''
         return []

@@ -53,8 +53,9 @@ class Conv2D(Template):
         conv_out = tf.nn.conv2d(state_below, self.W, strides=(1,)+self.stride+(1,), padding=self.border_mode)
         return tf.nn.bias_add(conv_out, self.b)
 
+    @property
     def _variables(self):
-        return self.W, self.b
+        return [self.W, self.b]
 
 # TODO
 class Conv2D_Transpose(Template):
