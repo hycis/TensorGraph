@@ -12,11 +12,11 @@ idea is simple, in TensorGraph, we defined three types of nodes
 3. EndNode : for getting outputs from the model
 
 We put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
-together to build all kinds of architectures without worrying about how to design 
-the forward propagation. We let the graph engine sort out all the forward propagations 
-for you, so that you just focus on designing the architecture. The graph always 
+together to build all kinds of architectures without worrying about how to design
+the forward propagation. We let the graph engine sort out all the forward propagations
+for you, so that you just focus on designing the architecture. The graph always
 starts with `StartNode` and ends with `EndNode`. Below shows an
-[example](../examples/example.py) of building a tensor graph.
+[example](examples/example.py) of building a tensor graph.
 
 -----
 ### Graph Example
@@ -46,7 +46,7 @@ h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
 ```
-Then define the `EndNode`. `EndNode` is used to back-trace the graph to perform 
+Then define the `EndNode`. `EndNode` is used to back-trace the graph to perform
 node mergings.
 ```python
 e1 = EndNode(prev=[h3])
