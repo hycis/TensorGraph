@@ -19,6 +19,18 @@ starts with `StartNode` and ends with `EndNode`. Below shows an
 [example](examples/example.py) of building a tensor graph.
 
 -----
+### Install
+
+install via pip for bleeding edge version
+```bash
+pip install git+https://github.com/hycis/TensorGraph.git@master
+```
+or simply
+```bash
+git clone https://github.com/hycis/TensorGraph.git
+export PYTHONPATH=./TensorGraph:$PYTHONPATH
+```
+-----
 ### Graph Example
 
 <img src="draw/graph.png" height="250">
