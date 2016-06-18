@@ -67,8 +67,8 @@ h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
                 layers=[Linear(y2_dim, y1_dim), RELU()])
 ```
-Then define the `EndNode`. `EndNode` is used to back-trace the graph to perform
-node mergings.
+Then define the `EndNode`. `EndNode` is used to back-trace the graph to connect
+the nodes together.
 ```python
 e1 = EndNode(prev=[h3])
 e2 = EndNode(prev=[h2])

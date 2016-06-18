@@ -15,13 +15,16 @@ class Graph(object):
         self.end = end
 
 
-    @staticmethod
-    def _output(node, mode):
+    def _output(self, node, mode):
+        assert node.__class__.__name__ in ['StartNode', 'HiddenNode', 'EndNode']
         if node.__class__.__name__ == 'StartNode':
-            return node.input_vars
+            if node in self.start:
+                return node.input_vars
+            else:
+                return []
         input_vars = []
         for pnode in node.prev:
-            input_vars += Graph._output(pnode, mode)
+            input_vars += self._output(pnode, mode)
         node.input_vars = input_vars
         return getattr(node, mode)()
 
@@ -29,12 +32,12 @@ class Graph(object):
     def train_fprop(self):
         outs = []
         for node in self.end:
-            outs += Graph._output(node, 'train_fprop')
+            outs += self._output(node, 'train_fprop')
         return outs
 
 
     def test_fprop(self):
         outs = []
         for node in self.end:
-            outs += Graph._output(node, 'test_fprop')
+            outs += self._output(node, 'test_fprop')
         return outs
