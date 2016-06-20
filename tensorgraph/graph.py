@@ -13,6 +13,10 @@ class Graph(object):
         assert isinstance(end, list)
         self.start = start
         self.end = end
+        for node in self.start:
+            assert node.__class__.__name__ == 'StartNode'
+        for node in self.end:
+            assert node.__class__.__name__ == 'EndNode'
 
 
     def _output(self, node, mode):
