@@ -9,7 +9,7 @@ class Flatten(Template):
         return tf.reshape(state_below, [shape[0], np.prod(shape[1:])])
 
 
-class Embedding(Template)
+class Embedding(Template):
     def __init__(self, cat_dim=None, encode_dim=None, W=None, include_zero=False):
         """
         DESCRIPTION:
