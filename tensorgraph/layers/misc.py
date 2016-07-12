@@ -19,7 +19,7 @@ class Reshape(object):
 
 
 class Embedding(Template):
-    def __init__(self, cat_dim=None, encode_dim=None, W=None):
+    def __init__(self, cat_dim=None, encode_dim=None, W=None, zero_pad=False):
         """
         DESCRIPTION:
             embedding
@@ -27,6 +27,8 @@ class Embedding(Template):
             cat_dim (int): number of categories
             encode_dim (int): dense encoding of the categories
             W (tensor variable): embedding of 2D tensor matrix
+            zero_pad (bool): whether should initialize zero embedding for sequence
+                with zero paddings
         """
 
         self.cat_dim = cat_dim
@@ -35,8 +37,10 @@ class Embedding(Template):
 
         if self.W is None:
             embed = tf.random_normal([self.cat_dim, self.encode_dim], stddev=0.1)
+            if zero_pad:
+                embed[0] *= 0
             self.W = tf.Variable(embed, name='W')
-            
+
 
     def _train_fprop(self, state_below):
         '''
