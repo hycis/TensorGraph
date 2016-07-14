@@ -18,8 +18,24 @@ class Reshape(object):
         return tf.reshape(X, self.shape)
 
 
+class Squeeze(object):
+
+    def __init__(self, squeeze_dims=None):
+        '''
+        PARAM:
+            squeeze_dims: An optional list of ints. Defaults to []. If specified,
+            only squeezes the dimensions listed. The dimension index starts at 0.
+            It is an error to squeeze a dimension that is not 1. Refer to tensorflow
+            for details.
+        '''
+        self.squeeze_dims = squeeze_dims
+
+    def _train_fprop(self, state_below):
+        return tf.squeeze(state_below, self.squeeze_dims)
+
+
 class Embedding(Template):
-    def __init__(self, cat_dim=None, encode_dim=None, W=None, zero_pad=False):
+    def __init__(self, cat_dim, encode_dim, W=None):
         """
         DESCRIPTION:
             embedding
@@ -37,8 +53,6 @@ class Embedding(Template):
 
         if self.W is None:
             embed = tf.random_normal([self.cat_dim, self.encode_dim], stddev=0.1)
-            if zero_pad:
-                embed[0] *= 0
             self.W = tf.Variable(embed, name='W')
 
 
