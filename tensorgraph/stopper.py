@@ -1,5 +1,5 @@
 import sys
-
+import numpy as np
 
 class EarlyStopper(object):
 
@@ -47,7 +47,7 @@ class EarlyStopper(object):
             self.best_epoch_last_update = self.epoch
             return True
 
-        elif epoch - self.best_epoch_last_update > self.epoch_look_back:
+        elif self.epoch - self.best_epoch_last_update > self.epoch_look_back:
             return False
 
         else:

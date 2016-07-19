@@ -37,3 +37,8 @@ class Mean(Merge):
 class Sum(Merge):
     def _train_fprop(self, state_list):
         return tf.add_n(state_list)
+
+
+class NoChange(Merge):
+    def _train_fprop(self, state_list):
+        return state_list

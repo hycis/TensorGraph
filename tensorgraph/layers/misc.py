@@ -57,8 +57,7 @@ class Embedding(Template):
 
 
     def _train_fprop(self, state_below):
-        '''
-        state_below is a list of indices
+        '''state_below is a list of indices
         '''
         return tf.gather(self.W, state_below)
 
