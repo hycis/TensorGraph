@@ -1,7 +1,7 @@
 import sys
 
 
-class EarlyStopping(object):
+class EarlyStopper(object):
 
     def __init__(self, max_epoch=100, epoch_look_back=None, percent_decrease=None):
         self.max_epoch = max_epoch
