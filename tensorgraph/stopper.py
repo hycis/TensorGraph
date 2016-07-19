@@ -21,21 +21,18 @@ class EarlyStopper(object):
         self.epoch = 0
 
 
-    def check(self, valid_error):
+    def continue_learning(self, valid_error):
+        '''check if should continue learning
         '''
-        check if should stop
-        '''
+        self.epoch += 1
         if valid_error < self.best_valid_error:
             self.best_valid_error = valid_error
         if valid_error < self.best_valid_last_update:
             error_dcr = self.best_valid_last_update - valid_error
         else:
             error_dcr = 0
-        self.epoch += 1
-        return self._continue_learning(error_dcr)
 
-
-    def _continue_learning(self, error_dcr):
+        # check if should continue learning based on the error decrease
         if self.epoch > self.max_epoch:
             return False
 
