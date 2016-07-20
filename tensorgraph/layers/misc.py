@@ -35,32 +35,38 @@ class Squeeze(object):
 
 
 class Embedding(Template):
-    def __init__(self, cat_dim, encode_dim, W=None):
+    def __init__(self, cat_dim, encode_dim, embedding=None, zero_pad=False):
         """
         DESCRIPTION:
             embedding
         PARAM:
             cat_dim (int): number of categories
             encode_dim (int): dense encoding of the categories
-            W (tensor variable): embedding of 2D tensor matrix
+            embedding (tensor variable): embedding of 2D tensor variable matrix
             zero_pad (bool): whether should initialize zero embedding for sequence
-                with zero paddings
+                with zero paddings, zero pad is added to the first row of the embedding,
+                and will not be updated.
         """
 
         self.cat_dim = cat_dim
         self.encode_dim = encode_dim
-        self.W = W
+        self._W = self.embedding = embedding
 
-        if self.W is None:
+        if self._W is None:
             embed = tf.random_normal([self.cat_dim, self.encode_dim], stddev=0.1)
-            self.W = tf.Variable(embed, name='W')
+            self.embedding = tf.Variable(embed, name='embedding')
+            if zero_pad:
+                zeros = tf.zeros([1, self.encode_dim])
+                self._W = tf.concat(0, [zeros, self.embedding])
+            else:
+                self._W = self.embedding
 
 
     def _train_fprop(self, state_below):
         '''state_below is a list of indices
         '''
-        return tf.gather(self.W, state_below)
+        return tf.gather(self._W, state_below)
 
     @property
     def _variables(self):
-        return [self.W]
+        return [self.embedding]
