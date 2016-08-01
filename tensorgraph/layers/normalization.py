@@ -35,8 +35,9 @@ class BatchNormalization(Template):
         elif self.layer_type == 'conv':
             input_shape = (1, 1, 1, dim)
 
-        self.gamma = tf.Variable(tf.random_uniform(input_shape, minval=-0.05, maxval=0.05), name='gamma')
-        self.beta = tf.Variable(tf.zeros(input_shape), name='beta')
+        self.gamma = tf.Variable(tf.random_uniform(input_shape, minval=-0.05, maxval=0.05),
+                                                   name=self.__class__.__name__ + '_gamma')
+        self.beta = tf.Variable(tf.zeros(input_shape), name=self.__class__.__name__ + '_beta')
         self.moving_mean = 0
         self.moving_var = 1
 

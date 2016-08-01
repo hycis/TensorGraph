@@ -71,11 +71,13 @@ class Conv2D(Template):
         self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1), name='filter')
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+                                      name=self.__class__.__name__ + '_filter')
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1), name='b')
+            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1),
+                                      name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         '''
@@ -113,11 +115,13 @@ class Conv2D_Transpose(Template):
         self.filter_shape = (width, height, self.num_filters, self.input_channels)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1), name='filter')
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+                                      name=self.__class__.__name__ + '_filter')
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1), name='b')
+            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1),
+                                      name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         '''

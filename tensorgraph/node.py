@@ -35,6 +35,13 @@ class HiddenNode(object):
             state = layer._test_fprop(state)
         return [state]
 
+    @property
+    def variables(self):
+        var = []
+        for layer in self.layers:
+            var += layer._variables
+        return var
+
 
 class EndNode(object):
     def __init__(self, prev, input_merge_mode=Sum()):

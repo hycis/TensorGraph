@@ -20,11 +20,13 @@ class Linear(Template):
 
         self.W = W
         if self.W is None:
-            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1), name='W')
+            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
+                                                  name=self.__class__.__name__ + '_W')
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.this_dim], stddev=0.1), name='b')
+            self.b = tf.Variable(tf.random_normal([self.this_dim], stddev=0.1),
+                                                  name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         return tf.matmul(state_below, self.W) + self.b
@@ -56,15 +58,17 @@ class LinearMasked(Template):
 
         self.W = W
         if self.W is None:
-            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1), name='W')
+            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
+                                                   name=self.__class__.__name__ + '_W')
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.this_dim], stddev=0.1), name='b')
+            self.b = tf.Variable(tf.random_normal([self.this_dim], stddev=0.1),
+                                                  name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         return tf.mul(tf.matmul(state_below, self.W) + self.b, self.mask)
 
     @property
     def _variables(self):
-        return [self.W, self.b, self.mask]
+        return [self.W, self.b]

@@ -45,3 +45,20 @@ class Graph(object):
         for node in self.end:
             outs += self._output(node, 'test_fprop')
         return outs
+
+    @property
+    def variables(self):
+        def outvars(node):
+            var = []
+            if node.__class__.__name__ == 'StartNode':
+                return var
+            for pnode in node.prev:
+                var += outvars(pnode)
+            if node.__class__.__name__ == 'HiddenNode':
+                var += node.variables
+            return var
+
+        var = []
+        for node in self.end:
+            var += outvars(node)
+        return list(set(var))
