@@ -17,7 +17,7 @@ class DataIterator(object):
         outs = []
         for val in self.data:
             outs.append(val[key])
-        return outs
+        return self.__class__(*outs, batchsize=self.batchsize)
 
 
 class SequentialIterator(DataIterator):
