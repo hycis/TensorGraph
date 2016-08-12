@@ -15,8 +15,19 @@ class Reshape(Template):
     def __init__(self, shape):
         self.shape = shape
 
-    def _train_fprop(self, X):
-        return tf.reshape(X, self.shape)
+    def _train_fprop(self, state_below):
+        return tf.reshape(state_below, self.shape)
+
+
+class ReduceSum(Template):
+
+    def __init__(self, reduction_indices=None, keep_dims=False):
+        self.reduction_indices = reduction_indices
+        self.keep_dims = keep_dims
+
+    def _train_fprop(self, state_below):
+        return tf.reduce_sum(state_below, reduction_indices=self.reduction_indices,
+                             keep_dims=self.keep_dims)
 
 
 class Squeeze(Template):
