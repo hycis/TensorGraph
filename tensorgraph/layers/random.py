@@ -1,6 +1,5 @@
 from template import Template
 import tensorflow as tf
-import numpy as np
 
 class OneSample(Template):
 
@@ -11,10 +10,10 @@ class OneSample(Template):
         PARAM:
             dim (int): layer dimension
         '''
-        self.diag = tf.diag(np.ones(dim))
+        self.diag = tf.diag(tf.ones(dim))
 
 
     def _train_fprop(self, state_below):
         samples = tf.multinomial(state_below, num_samples=1)
         samples = tf.squeeze(samples)
-        return tf.cast(tf.gather(self.diag, samples), state_below.dtype)
+        return tf.gather(self.diag, samples)
