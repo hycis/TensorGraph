@@ -76,8 +76,7 @@ class Conv2D(Template):
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1),
-                                      name=self.__class__.__name__ + '_b')
+            self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         '''
@@ -120,8 +119,7 @@ class Conv2D_Transpose(Template):
 
         self.b = b
         if self.b is None:
-            self.b = tf.Variable(tf.random_normal([self.num_filters], stddev=0.1),
-                                      name=self.__class__.__name__ + '_b')
+            self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         '''
