@@ -57,7 +57,7 @@ class Embedding(Template):
             embedding (tensor variable): embedding of 2D tensor variable matrix
             zero_pad (bool): whether should initialize zero embedding for sequence
                 with zero paddings, zero pad is added to the first row of the embedding,
-                and will not be updated.
+                and will not be updated by back-propagation.
         """
 
         self.cat_dim = cat_dim
@@ -65,7 +65,6 @@ class Embedding(Template):
         self._W = self.embedding = embedding
 
         if self._W is None:
-            # embed = tf.random_normal([self.cat_dim, self.encode_dim], stddev=0.1)
             embed = tf.random_uniform([self.cat_dim, self.encode_dim], minval=-1, maxval=1)
             self.embedding = tf.Variable(embed, name=self.__class__.__name__ + '_embedding')
             if zero_pad:
