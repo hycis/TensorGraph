@@ -13,7 +13,7 @@ First you need to install [tensorflow](https://www.tensorflow.org/versions/r0.9/
 
 Then install tensorgraph via pip for bleeding edge version
 ```bash
-sudo pip install git+https://github.com/hycis/TensorGraph.git@master
+sudo pip install --upgrade git+https://github.com/hycis/TensorGraph.git@master
 ```
 or simply clone and add to `PYTHONPATH`.
 ```bash
