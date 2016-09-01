@@ -15,6 +15,7 @@ setup(
                       'matplotlib>=1.5',
                       'scipy>=0.17'],
     url='https://github.com/hycis/TensorGraph',
+    download_url = 'https://github.com/hycis/TensorGraph/tarball/1.4.2',
     license='Apache 2.0, see LICENCE',
     description='A tensorflow library for building all kinds of models',
     long_description=open('README.md').read(),
