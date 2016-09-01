@@ -11,7 +11,11 @@ to use framework, but it allows you to build all kinds of imaginable models.
 
 First you need to install [tensorflow](https://www.tensorflow.org/versions/r0.9/get_started/os_setup.html)
 
-Then install tensorgraph via pip for bleeding edge version
+To install tensorgraph simply do via pip
+```bash
+sudo pip install tensorgraph
+```
+or for bleeding edge version do
 ```bash
 sudo pip install --upgrade git+https://github.com/hycis/TensorGraph.git@master
 ```
