@@ -39,7 +39,7 @@ class EarlyStopper(object):
         elif self.percent_decrease is None or self.epoch_look_back is None:
             return True
 
-        elif np.abs(float(error_dcr)/self.best_valid_last_update) >= self.percent_decrease:
+        elif np.abs(float(error_dcr)/self.best_valid_last_update) > self.percent_decrease:
             self.best_valid_last_update = self.best_valid_error
             self.best_epoch_last_update = self.epoch
             return True
