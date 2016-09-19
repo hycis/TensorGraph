@@ -1,7 +1,7 @@
 from math import ceil
 import numpy as np
 
-def same(in_height, in_width, strides, filters):
+def same(in_height, in_width, stride, kernel_size):
     '''
     description:
         describe the output dimension of an input image during pooling or convolution
@@ -10,14 +10,14 @@ def same(in_height, in_width, strides, filters):
         pad_along_width = ((out_width - 1) * stride[1] + filter_width - in_width)
     '''
 
-    assert isinstance(strides, (list, tuple))
-    assert isinstance(filters, (list, tuple))
-    out_height = ceil(float(in_height) / float(strides[0]))
-    out_width  = ceil(float(in_width) / float(strides[1]))
+    assert isinstance(stride, (list, tuple))
+    assert isinstance(kernel_size, (list, tuple))
+    out_height = ceil(float(in_height) / float(stride[0]))
+    out_width  = ceil(float(in_width) / float(stride[1]))
     return out_height, out_width
 
 
-def valid(in_height, in_width, strides, filters):
+def valid(in_height, in_width, stride, kernel_size):
     '''
     description:
         describe the output dimension of an input image during pooling or convolution
@@ -25,10 +25,10 @@ def valid(in_height, in_width, strides, filters):
         pad_along_height = 0
         pad_along_width = 0
     '''
-    assert isinstance(strides, (list, tuple))
-    assert isinstance(filters, (list, tuple))
-    out_height = ceil(float(in_height - filters[0] + 1) / float(strides[0]))
-    out_width  = ceil(float(in_width - filters[1] + 1) / float(strides[1]))
+    assert isinstance(stride, (list, tuple))
+    assert isinstance(kernel_size, (list, tuple))
+    out_height = ceil(float(in_height - kernel_size[0] + 1) / float(stride[0]))
+    out_width  = ceil(float(in_width - kernel_size[1] + 1) / float(stride[1]))
     return out_height, out_width
 
 

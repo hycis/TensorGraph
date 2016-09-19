@@ -83,7 +83,7 @@ class Conv2D(Template):
         state_below: (b, h, w, c)
         '''
         conv_out = tf.nn.conv2d(state_below, self.filter, strides=(1,)+self.stride+(1,),
-                                padding=self.padding)
+                                padding=self.padding, data_format='NHWC')
         return tf.nn.bias_add(conv_out, self.b)
 
     @property
@@ -92,7 +92,7 @@ class Conv2D(Template):
 
 
 class Conv2D_Transpose(Template):
-    def __init__(self, input_channels, num_filters, output_shape, stride=(1,1),
+    def __init__(self, input_channels, num_filters, output_shape, kernel_size=(3,3), stride=(1,1),
                  filter=None, b=None, padding='VALID'):
         '''
         PARAM:
@@ -110,8 +110,8 @@ class Conv2D_Transpose(Template):
         self.stride = stride
         self.padding = padding
 
-        width, height = self.output_shape
-        self.filter_shape = (width, height, self.num_filters, self.input_channels)
+        height, width = self.output_shape
+        self.filter_shape = kernel_size + (self.num_filters, self.input_channels)
         self.filter = filter
         if self.filter is None:
             self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
@@ -126,8 +126,9 @@ class Conv2D_Transpose(Template):
         state_below: (b, h, w, c)
         '''
         batch_size = tf.shape(state_below)[0]
-        deconv_shape = tf.pack((batch_size,) + self.output_shape + (self.num_filters,))
-        conv_out = tf.nn.conv2d_transpose(state_below, self.filter, output_shape=deconv_shape,
+        width, height = self.output_shape
+        deconv_shape = tf.pack((batch_size, int(height), int(width), self.num_filters))
+        conv_out = tf.nn.conv2d_transpose(value=state_below, filter=self.filter, output_shape=deconv_shape,
                                           strides=(1,)+self.stride+(1,), padding=self.padding)
         return tf.nn.bias_add(conv_out, self.b)
 
