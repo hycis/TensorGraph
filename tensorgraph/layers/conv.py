@@ -135,3 +135,47 @@ class Conv2D_Transpose(Template):
     @property
     def _variables(self):
         return [self.filter, self.b]
+
+
+class Conv3D(Template):
+    def __init__(self, input_channels, num_filters, kernel_size=(3,3,3), stride=(1,1,1),
+                 filter=None, b=None, padding='VALID'):
+        '''
+        PARAM:
+            kernel_size: [filter_depth, filter_height, filter_width]
+            stride: [stride_depth, stride_height, stride_width]
+            padding: "SAME" pad_along_depth = ((out_depth - 1) * stride[0] + filter_depth - in_depth)
+                            pad_along_height = ((out_height - 1) * stride[1] + filter_height - in_height)
+                            pad_along_width = ((out_width - 1) * stride[2] + filter_width - in_width)
+
+                      or
+                     "VALID" padding is always 0
+        '''
+        self.input_channels = input_channels
+        self.num_filters = num_filters
+        self.kernel_size = kernel_size
+        self.stride = stride
+        self.padding = padding
+
+        self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
+        self.filter = filter
+        if self.filter is None:
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+                                      name=self.__class__.__name__ + '_filter')
+
+        self.b = b
+        if self.b is None:
+            self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
+
+
+    def _train_fprop(self, state_below):
+        '''
+        state_below: (b, d, h, w, c)
+        '''
+        conv_out = tf.nn.conv3d(state_below, self.filter, strides=(1,)+self.stride+(1,),
+                                padding=self.padding)
+        return tf.nn.bias_add(conv_out, self.b)
+
+    @property
+    def _variables(self):
+        return [self.filter, self.b]
