@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='tensorgraph',
-    version='1.4.8',
+    version='1.4.9',
     author=u'Wu Zhen Zhou',
     author_email='hyciswu@gmail.com',
     install_requires=['numpy>=1.7.1',
