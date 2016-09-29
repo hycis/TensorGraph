@@ -8,7 +8,6 @@ setup(
     author=u'Wu Zhen Zhou',
     author_email='hyciswu@gmail.com',
     install_requires=['numpy>=1.7.1',
-                      'scipy>=0.11',
                       'six>=1.9.0',
                       'scikit-learn>=0.17',
                       'pandas>=0.17',
