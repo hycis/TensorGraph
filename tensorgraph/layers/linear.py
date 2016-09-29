@@ -109,7 +109,7 @@ class SparseLinear(Template):
         X = tf.SparseTensor(tf.cast(idx, 'int64'), val, shape=[-1, self.prev_dim])
         X = tf.sparse_reorder(X)
         XW = tf.sparse_tensor_dense_matmul(X, self.W, adjoint_a=False, adjoint_b=False)
-        return tf.sparse_add(XW, self.b)
+        return tf.add(XW, self.b)
 
     @property
     def _variables(self):
