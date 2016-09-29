@@ -91,7 +91,7 @@ class SparseLinear(Template):
 
         self.prev_dim = prev_dim
         self.this_dim = this_dim
-        self.mask = mask
+        # self.mask = mask
 
         self.W = W
         if self.W is None:
