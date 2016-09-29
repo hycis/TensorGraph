@@ -10,14 +10,14 @@ class StartNode(object):
 
 class HiddenNode(object):
     def __init__(self, prev, input_merge_mode=Sum(), layers=[]):
-        assert isinstance(prev, list)
-        assert isinstance(layers, list)
         '''
         PARAMS:
             input_merge_mode(layer): the way to merge the multiple inputs coming into this hidden node
             layers(list): the sequential layers within the node
             prev(list): previous nodes to link to
         '''
+        assert isinstance(prev, list)
+        assert isinstance(layers, list)
         self.input_merge_mode = input_merge_mode
         self.prev = prev
         self.layers = layers
