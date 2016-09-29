@@ -1,4 +1,5 @@
 import numpy as np
+from multiprocessing import Process, Queue
 
 
 class DataIterator(object):
