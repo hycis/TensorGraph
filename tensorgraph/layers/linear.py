@@ -22,7 +22,6 @@ class Linear(Template):
         if self.W is None:
             self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
                                                   name=self.__class__.__name__ + '_W')
-
         self.b = b
         if self.b is None:
             self.b = tf.Variable(tf.zeros([self.this_dim]), name=self.__class__.__name__ + '_b')
@@ -59,7 +58,6 @@ class LinearMasked(Template):
         if self.W is None:
             self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
                                                    name=self.__class__.__name__ + '_W')
-
         self.b = b
         if self.b is None:
             self.b = tf.Variable(tf.zeros([self.this_dim]), name=self.__class__.__name__ + '_b')
@@ -74,7 +72,7 @@ class LinearMasked(Template):
 
 class SparseLinear(Template):
 
-    def __init__(self, prev_dim=None, this_dim=None, ndim=None, W=None, b=None):
+    def __init__(self, prev_dim=None, this_dim=None, ndim=None, W=None, b=None, batchsize=None):
         """
         DESCRIPTION:
             This is a fully connected layer with sparse inputs are two tensors
@@ -91,26 +89,43 @@ class SparseLinear(Template):
 
         self.prev_dim = prev_dim
         self.this_dim = this_dim
-        # self.mask = mask
+        self.batchsize = batchsize
 
         self.W = W
         if self.W is None:
             self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
                                                    name=self.__class__.__name__ + '_W')
-
         self.b = b
         if self.b is None:
             self.b = tf.Variable(tf.zeros([self.this_dim]), name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         idx, val = state_below
-        nrow = val.get_shape()[0]
-        import pdb; pdb.set_trace()
-        X = tf.SparseTensor(tf.cast(idx, 'int64'), val, shape=[nrow, self.prev_dim])
-        X = tf.sparse_reorder(X)
-        XW = tf.sparse_tensor_dense_matmul(X, self.W, adjoint_a=False, adjoint_b=False)
+        X = tf.SparseTensor(tf.cast(idx, 'int64'), val, shape=[self.batchsize, self.prev_dim])
+        X_order = tf.sparse_reorder(X)
+        XW = tf.sparse_tensor_dense_matmul(X_order, self.W, adjoint_a=False, adjoint_b=False)
         return tf.add(XW, self.b)
 
     @property
     def _variables(self):
         return [self.W, self.b]
+
+'''
+if __name__ == '__main__':
+import tensorflow as tf
+import tensorgraph as tg
+from tensorgraph.layers import SparseLinear
+mod = tg.Sequential()
+mod.add(SparseLinear(prev_dim=10, this_dim=10, batchsize=3))
+
+idx_ph = tf.placeholder('int32', [None, 2])
+val_ph = tf.placeholder('float32', [None])
+
+out = mod.train_fprop((idx_ph, val_ph))
+
+init = tf.initialize_all_variables()
+with tf.Session() as sess:
+    sess.run(init)
+    feed_dict = {idx_ph:[[0,0],[1,1],[2,2]], val_ph:[100,1000,10000]}
+    print sess.run(out, feed_dict=feed_dict)
+'''

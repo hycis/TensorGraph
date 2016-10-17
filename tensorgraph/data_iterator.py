@@ -3,8 +3,17 @@ import numpy as np
 
 class DataIterator(object):
     def __init__(self, *data, **params):
+        '''
+        PARAMS:
+            fullbatch (bool): decides if the number of examples return after every
+                              iteration should be always a full batch.
+        '''
         self.data = data
         self.batchsize = params['batchsize']
+        if 'fullbatch' in params:
+            self.fullbatch = params['fullbatch']
+        else:
+            self.fullbatch = False
 
     def __iter__(self):
         self.first = 0
@@ -17,7 +26,7 @@ class DataIterator(object):
         outs = []
         for val in self.data:
             outs.append(val[key])
-        return self.__class__(*outs, batchsize=self.batchsize)
+        return self.__class__(*outs, batchsize=self.batchsize, fullbatch=self.fullbatch)
 
 
 class SequentialIterator(DataIterator):
@@ -26,8 +35,11 @@ class SequentialIterator(DataIterator):
     [0, 1, 2], [3, 4, 5], [6, 7, 8]
     '''
     def next(self):
-        if self.first >= len(self):
+        if self.fullbatch and self.first+self.batchsize >= len(self):
             raise StopIteration()
+        elif self.first >= len(self):
+            raise StopIteration()
+
         outs = []
         for val in self.data:
             outs.append(val[self.first:self.first+self.batchsize])
@@ -46,16 +58,24 @@ class StepIterator(DataIterator):
         self.step = params['step']
 
     def next(self):
-        if self.first >= len(self):
+        if self.fullbatch and self.first+self.batchsize >= len(self):
             raise StopIteration()
+        elif self.first >= len(self):
+            raise StopIteration()
+
         outs = []
         for val in self.data:
             outs.append(val[self.first:self.first+self.batchsize])
         self.first += self.step
         return outs
 
-
-def np_load_func(path):
-    with open(path) as fin:
-        arr = np.load(fin)
-    return arr
+if __name__ == '__main__':
+    import numpy as np
+    X = np.random.rand(1000)
+    data = SequentialIterator(X, batchsize=32, fullbatch=True)
+    count = 0
+    for batch in data:
+        # import pdb; pdb.set_trace()
+        print batch[0].__len__()
+        count += batch[0].__len__()
+        print count
