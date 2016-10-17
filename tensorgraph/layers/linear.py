@@ -109,23 +109,3 @@ class SparseLinear(Template):
     @property
     def _variables(self):
         return [self.W, self.b]
-
-'''
-if __name__ == '__main__':
-import tensorflow as tf
-import tensorgraph as tg
-from tensorgraph.layers import SparseLinear
-mod = tg.Sequential()
-mod.add(SparseLinear(prev_dim=10, this_dim=10, batchsize=3))
-
-idx_ph = tf.placeholder('int32', [None, 2])
-val_ph = tf.placeholder('float32', [None])
-
-out = mod.train_fprop((idx_ph, val_ph))
-
-init = tf.initialize_all_variables()
-with tf.Session() as sess:
-    sess.run(init)
-    feed_dict = {idx_ph:[[0,0],[1,1],[2,2]], val_ph:[100,1000,10000]}
-    print sess.run(out, feed_dict=feed_dict)
-'''

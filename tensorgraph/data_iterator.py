@@ -68,14 +68,3 @@ class StepIterator(DataIterator):
             outs.append(val[self.first:self.first+self.batchsize])
         self.first += self.step
         return outs
-
-if __name__ == '__main__':
-    import numpy as np
-    X = np.random.rand(1000)
-    data = SequentialIterator(X, batchsize=32, fullbatch=True)
-    count = 0
-    for batch in data:
-        # import pdb; pdb.set_trace()
-        print batch[0].__len__()
-        count += batch[0].__len__()
-        print count
