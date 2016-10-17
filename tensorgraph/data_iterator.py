@@ -35,7 +35,7 @@ class SequentialIterator(DataIterator):
     [0, 1, 2], [3, 4, 5], [6, 7, 8]
     '''
     def next(self):
-        if self.fullbatch and self.first+self.batchsize >= len(self):
+        if self.fullbatch and self.first+self.batchsize > len(self):
             raise StopIteration()
         elif self.first >= len(self):
             raise StopIteration()
@@ -58,7 +58,7 @@ class StepIterator(DataIterator):
         self.step = params['step']
 
     def next(self):
-        if self.fullbatch and self.first+self.batchsize >= len(self):
+        if self.fullbatch and self.first+self.batchsize > len(self):
             raise StopIteration()
         elif self.first >= len(self):
             raise StopIteration()
