@@ -60,7 +60,7 @@ def np_load_func(path):
     with open(path) as fin:
         arr = np.load(fin)
     return arr
-    
+
 
 class DataBlocks(object):
 
@@ -113,13 +113,13 @@ class DataBlocks(object):
                 self.lastblock = True
         else:
             fpath = next(self.files)
-            arr = self.load_func(fpath)
+            arr = self.load_file(fpath)
             self.iterator = SequentialIterator(*arr, batchsize=self.batchsize)
 
         return self.iterator
 
 
-    def load_file(self, paths, queue):
+    def load_file(self, paths, queue=None):
         '''
         paths (list or str): []
         '''
@@ -129,7 +129,9 @@ class DataBlocks(object):
                 data.append(self.load_func(path))
         else:
             data.append(self.load_func(paths))
-        queue.put(data)
+        if queue:
+            queue.put(data)
+        return data
 
 
     @property
