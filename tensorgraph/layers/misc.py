@@ -46,6 +46,15 @@ class Squeeze(Template):
         return tf.squeeze(state_below, self.squeeze_dims)
 
 
+class Expand_Dims(Template):
+
+    def __init__(self, dim):
+        self.dim = dim
+
+    def _train_fprop(self, state_below):
+        return tf.expand_dims(state_below, self.dim)
+
+
 class Embedding(Template):
     def __init__(self, cat_dim, encode_dim, embedding=None, zero_pad=False):
         """
