@@ -152,3 +152,155 @@ class DataBlocks(object):
     @property
     def nblocks(self):
         return len(self.data_paths)
+
+
+class SimpleBlocks(object):
+
+    def __init__(self, data_paths, batchsize=32, load_func=np_load_func, allow_preload=False):
+        """
+        DESCRIPTION:
+            This is class for processing blocks of data, whereby dataset is loaded
+            and unloaded into memory one block at a time.
+        PARAM:
+            data_paths (list or list of list): contains list of paths for data loading,
+                            example:
+                                [f1a.npy, f1b.npy, f1c.npy]  or
+                                [(f1a.npy, f1b.npy, f1c.npy), (f2a.npy, f2b.npy, f2c.npy)]
+            load_func (function): function for loading the data_paths, default to
+                            numpy file loader
+            allow_preload (bool): by allowing preload, it will preload the next data block
+                            while training at the same time on the current datablock,
+                            this will reduce time but will also cost more memory.
+        """
+
+        assert isinstance(data_paths, (list)), "data_paths is not a list"
+        self.data_paths = data_paths
+        self.batchsize = batchsize
+        self.load_func = load_func
+        self.allow_preload = allow_preload
+        self.q = Queue()
+
+
+    def __iter__(self):
+        self.files = iter(self.data_paths)
+        if self.allow_preload:
+            self.lastblock = False
+            bufile = next(self.files)
+            self.load_file(bufile, self.q)
+        return self
+
+
+    def next(self):
+        if self.allow_preload:
+            if self.lastblock:
+                raise StopIteration
+
+            try:
+                arr = self.q.get(block=True, timeout=None)
+                self.iterator = SequentialIterator(*arr, batchsize=self.batchsize)
+                bufile = next(self.files)
+                p = Process(target=self.load_file, args=(bufile, self.q))
+                p.start()
+            except:
+                self.lastblock = True
+        else:
+            fpath = next(self.files)
+            arr = self.load_file(fpath)
+            self.iterator = SequentialIterator(*arr, batchsize=self.batchsize)
+
+        return self.iterator
+
+
+    def load_file(self, paths, queue=None):
+        '''
+        paths (list or str): []
+        '''
+        data = []
+        if isinstance(paths, (list, tuple)):
+            for path in paths:
+                data.append(self.load_func(path))
+        else:
+            data.append(self.load_func(paths))
+        if queue:
+            queue.put(data)
+        return data
+
+
+    @property
+    def nblocks(self):
+        return len(self.data_paths)
+
+
+class DataBlocks(SimpleBlocks):
+
+    def __init__(self, data_paths, train_valid_ratio=[5,1], batchsize=32, load_func=np_load_func, allow_preload=False):
+        """
+        DESCRIPTION:
+            This is class for processing blocks of data, whereby dataset is loaded
+            and unloaded into memory one block at a time.
+        PARAM:
+            data_paths (list or list of list): contains list of paths for data loading,
+                            example:
+                                [f1a.npy, f1b.npy, f1c.npy]  or
+                                [(f1a.npy, f1b.npy, f1c.npy), (f2a.npy, f2b.npy, f2c.npy)]
+            load_func (function): function for loading the data_paths, default to
+                            numpy file loader
+            allow_preload (bool): by allowing preload, it will preload the next data block
+                            while training at the same time on the current datablock,
+                            this will reduce time but will also cost more memory.
+        """
+
+        assert isinstance(data_paths, (list)), "data_paths is not a list"
+        self.data_paths = data_paths
+        self.train_valid_ratio = train_valid_ratio
+        self.batchsize = batchsize
+        self.load_func = load_func
+        self.allow_preload = allow_preload
+        self.q = Queue()
+
+
+    def next(self):
+        if self.allow_preload:
+            if self.lastblock:
+                raise StopIteration
+
+            try:
+                train, valid = self.q.get(block=True, timeout=None)
+                self.train_iterator = SequentialIterator(*train, batchsize=self.batchsize)
+                self.valid_iterator = SequentialIterator(*valid, batchsize=self.batchsize)
+                bufile = next(self.files)
+                p = Process(target=self.load_file, args=(bufile, self.q))
+                p.start()
+            except:
+                self.lastblock = True
+        else:
+            fpath = next(self.files)
+            train, valid = self.load_file(fpath)
+            self.train_iterator = SequentialIterator(*train, batchsize=self.batchsize)
+            self.valid_iterator = SequentialIterator(*valid, batchsize=self.batchsize)
+        return self.train_iterator, self.valid_iterator
+
+
+    def load_file(self, paths, queue=None):
+        '''
+        paths (list or str): []
+        '''
+        train = []
+        valid = []
+        if isinstance(paths, (list, tuple)):
+            for path in paths:
+                X = self.load_func(path)
+                num_train = len(X) * self.train_valid_ratio[0] * 1.0 / sum(self.train_valid_ratio)
+                num_train = int(num_train)
+                train.append(X[:num_train])
+                valid.append(X[num_train:])
+        else:
+            X = self.load_func(paths)
+            num_train = len(X) * self.train_valid_ratio[0] * 1.0 / sum(self.train_valid_ratio)
+            num_train = int(num_train)
+            train.append(X[:num_train])
+            valid.append(X[num_train:])
+        data = [train, valid]
+        if queue:
+            queue.put(data)
+        return data
