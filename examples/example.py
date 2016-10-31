@@ -55,22 +55,7 @@ def train():
             n_exp = 0
             for y1_batch, y2_batch in data:
                 sess.run([o1, o2], feed_dict={y1:y1_batch, y2:y2_batch})
-                # h1w = sess.run(h1.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # h2w = sess.run(h2.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # h3w = sess.run(h3.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # print 'before optimize'
-                # print 'h1w', np.mean(h1w)
-                # print 'h2w', np.mean(h2w)
-                # print 'h3w', np.mean(h3w)
                 sess.run(optimizer, feed_dict={y1:y1_batch, y2:y2_batch})
-
-                # print 'after optimize'
-                # h1w = sess.run(h1.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # h2w = sess.run(h2.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # h3w = sess.run(h3.layers[0].W, feed_dict={y1:y1_batch, y2:y2_batch})
-                # print 'h1w', np.mean(h1w)
-                # print 'h2w', np.mean(h2w)
-                # print 'h3w', np.mean(h3w)
                 n_exp += len(y1_batch)
                 pbar.update(n_exp)
             print 'end'
