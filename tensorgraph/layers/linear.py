@@ -72,11 +72,11 @@ class LinearMasked(Template):
 
 class SparseLinear(Template):
 
-    def __init__(self, prev_dim=None, this_dim=None, ndim=None, W=None, b=None, batchsize=None):
+    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, batchsize=None):
         """
         DESCRIPTION:
             This is a fully connected layer with sparse inputs are two tensors
-            one is index tensor of dimension [N, ndim] and another one is value
+            one is index tensor of dimension [N, prev_dim] and another one is value
             tensor of [N]
         PARAM:
             prev_dim (int): dimension of previous layer
