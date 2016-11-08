@@ -12,32 +12,32 @@ def test_SimpleBlocks():
     t1 = time.time()
     count = 1
     for blk in db:
-        print count
+        print(count)
         count += 1
         for batch in blk:
-            print time.sleep(0.1)
+            print(time.sleep(0.1))
             pass
-    print 'with preload time:', time.time() - t1
+    print('with preload time:', time.time() - t1)
 
     db = tg.SimpleBlocks(['X.npy']*10, batchsize=32, allow_preload=False)
     t1 = time.time()
     count = 1
     for blk in db:
-        print count
+        print(count)
         count += 1
         for batch in blk:
-            print time.sleep(0.1)
+            print(time.sleep(0.1))
             pass
-    print 'without preload time:', time.time() - t1
+    print('without preload time:', time.time() - t1)
 
 
     db = tg.SimpleBlocks([('X.npy', 'X.npy'), ('X.npy', 'X.npy')], batchsize=32, allow_preload=False)
     for blk in db:
-        print blk
+        print(blk)
         for batch in blk:
-            print 'len batch:', len(batch)
-            print 'batch1 size:', batch[0].shape
-            print 'batch2 size:', batch[1].shape
+            print('len batch:', len(batch))
+            print('batch1 size:', batch[0].shape)
+            print('batch2 size:', batch[1].shape)
 
 
 def test_DataBlocks():
@@ -53,14 +53,14 @@ def test_DataBlocks():
             n_exp += len(batch[0])
             time.sleep(0.05)
             pbar.update(n_exp)
-        print
+        print()
         pbar = tg.ProgressBar(len(valid_blk))
         n_exp = 0
         for batch in valid_blk:
             n_exp += len(batch[0])
             time.sleep(0.05)
             pbar.update(n_exp)
-        print
+        print()
 
 
 

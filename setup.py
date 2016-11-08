@@ -1,11 +1,11 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-version = '1.4.12'
+version = '2.0.0'
 setup(
     name='tensorgraph',
     version=version,
-    author=u'Wu Zhen Zhou',
+    author='Wu Zhen Zhou',
     author_email='hyciswu@gmail.com',
     install_requires=['numpy>=1.7.1',
                       'six>=1.9.0',

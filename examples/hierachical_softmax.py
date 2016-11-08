@@ -55,6 +55,6 @@ with tf.Session() as sess:
     sess.run(init)
     i = 0
     for x_batch, y1_batch, y2_batch, y3_batch in data:
-        print i
+        print(i)
         i += 1
         sess.run(optimizer, feed_dict={x_ph:x_batch, y1_ph:y1_batch, y2_ph:y2_batch, y3_ph:y3_batch})

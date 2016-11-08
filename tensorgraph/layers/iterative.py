@@ -1,5 +1,5 @@
-from template import Template
-from merge import Sum
+from .template import Template
+from .merge import Sum
 import tensorgraph as tg
 
 class Iterative(Template):

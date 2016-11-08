@@ -8,16 +8,16 @@ class EarlyStopper(object):
         self.epoch_look_back = epoch_look_back
         self.percent_decrease = percent_decrease
 
-        self.best_valid_error = float(sys.maxint)
+        self.best_valid_error = float(sys.maxsize)
         self.best_epoch_last_update = 0
-        self.best_valid_last_update = float(sys.maxint)
+        self.best_valid_last_update = float(sys.maxsize)
         self.epoch = 0
 
 
     def reset(self):
-        self.best_valid_error = float(sys.maxint)
+        self.best_valid_error = float(sys.maxsize)
         self.best_epoch_last_update = 0
-        self.best_valid_last_update = float(sys.maxint)
+        self.best_valid_last_update = float(sys.maxsize)
         self.epoch = 0
 
 

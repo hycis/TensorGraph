@@ -58,7 +58,7 @@ def train():
                 sess.run(optimizer, feed_dict={y1:y1_batch, y2:y2_batch})
                 n_exp += len(y1_batch)
                 pbar.update(n_exp)
-            print 'end'
+            print('end')
         saver.save(sess, 'test.tf')
 
 def train2():
@@ -67,7 +67,7 @@ def train2():
     model()
     saver.restore(sess, 'test.tf')
     import pdb; pdb.set_trace()
-    print
+    print()
 
 
 if __name__ == '__main__':

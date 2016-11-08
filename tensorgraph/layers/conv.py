@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from template import Template
+from .template import Template
 
 
 

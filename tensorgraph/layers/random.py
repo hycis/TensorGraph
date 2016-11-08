@@ -1,4 +1,4 @@
-from template import Template
+from .template import Template
 import tensorflow as tf
 
 class OneSample(Template):

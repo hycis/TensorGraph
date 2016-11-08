@@ -1,6 +1,6 @@
 
 import tensorflow as tf
-from template import Template
+from .template import Template
 
 
 class Dropout(Template):

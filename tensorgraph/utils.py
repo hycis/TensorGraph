@@ -44,7 +44,7 @@ def make_one_hot(X, onehot_size):
     """
 
     rX = np.zeros((len(X), onehot_size))
-    for i in xrange(len(X)):
+    for i in range(len(X)):
         rX[i, X[i]] = 1
 
     return rX

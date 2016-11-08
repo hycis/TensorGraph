@@ -13,7 +13,7 @@ class Sequential(object):
 
     def train_fprop(self, input_state, layers=None):
         if layers is None:
-            layers = xrange(len(self.layers))
+            layers = range(len(self.layers))
         for i in layers:
             layer_output = self.layers[i]._train_fprop(input_state)
             input_state = layer_output
@@ -21,7 +21,7 @@ class Sequential(object):
 
     def test_fprop(self, input_state, layers=None):
         if layers is None:
-            layers = xrange(len(self.layers))
+            layers = range(len(self.layers))
         for i in layers:
             layer_output = self.layers[i]._test_fprop(input_state)
             input_state = layer_output
