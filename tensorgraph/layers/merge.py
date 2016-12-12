@@ -42,3 +42,11 @@ class Sum(Merge):
 class NoChange(Merge):
     def _train_fprop(self, state_list):
         return state_list
+
+
+class Multiply(Merge):
+    def _train_fprop(self, state_list):
+        out = state_list[0]
+        for state in state_list[1:]:
+            out = tf.mul(out, state)
+        return out

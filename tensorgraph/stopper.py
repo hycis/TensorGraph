@@ -7,6 +7,8 @@ class EarlyStopper(object):
         self.max_epoch = max_epoch
         self.epoch_look_back = epoch_look_back
         self.percent_decrease = percent_decrease
+        if self.percent_decrease is None:
+            self.percent_decrease = 0
 
         self.best_valid_error = float(sys.maxsize)
         self.best_epoch_last_update = 0
@@ -33,15 +35,15 @@ class EarlyStopper(object):
             error_dcr = 0
 
         # check if should continue learning based on the error decrease
-        if self.epoch > self.max_epoch:
+        if self.epoch >= self.max_epoch:
             return False
-
-        elif self.percent_decrease is None or self.epoch_look_back is None:
-            return True
 
         elif np.abs(float(error_dcr)/self.best_valid_last_update) > self.percent_decrease:
             self.best_valid_last_update = self.best_valid_error
             self.best_epoch_last_update = self.epoch
+            return True
+
+        elif self.epoch_look_back is None:
             return True
 
         elif self.epoch - self.best_epoch_last_update > self.epoch_look_back:

@@ -48,3 +48,29 @@ def make_one_hot(X, onehot_size):
         rX[i, X[i]] = 1
 
     return rX
+
+
+def cat_to_num(cat, start_idx=0):
+    '''
+    DESCRIPTION:
+        convert categorical values to numeric values
+    PARAM:
+        cat (list or 1d array): an array of categorical values
+    RETURN:
+        return numeric list and a categorical dictionary map
+    '''
+    cat_dict = {}
+    for lbl in cat:
+        if lbl not in cat_dict:
+            cat_dict[lbl] = start_idx
+            start_idx += 1
+
+    nums = []
+    for lbl in cat:
+        nums.append(cat_dict[lbl])
+    return nums, cat_dict
+
+
+def cat_to_one_hot(cat):
+    nums, cat_dict = cat_to_num(cat, start_idx=0)
+    return make_one_hot(nums, len(cat_dict)), cat_dict

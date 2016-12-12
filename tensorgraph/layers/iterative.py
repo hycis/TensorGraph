@@ -23,3 +23,33 @@ class Iterative(Template):
             out = self.sequential.test_fprop(state_below)
             state_below = self.input_merge_mode._test_fprop([out, state_below])
         return out
+
+
+class ResNet(Template):
+
+    def __init__(self, num_blocks):
+        '''
+        num_blocks (int): number of resnet blocks
+        '''
+        self.blocks = []
+        for _ in range(num_blocks):
+            layers = [] # put the layers inside
+            self.blocks.append(layers)
+
+
+    def _train_fprop(self, state_below):
+        for block in self.blocks:
+            out = state_below
+            for layer in block:
+                out = layer._train_fprop(out)
+            state_below = out + state_below
+        return state_below
+
+
+    def _test_fprop(self, state_below):
+        for block in self.blocks:
+            out = state_below
+            for layer in block:
+                out = layer._test_fprop(out)
+            state_below = out + state_below
+        return state_below
