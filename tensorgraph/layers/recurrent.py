@@ -10,6 +10,7 @@ class DynamicLSTM(Template):
             DynamicLSTM is for sequences with dynamic length.
         '''
         self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+        
 
     def _train_fprop(self, state_below):
         '''
@@ -32,6 +33,7 @@ class LSTM(Template):
             LSTM is for sequences with fixed length.
         '''
         self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+
 
     def _train_fprop(self, state_below):
         '''

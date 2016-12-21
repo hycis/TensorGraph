@@ -8,3 +8,5 @@ from .normalization import *
 from .random import *
 from .misc import *
 from .iterative import *
+from .recurrent import *
+from .template import *
