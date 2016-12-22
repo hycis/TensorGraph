@@ -24,7 +24,8 @@ class DynamicLSTM(Template):
         X_sb, len_sb = state_below
         outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                  sequence_length=len_sb,
-                                                 inputs=X_sb)
+                                                 inputs=X_sb,
+                                                 dtype=float)
         return outputs, last_states
 
 
@@ -48,7 +49,8 @@ class LSTM(Template):
         '''
         outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                  sequence_length=None,
-                                                 inputs=state_below)
+                                                 inputs=state_below,
+                                                 dtype=float)
         return outputs, last_states
 
 
@@ -78,7 +80,8 @@ class BiDynamicLSTM(Template):
         outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
                                                                cell_bw=self.bw_lstm,
                                                                sequence_length=len_sb,
-                                                               inputs=X_sb)
+                                                               inputs=X_sb,
+                                                               dtype=float)
         return outputs, last_states
 
 
@@ -107,7 +110,8 @@ class BiLSTM(Template):
         outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
                                                                cell_bw=self.bw_lstm,
                                                                sequence_length=None,
-                                                               inputs=state_below)
+                                                               inputs=state_below,
+                                                               dtype=float)
         return outputs, last_states
 
 
