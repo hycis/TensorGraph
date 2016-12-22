@@ -25,8 +25,11 @@ class Merge(object):
 
 
 class Concat(Merge):
+    def __init__(self, axis=1):
+        self.axis = axis
+
     def _train_fprop(self, state_list):
-        return tf.concat(1, state_list)
+        return tf.concat(self.axis, state_list)
 
 
 class Mean(Merge):

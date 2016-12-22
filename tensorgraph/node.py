@@ -45,6 +45,13 @@ class HiddenNode(object):
 
 class EndNode(object):
     def __init__(self, prev, input_merge_mode=Sum()):
+        '''
+        DESCRIPTION:
+            EndNode is where we want to get the output from the graph.
+        PARAMS:
+            input_merge_mode(layer): the way to merge the multiple inputs coming into this hidden node
+            prev(list): previous nodes to link to
+        '''
         assert isinstance(prev, list)
         self.input_merge_mode = input_merge_mode
         self.prev = prev
