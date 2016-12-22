@@ -25,7 +25,7 @@ class DynamicLSTM(Template):
         outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                  sequence_length=len_sb,
                                                  inputs=X_sb,
-                                                 dtype=float)
+                                                 dtype=tf.float32)
         return outputs, last_states
 
 
@@ -50,7 +50,7 @@ class LSTM(Template):
         outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                  sequence_length=None,
                                                  inputs=state_below,
-                                                 dtype=float)
+                                                 dtype=tf.float32)
         return outputs, last_states
 
 
@@ -81,7 +81,7 @@ class BiDynamicLSTM(Template):
                                                                cell_bw=self.bw_lstm,
                                                                sequence_length=len_sb,
                                                                inputs=X_sb,
-                                                               dtype=float)
+                                                               dtype=tf.float32)
         return outputs, last_states
 
 
@@ -111,7 +111,7 @@ class BiLSTM(Template):
                                                                cell_bw=self.bw_lstm,
                                                                sequence_length=None,
                                                                inputs=state_below,
-                                                               dtype=float)
+                                                               dtype=tf.float32)
         return outputs, last_states
 
 
