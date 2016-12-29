@@ -10,7 +10,8 @@ class DynamicLSTM(Template):
         DESCRIPTION:
             DynamicLSTM is for sequences with dynamic length.
         '''
-        self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+        with tf.variable_scope("DynamicLSTM"):
+            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
 
 
     def _train_fprop(self, state_below):
@@ -21,11 +22,19 @@ class DynamicLSTM(Template):
             outputs: [batchsize, max_time, num_units] collect the outputs at each time step
             last_states: [batchsize, num_units] the output of the last lstm iteration
         '''
-        X_sb, len_sb = state_below
-        outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
-                                                 sequence_length=len_sb,
-                                                 inputs=X_sb,
-                                                 dtype=tf.float32)
+        X_sb, seqlen_sb = state_below
+        with tf.variable_scope("DynamicLSTM") as scope:
+            try:
+                outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
+                                                         sequence_length=seqlen_sb,
+                                                         inputs=X_sb,
+                                                         dtype=tf.float32)
+            except ValueError:
+                scope.reuse_variables()
+                outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
+                                                         sequence_length=seqlen_sb,
+                                                         inputs=X_sb,
+                                                         dtype=tf.float32)
         return outputs, last_states
 
 
@@ -36,7 +45,8 @@ class LSTM(Template):
         DESCRIPTION:
             LSTM is for sequences with fixed length.
         '''
-        self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+        with tf.variable_scope("LSTM"):
+            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
 
 
     def _train_fprop(self, state_below):
@@ -47,22 +57,32 @@ class LSTM(Template):
             outputs: [batchsize, max_time, num_units] collect the outputs at each time step
             last_states: [batchsize, num_units] the output of the last lstm iteration
         '''
-        outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
-                                                 sequence_length=None,
-                                                 inputs=state_below,
-                                                 dtype=tf.float32)
+
+        with tf.variable_scope("LSTM") as scope:
+            try:
+                outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
+                                                         sequence_length=None,
+                                                         inputs=state_below,
+                                                         dtype=tf.float32)
+            except ValueError:
+                scope.reuse_variables()
+                outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
+                                                         sequence_length=None,
+                                                         inputs=state_below,
+                                                         dtype=tf.float32)
         return outputs, last_states
 
 
-class BiDynamicLSTM(Template):
+class DynamicBiLSTM(Template):
 
     def __init__(self, fw_num_units, bw_num_units):
         '''
         DESCRIPTION:
             BiDynamicLSTM is for sequences with dynamic length.
         '''
-        self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=True)
-        self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=True)
+        with tf.variable_scope("DynamicBiLSTM"):
+            self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=True)
+            self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=True)
 
 
     def _train_fprop(self, state_below):
@@ -76,42 +96,21 @@ class BiDynamicLSTM(Template):
             last_states (tuple): ([batchsize, fw_num_units], [batchsize, bw_num_units])
                                   the output of the last lstm iteration
         '''
-        X_sb, len_sb = state_below
-        outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
-                                                               cell_bw=self.bw_lstm,
-                                                               sequence_length=len_sb,
-                                                               inputs=X_sb,
-                                                               dtype=tf.float32)
-        return outputs, last_states
-
-
-class BiLSTM(Template):
-
-    def __init__(self, fw_num_units, bw_num_units):
-        '''
-        DESCRIPTION:
-            BiLSTM is for sequences with fixed length.
-        '''
-        self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=True)
-        self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=True)
-
-
-    def _train_fprop(self, state_below):
-        '''
-        PARAMS:
-            state_below: [batchsize, max_time, fea_dim]
-        RETURN:
-            outputs (tuple): ([batchsize, max_time, fw_num_units],
-                              [batchsize, max_time, bw_num_units])
-                              collect the outputs at each time step
-            last_states (tuple): ([batchsize, fw_num_units], [batchsize, bw_num_units])
-                                  the output of the last lstm iteration
-        '''
-        outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
-                                                               cell_bw=self.bw_lstm,
-                                                               sequence_length=None,
-                                                               inputs=state_below,
-                                                               dtype=tf.float32)
+        X_sb, seqlen_sb = state_below
+        with tf.variable_scope("DynamicBiLSTM") as scope:
+            try:
+                outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
+                                                                       cell_bw=self.bw_lstm,
+                                                                       sequence_length=seqlen_sb,
+                                                                       inputs=X_sb,
+                                                                       dtype=tf.float32)
+            except ValueError:
+                scope.reuse_variables()
+                outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
+                                                                       cell_bw=self.bw_lstm,
+                                                                       sequence_length=seqlen_sb,
+                                                                       inputs=X_sb,
+                                                                       dtype=tf.float32)
         return outputs, last_states
 
 
