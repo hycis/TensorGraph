@@ -53,3 +53,11 @@ class Multiply(Merge):
         for state in state_list[1:]:
             out = tf.mul(out, state)
         return out
+
+
+class Select(Merge):
+    def __init__(self, index=0):
+        self.index = index
+
+    def _train_fprop(self, state_list):
+        return state_list[self.index]
