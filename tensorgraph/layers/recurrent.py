@@ -11,7 +11,7 @@ class DynamicLSTM(Template):
             DynamicLSTM is for sequences with dynamic length.
         '''
         with tf.variable_scope("DynamicLSTM"):
-            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
 
     def _train_fprop(self, state_below):
@@ -46,7 +46,7 @@ class LSTM(Template):
             LSTM is for sequences with fixed length.
         '''
         with tf.variable_scope("LSTM"):
-            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=True)
+            self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
 
     def _train_fprop(self, state_below):
@@ -81,8 +81,8 @@ class DynamicBiLSTM(Template):
             BiDynamicLSTM is for sequences with dynamic length.
         '''
         with tf.variable_scope("DynamicBiLSTM"):
-            self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=True)
-            self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=True)
+            self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=False)
+            self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=False)
 
 
     def _train_fprop(self, state_below):
