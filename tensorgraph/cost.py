@@ -3,8 +3,6 @@ import tensorflow as tf
 
 epsilon = 1e-6
 
-
-
 def mse(ytrue, ypred):
     return tf.reduce_mean((ytrue - ypred)**2)
 
@@ -14,16 +12,22 @@ def entropy(ytrue, ypred):
     return tf.reduce_mean(L)
 
 def binary_f1(ytrue, ypred):
+    '''ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+    since it is binary, the values must be 0 and 1'''
     r = binary_recall(ytrue, ypred)
     p = binary_precision(ytrue, ypred)
     return 2 * p * r / (p + r)
 
 def binary_recall(ytrue, ypred):
+    '''ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+    since it is binary, the values must be 0 and 1'''
     P = tf.reduce_sum(ytrue[:, 1])
     TP = tf.reduce_sum(ypred[:,1] * ytrue[:,1]) # both ypred and ytrue are positives
     return tf.to_float(TP) / tf.to_float(P)
 
 def binary_precision(ytrue, ypred):
+    '''ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+    since it is binary, the values must be 0 and 1'''
     TPnFP = tf.reduce_sum(ypred[:, 1])
     TP = tf.reduce_sum(ypred[:,1] * ytrue[:,1]) # both ypred and ytrue are positives
     return tf.to_float(TP) / tf.to_float(TPnFP)
