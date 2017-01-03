@@ -43,9 +43,9 @@ def test_dynamic_lstm(layer, seq_len, fea_dim):
 
 
 if __name__ == '__main__':
-    lstm = LSTM(num_units=10)
-    dylstm = DynamicLSTM(num_units=10)
-    dybilstm = DynamicBiLSTM(fw_num_units=10, bw_num_units=20)
+    lstm = LSTM(num_units=10, scope='lstm')
+    dylstm = DynamicLSTM(num_units=10, scope='dylstm')
+    dybilstm = DynamicBiLSTM(fw_num_units=10, bw_num_units=20, scope='bilstm')
 
     for layer in [lstm]:
         test_lstm(layer, seq_len=15, fea_dim=8)
