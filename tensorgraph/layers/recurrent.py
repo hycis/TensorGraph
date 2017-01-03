@@ -5,12 +5,16 @@ from .merge import Concat
 
 class DynamicLSTM(Template):
 
-    def __init__(self, num_units):
+    def __init__(self, num_units, scope):
         '''
         DESCRIPTION:
             DynamicLSTM is for sequences with dynamic length.
+        PARAMS:
+            scope (str): scope for the cells. For RNN with the same scope name,
+                         the rnn cell will be reused.
         '''
-        with tf.variable_scope("DynamicLSTM"):
+        self.scope = scope
+        with tf.variable_scope(self.scope):
             self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
 
@@ -23,7 +27,7 @@ class DynamicLSTM(Template):
             last_states: [batchsize, num_units] the output of the last lstm iteration
         '''
         X_sb, seqlen_sb = state_below
-        with tf.variable_scope("DynamicLSTM") as scope:
+        with tf.variable_scope(self.scope) as scope:
             try:
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=seqlen_sb,
@@ -40,12 +44,16 @@ class DynamicLSTM(Template):
 
 class LSTM(Template):
 
-    def __init__(self, num_units):
+    def __init__(self, num_units, scope):
         '''
         DESCRIPTION:
             LSTM is for sequences with fixed length.
+        PARAMS:
+            scope (str): scope for the cells. For RNN with the same scope name,
+                         the rnn cell will be reused.
         '''
-        with tf.variable_scope("LSTM"):
+        self.scope = scope
+        with tf.variable_scope(self.scope):
             self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
 
@@ -58,7 +66,7 @@ class LSTM(Template):
             last_states: [batchsize, num_units] the output of the last lstm iteration
         '''
 
-        with tf.variable_scope("LSTM") as scope:
+        with tf.variable_scope(self.scope) as scope:
             try:
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=None,
@@ -75,12 +83,16 @@ class LSTM(Template):
 
 class DynamicBiLSTM(Template):
 
-    def __init__(self, fw_num_units, bw_num_units):
+    def __init__(self, fw_num_units, bw_num_units, scope):
         '''
         DESCRIPTION:
             BiDynamicLSTM is for sequences with dynamic length.
+        PARAMS:
+            scope (str): scope for the cells. For RNN with the same scope name,
+                         the rnn cell will be reused.
         '''
-        with tf.variable_scope("DynamicBiLSTM"):
+        self.scope = scope
+        with tf.variable_scope(self.scope):
             self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=False)
             self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=False)
 
@@ -97,7 +109,7 @@ class DynamicBiLSTM(Template):
                                   the output of the last lstm iteration
         '''
         X_sb, seqlen_sb = state_below
-        with tf.variable_scope("DynamicBiLSTM") as scope:
+        with tf.variable_scope(self.scope) as scope:
             try:
                 outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
                                                                        cell_bw=self.bw_lstm,
