@@ -38,9 +38,11 @@ def hingeloss(ytrue, ypred):
     return tf.reduce_mean(L)
 
 def error(ytrue, ypred):
+    '''ytrue and ypred is one-hot, and have to be of type int'''
     L = tf.not_equal(tf.argmax(ypred, 1), tf.argmax(ytrue, 1))
     return tf.reduce_mean(L)
 
 def accuracy(ytrue, ypred):
+    '''ytrue and ypred is one-hot, and have to be of type int'''
     L = tf.equal(tf.argmax(ypred, 1), tf.argmax(ytrue, 1))
     return tf.reduce_mean(L)
