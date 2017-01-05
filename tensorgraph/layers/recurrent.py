@@ -5,7 +5,7 @@ from .merge import Concat
 
 class DynamicLSTM(Template):
 
-    def __init__(self, num_units, scope):
+    def __init__(self, num_units, scope=None):
         '''
         DESCRIPTION:
             DynamicLSTM is for sequences with dynamic length.
@@ -13,7 +13,10 @@ class DynamicLSTM(Template):
             scope (str): scope for the cells. For RNN with the same scope name,
                          the rnn cell will be reused.
         '''
-        self.scope = scope
+        if scope is None:
+            scope = self.__class__.__name__
+        else:
+            self.scope = scope
         with tf.variable_scope(self.scope):
             self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
@@ -44,7 +47,7 @@ class DynamicLSTM(Template):
 
 class LSTM(Template):
 
-    def __init__(self, num_units, scope):
+    def __init__(self, num_units, scope=None):
         '''
         DESCRIPTION:
             LSTM is for sequences with fixed length.
@@ -52,7 +55,10 @@ class LSTM(Template):
             scope (str): scope for the cells. For RNN with the same scope name,
                          the rnn cell will be reused.
         '''
-        self.scope = scope
+        if scope is None:
+            scope = self.__class__.__name__
+        else:
+            self.scope = scope
         with tf.variable_scope(self.scope):
             self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
@@ -83,7 +89,7 @@ class LSTM(Template):
 
 class DynamicBiLSTM(Template):
 
-    def __init__(self, fw_num_units, bw_num_units, scope):
+    def __init__(self, fw_num_units, bw_num_units, scope=None):
         '''
         DESCRIPTION:
             BiDynamicLSTM is for sequences with dynamic length.
@@ -91,7 +97,10 @@ class DynamicBiLSTM(Template):
             scope (str): scope for the cells. For RNN with the same scope name,
                          the rnn cell will be reused.
         '''
-        self.scope = scope
+        if scope is None:
+            scope = self.__class__.__name__
+        else:
+            self.scope = scope
         with tf.variable_scope(self.scope):
             self.fw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=fw_num_units, state_is_tuple=False)
             self.bw_lstm = tf.nn.rnn_cell.LSTMCell(num_units=bw_num_units, state_is_tuple=False)
