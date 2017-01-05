@@ -14,7 +14,7 @@ class DynamicLSTM(Template):
                          the rnn cell will be reused.
         '''
         if scope is None:
-            scope = self.__class__.__name__
+            self.scope = self.__class__.__name__
         else:
             self.scope = scope
         with tf.variable_scope(self.scope):
@@ -56,7 +56,7 @@ class LSTM(Template):
                          the rnn cell will be reused.
         '''
         if scope is None:
-            scope = self.__class__.__name__
+            self.scope = self.__class__.__name__
         else:
             self.scope = scope
         with tf.variable_scope(self.scope):
@@ -98,7 +98,7 @@ class DynamicBiLSTM(Template):
                          the rnn cell will be reused.
         '''
         if scope is None:
-            scope = self.__class__.__name__
+            self.scope = self.__class__.__name__
         else:
             self.scope = scope
         with tf.variable_scope(self.scope):
