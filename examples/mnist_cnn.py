@@ -37,7 +37,6 @@ def model():
     h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(2,2))
     seq.add(LRN())
     seq.add(Flatten())
-    print(h*w*64)
     seq.add(Linear(int(h*w*64), 128))
     seq.add(Tanh())
     seq.add(Dropout(0.8))
