@@ -35,14 +35,14 @@ def binary_precision(ytrue, ypred):
 def hingeloss(ytrue, ypred):
     ypred = tf.clip_by_value(ypred, 0., 1.0)
     L = tf.maximum(0, 1 - ytrue * ypred)
-    return tf.reduce_mean(L)
+    return tf.reduce_mean(tf.to_float(L))
 
 def error(ytrue, ypred):
-    '''ytrue and ypred is one-hot, and have to be of type int'''
+    '''ytrue and ypred is 2d'''
     L = tf.not_equal(tf.argmax(ypred, 1), tf.argmax(ytrue, 1))
-    return tf.reduce_mean(L)
+    return tf.reduce_mean(tf.to_float(L))
 
 def accuracy(ytrue, ypred):
-    '''ytrue and ypred is one-hot, and have to be of type int'''
+    '''ytrue and ypred is 2d'''
     L = tf.equal(tf.argmax(ypred, 1), tf.argmax(ytrue, 1))
-    return tf.reduce_mean(L)
+    return tf.reduce_mean(tf.to_float(L))
