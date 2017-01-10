@@ -53,6 +53,11 @@ if __name__ == '__main__':
     learning_rate = 0.001
     batchsize = 32
 
+    max_epoch = 300
+    es = tg.EarlyStopper(max_epoch=max_epoch,
+                         epoch_look_back=3,
+                         percent_decrease=0)
+
     seq = model()
     X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')
     iter_train = tg.SequentialIterator(X_train, y_train, batchsize=batchsize)
@@ -75,17 +80,13 @@ if __name__ == '__main__':
         init = tf.initialize_all_variables()
         sess.run(init)
 
-        max_epoch = 300
-        es = tg.EarlyStopper(max_epoch=max_epoch,
-                             epoch_look_back=3,
-                             percent_decrease=0)
-
         best_valid_accu = 0
         for epoch in range(max_epoch):
             print('epoch:', epoch)
             pbar = tg.ProgressBar(len(iter_train))
             ttl_train_cost = 0
             ttl_examples = 0
+            print('..training')
             for X_batch, y_batch in iter_train:
                 feed_dict = {X_ph:X_batch, y_ph:y_batch}
                 _, train_cost = sess.run([optimizer,train_cost_sb] , feed_dict=feed_dict)
@@ -99,9 +100,10 @@ if __name__ == '__main__':
             ttl_valid_accu = 0
             ttl_examples = 0
             pbar = tg.ProgressBar(len(iter_test))
+            print('..validating')
             for X_batch, y_batch in iter_test:
                 feed_dict = {X_ph:X_batch, y_ph:y_batch}
-                _, valid_cost, valid_accu = sess.run([optimizer, test_cost_sb, test_accu_sb] , feed_dict=feed_dict)
+                valid_cost, valid_accu = sess.run([test_cost_sb, test_accu_sb] , feed_dict=feed_dict)
                 ttl_valid_cost += len(X_batch) * valid_cost
                 ttl_valid_accu += len(X_batch) * valid_accu
                 ttl_examples += len(X_batch)
