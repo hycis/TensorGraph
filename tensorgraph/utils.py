@@ -42,11 +42,15 @@ def make_one_hot(X, onehot_size):
     RETURN:
         2d numpy tensor, with each row been the onehot vector
     """
-
-    rX = np.zeros((len(X), onehot_size))
-    for i in range(len(X)):
-        rX[i, X[i]] = 1
-
+    if onehot_size < 450:
+        dig_one = np.zeros((onehot_size, onehot_size))
+        np.fill_diagonal(dig_one, 1)
+        rX = dig_one[np.asarray(X)]
+    else:
+        # for large onehot size, this is faster
+        rX = np.zeros((len(X), onehot_size))
+        for i in range(len(X)):
+            rX[i, X[i]] = 1
     return rX
 
 
