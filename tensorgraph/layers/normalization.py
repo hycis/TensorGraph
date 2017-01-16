@@ -17,7 +17,7 @@ class BatchNormalization(Template):
                 y_t is the latest value, the moving average x_tp1 is calculated as
                 x_tp1 = memory * y_t + (1-memory) * x_t, the larger the short term
                 memory, the more weight is put on contempory.
-            layer_type: fc or conv
+            layer_type: fc (fully-connected) or conv (convolutional)
             epsilon:
                 denominator min value for preventing division by zero in computing std
             dim: for fc layers, shape is the layer dimension, for conv layers,
