@@ -61,3 +61,50 @@ class Select(Merge):
 
     def _train_fprop(self, state_list):
         return state_list[self.index]
+
+
+class SequenceMask(Merge):
+    def __init__(self, maxlen):
+        '''
+        DESCRIPTION:
+            Mask the sequence of shape [batchsize, max_seq_len, :, ..] at the
+            second dimension by using a mask tensor representing the first N
+            positions of each row.
+            Example:
+                mask = tf.sequence_mask(lengths=[1, 3, 2], maxlen=5) =
+                       [[True, False, False, False, False],
+                       [True, True, True, False, False],
+                       [True, True, False, False, False]]
+                y = X * mask
+        '''
+        self.maxlen = maxlen
+
+    def _train_fprop(self, state_list):
+        assert len(state_list) == 2
+        state_below, seqlen = state_list
+        mask = tf.to_float(tf.sequence_mask(seqlen, self.maxlen))
+        num_dim = len(state_below.get_shape())
+        for _ in range(num_dim-2):
+            mask = tf.expand_dims(mask, -1)
+        return state_below * mask
+
+
+class MaskSoftmax(Merge):
+    def _train_fprop(self, state_list):
+        '''The softmax is apply to units that is not masked
+           state_list : [state_below, seqlen]
+                state_below (2d tf tensor): shape = [batchsize, layer_dim]
+                seqlen (1d tf tensor): shape = [batchsize]
+                example:
+                    state_below = 3 x 5 matrix
+                    seqlen = [2, 1, 4]
+        '''
+        assert len(state_list) == 2
+        state_below, seqlen = state_list
+        assert len(seqlen.get_shape()) == 1
+        shape = state_below.get_shape()
+        assert len(shape) == 2, 'state below dimenion {} != 2'.format(len(shape))
+        mask = tf.to_float(tf.sequence_mask(seqlen, shape[-1]))
+        exp = tf.exp(state_below) * mask
+        exp_sum = tf.reduce_sum(exp, axis=1)
+        return tf.div(exp, tf.expand_dims(exp_sum, -1))
