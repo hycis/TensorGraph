@@ -50,12 +50,13 @@ def test_MaskSoftmax():
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
         feed_dict = {X_ph:np.random.rand(3, 20),
-                     seq_ph:[5, 8, 2]}
+                     seq_ph:[5, 8, 0]}
         out = sess.run(y_sb, feed_dict=feed_dict)
         assert out[0][5:].sum() == 0
         assert out[0][:5].sum() == 1
         assert out[1][8:].sum() == 0
         assert out[1][:8].sum() == 1
+        assert out[2].sum() == 0
         print('test passed!')
 
 

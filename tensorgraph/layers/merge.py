@@ -91,7 +91,8 @@ class SequenceMask(Merge):
 
 class MaskSoftmax(Merge):
     def _train_fprop(self, state_list):
-        '''The softmax is apply to units that is not masked
+        '''The softmax is apply to n units that is not masked specified by the
+           seqlen.
            state_list : [state_below, seqlen]
                 state_below (2d tf tensor): shape = [batchsize, layer_dim]
                 seqlen (1d tf tensor): shape = [batchsize]
@@ -107,4 +108,8 @@ class MaskSoftmax(Merge):
         mask = tf.to_float(tf.sequence_mask(seqlen, shape[-1]))
         exp = tf.exp(state_below) * mask
         exp_sum = tf.reduce_sum(exp, axis=1)
-        return tf.div(exp, tf.expand_dims(exp_sum, -1))
+        zeros = tf.to_float(tf.equal(exp_sum, 0))
+        softmax = tf.div(exp, tf.expand_dims(exp_sum + zeros, -1))
+        nonzeros = tf.to_float(tf.not_equal(exp_sum, 0))
+        softmax = softmax * tf.expand_dims(nonzeros, -1)
+        return softmax
