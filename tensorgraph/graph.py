@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class Graph(object):
 
@@ -62,3 +62,10 @@ class Graph(object):
         for node in self.end:
             var += outvars(node)
         return list(set(var))
+
+
+    def total_num_parameters(self):
+        count = 0
+        for var in self.variables:
+            count += int(np.prod(var.get_shape()))
+        return count
