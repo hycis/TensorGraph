@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class Sequential(object):
 
@@ -26,3 +26,16 @@ class Sequential(object):
             layer_output = self.layers[i]._test_fprop(input_state)
             input_state = layer_output
         return input_state
+
+    @property
+    def variables(self):
+        var = []
+        for layer in self.layers:
+            var += layer._variables
+        return list(set(var))
+
+    def total_num_parameters(self):
+        count = 0
+        for var in self.variables:
+            count += int(np.prod(var.get_shape()))
+        return count
