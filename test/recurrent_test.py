@@ -9,7 +9,7 @@ def test_lstm(layer, seq_len, fea_dim):
 
     seq = tg.Sequential()
     seq.add(layer)
-
+    print(seq.total_num_parameters)
     train_sb = seq.train_fprop(x_ph)
     test_sb = seq.test_fprop(x_ph)
     init = tf.initialize_all_variables()
@@ -31,6 +31,9 @@ def test_dynamic_lstm(layer, seq_len, fea_dim):
 
     train_sb = seq.train_fprop([x_ph, seq_ph])
     test_sb = seq.test_fprop([x_ph, seq_ph])
+
+    print('... total number of parameters', seq.total_num_parameters())
+
     init = tf.initialize_all_variables()
     with tf.Session() as sess:
         sess.run(init)
