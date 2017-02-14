@@ -5,13 +5,15 @@ from .template import Template
 
 class Dropout(Template):
 
-    def __init__(self, dropout_below=0.5):
+    def __init__(self, dropout_below=0.5, noise_shape=None):
         '''
         PARAMS:
             dropout_below(float): probability of the inputs from the layer below
             been masked out
+            noise_shape (list): list of
         '''
         self.dropout_below = dropout_below
+        self.noise_shape = noise_shape
 
 
     def _test_fprop(self, state_below):
@@ -31,4 +33,15 @@ class Dropout(Template):
         PARAMS:
             keep_prob: probability of keeping the neuron active
         """
-        return tf.nn.dropout(state_below, keep_prob=1-self.dropout_below)
+        if self.noise_shape is not None:
+            assert len(state_below.get_shape()) == len(self.noise_shape)
+            noise_shape = []
+            for i, v in enumerate(self.noise_shape):
+                if v == -1 or v is None:
+                    noise_shape.append(tf.shape(state_below)[i])
+                else:
+                    noise_shape.append(v)
+            self.noise_shape = noise_shape
+
+        return tf.nn.dropout(state_below, keep_prob=1-self.dropout_below,
+                             noise_shape=self.noise_shape)
