@@ -21,6 +21,7 @@ class DynamicLSTM(Template):
             self.lstm = tf.nn.rnn_cell.LSTMCell(num_units=num_units, state_is_tuple=False)
 
 
+
     def _train_fprop(self, state_below):
         '''
         PARAMS:
@@ -31,11 +32,15 @@ class DynamicLSTM(Template):
         '''
         X_sb, seqlen_sb = state_below
         with tf.variable_scope(self.scope) as scope:
+
             try:
+                bef = set(tf.all_variables())
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=seqlen_sb,
                                                          inputs=X_sb,
                                                          dtype=tf.float32)
+                aft = set(tf.all_variables())
+                self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
@@ -43,6 +48,11 @@ class DynamicLSTM(Template):
                                                          inputs=X_sb,
                                                          dtype=tf.float32)
         return outputs, last_states
+
+    @property
+    def _variables(self):
+        return list(self.var)
+
 
 
 class LSTM(Template):
@@ -74,17 +84,26 @@ class LSTM(Template):
 
         with tf.variable_scope(self.scope) as scope:
             try:
+                bef = set(tf.all_variables())
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=None,
                                                          inputs=state_below,
                                                          dtype=tf.float32)
+                aft = set(tf.all_variables())
+                self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=None,
                                                          inputs=state_below,
                                                          dtype=tf.float32)
+
         return outputs, last_states
+
+
+    @property
+    def _variables(self):
+        return list(self.var)
 
 
 class DynamicBiLSTM(Template):
@@ -118,13 +137,17 @@ class DynamicBiLSTM(Template):
                                   the output of the last lstm iteration
         '''
         X_sb, seqlen_sb = state_below
+
         with tf.variable_scope(self.scope) as scope:
             try:
+                bef = set(tf.all_variables())
                 outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
                                                                        cell_bw=self.bw_lstm,
                                                                        sequence_length=seqlen_sb,
                                                                        inputs=X_sb,
                                                                        dtype=tf.float32)
+                aft = set(tf.all_variables())
+                self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
                 outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
@@ -132,7 +155,12 @@ class DynamicBiLSTM(Template):
                                                                        sequence_length=seqlen_sb,
                                                                        inputs=X_sb,
                                                                        dtype=tf.float32)
+
         return outputs, last_states
+
+    @property
+    def _variables(self):
+        return list(self.var)
 
 
 class BiLSTM_Merge(Template):
