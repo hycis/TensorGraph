@@ -1,5 +1,6 @@
 
 import tensorflow as tf
+import sys
 
 epsilon = 1e-6
 
@@ -35,20 +36,24 @@ def binary_precision(ytrue, ypred):
 def image_f1(ytrue, ypred):
     r = image_recall(ytrue, ypred)
     p = image_precision(ytrue, ypred)
-    f1 = 2 * p * r / (p + r)
+    pnr = tf.clip_by_value(p + r, epsilon, sys.maxint)
+    f1 = 2 * p * r / pnr
     return tf.reduce_mean(f1)
 
 def image_recall(ytrue, ypred):
     ndims = len(ytrue.get_shape())
     assert ndims > 1
     P = tf.reduce_sum(ytrue, axis=range(1, ndims))
+    P = tf.clip_by_value(tf.to_float(P), epsilon, sys.maxint)
     TP = tf.reduce_sum(ytrue * ypred, axis=range(1, ndims))
     return tf.to_float(TP) / tf.to_float(P)
+
 
 def image_precision(ytrue, ypred):
     ndims = len(ytrue.get_shape())
     assert ndims > 1
     TPnFP = tf.reduce_sum(ypred, axis=range(1, ndims))
+    TPnFP = tf.clip_by_value(tf.to_float(TPnFP), epsilon, sys.maxint)
     TP = tf.reduce_sum(ypred * ytrue, axis=range(1, ndims)) # both ypred and ytrue are positives
     return tf.to_float(TP) / tf.to_float(TPnFP)
 
