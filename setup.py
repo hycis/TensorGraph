@@ -1,7 +1,7 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-version = '2.5.2'
+version = '2.5.3'
 setup(
     name='tensorgraph',
     version=version,
