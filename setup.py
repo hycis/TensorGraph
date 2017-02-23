@@ -15,7 +15,7 @@ setup(
     url='https://github.com/hycis/TensorGraph',
     download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(version),
     license='Apache 2.0, see LICENCE',
-    description='A tensorflow library for building all kinds of models',
+    description='A high level tensorflow library for building models',
     long_description=open('README.md').read(),
     packages=find_packages(),
     zip_safe=False,
