@@ -48,7 +48,6 @@ def image_recall(ytrue, ypred):
     TP = tf.reduce_sum(ytrue * ypred, axis=range(1, ndims))
     return tf.to_float(TP) / tf.to_float(P)
 
-
 def image_precision(ytrue, ypred):
     ndims = len(ytrue.get_shape())
     assert ndims > 1
