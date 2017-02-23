@@ -46,7 +46,7 @@ def train():
     Y2 = np.random.rand(100, 100)
     data = SequentialIterator(Y1, Y2, batchsize=batchsize)
 
-    init = tf.initialize_all_variables()
+    init = tf.global_variables_initializer()
     with tf.Session() as sess:
         sess.run(init)
         saver = tf.train.Saver()

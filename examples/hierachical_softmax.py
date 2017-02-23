@@ -50,7 +50,7 @@ Y3 = np.random.rand(1000, component_dim)
 
 data = SequentialIterator(X, Y1, Y2, Y3, batchsize=batchsize)
 
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 with tf.Session() as sess:
     sess.run(init)
     i = 0

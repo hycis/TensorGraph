@@ -26,7 +26,7 @@ class ReduceSum(Template):
         self.keep_dims = keep_dims
 
     def _train_fprop(self, state_below):
-        return tf.reduce_sum(state_below, reduction_indices=self.reduction_indices,
+        return tf.reduce_sum(state_below, axis=self.reduction_indices,
                              keep_dims=self.keep_dims)
 
 
@@ -78,7 +78,7 @@ class Embedding(Template):
             self.embedding = tf.Variable(embed, name=self.__class__.__name__ + '_embedding')
             if zero_pad:
                 zeros = tf.zeros([1, self.encode_dim])
-                self._W = tf.concat(0, [zeros, self.embedding])
+                self._W = tf.concat(axis=0, values=[zeros, self.embedding])
             else:
                 self._W = self.embedding
 

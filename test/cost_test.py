@@ -10,7 +10,7 @@ def binary_f1_test():
 
     f1_sb = tg.cost.binary_f1(ph1, ph2)
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         y1 = np.random.randint(0, 2, 100)
         y2 = np.random.randint(0 ,2, 100)
         print(f1_score(y1, y2))
@@ -26,7 +26,7 @@ def image_f1_test():
 
     f1_sb = tg.cost.image_f1(ph1, ph2)
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         y1 = np.random.random_integers(0, 1, [10, 3, 4, 5])
         y2 = np.random.random_integers(0 ,1, [10, 3, 4, 5])
         print(sess.run(f1_sb, feed_dict={ph1:y1, ph2:y2}))

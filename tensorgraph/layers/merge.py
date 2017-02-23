@@ -29,7 +29,7 @@ class Concat(Merge):
         self.axis = axis
 
     def _train_fprop(self, state_list):
-        return tf.concat(self.axis, state_list)
+        return tf.concat(axis=self.axis, values=state_list)
 
 
 class Mean(Merge):
@@ -51,7 +51,7 @@ class Multiply(Merge):
     def _train_fprop(self, state_list):
         out = state_list[0]
         for state in state_list[1:]:
-            out = tf.mul(out, state)
+            out = tf.multiply(out, state)
         return out
 
 

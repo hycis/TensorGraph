@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.9)
     with tf.Session(config = tf.ConfigProto(gpu_options = gpu_options)) as sess:
-        init = tf.initialize_all_variables()
+        init = tf.global_variables_initializer()
         sess.run(init)
 
         best_valid_accu = 0

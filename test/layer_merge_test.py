@@ -21,7 +21,7 @@ def test_SequenceMask():
     y_test_sb = graph.test_fprop()
 
     with tf.Session() as sess:
-        init = tf.initialize_all_variables()
+        init = tf.global_variables_initializer()
         sess.run(init)
         feed_dict = {X_ph:np.random.rand(3,5,6,7), seq_ph:[2,3,4]}
         y_train = sess.run(y_train_sb, feed_dict=feed_dict)[0]
@@ -48,7 +48,7 @@ def test_MaskSoftmax():
     y_sb, = graph.train_fprop()
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         feed_dict = {X_ph:np.random.rand(3, 20),
                      seq_ph:[5, 8, 0]}
         out = sess.run(y_sb, feed_dict=feed_dict)

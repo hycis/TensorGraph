@@ -127,7 +127,7 @@ class Conv2D_Transpose(Template):
         '''
         batch_size = tf.shape(state_below)[0]
         width, height = self.output_shape
-        deconv_shape = tf.pack((batch_size, int(height), int(width), self.num_filters))
+        deconv_shape = tf.stack((batch_size, int(height), int(width), self.num_filters))
         conv_out = tf.nn.conv2d_transpose(value=state_below, filter=self.filter, output_shape=deconv_shape,
                                           strides=(1,)+self.stride+(1,), padding=self.padding)
         return tf.nn.bias_add(conv_out, self.b)

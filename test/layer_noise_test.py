@@ -15,7 +15,7 @@ def test_Dropout():
 
     out = seq.train_fprop(X_ph)
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         out = sess.run(out, feed_dict={X_ph:np.random.rand(1, 32)})
         print(out)
         print(out.shape)
@@ -24,7 +24,7 @@ def test_dropout():
     X_ph = tf.placeholder('float', [None, 5, 10])
     out = tf.nn.dropout(X_ph, keep_prob=0.5, noise_shape=[tf.shape(X_ph)[0], 5, 1])
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         out = sess.run(out, feed_dict={X_ph:np.random.rand(3, 5, 10)})
         print(out)
         print(out.shape)

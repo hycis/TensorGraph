@@ -63,7 +63,7 @@ class LinearMasked(Template):
             self.b = tf.Variable(tf.zeros([self.this_dim]), name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
-        return tf.mul(tf.matmul(state_below, self.W) + self.b, self.mask)
+        return tf.multiply(tf.matmul(state_below, self.W) + self.b, self.mask)
 
     @property
     def _variables(self):

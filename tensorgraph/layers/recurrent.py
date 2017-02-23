@@ -34,12 +34,12 @@ class DynamicLSTM(Template):
         with tf.variable_scope(self.scope) as scope:
 
             try:
-                bef = set(tf.all_variables())
+                bef = set(tf.global_variables())
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=seqlen_sb,
                                                          inputs=X_sb,
                                                          dtype=tf.float32)
-                aft = set(tf.all_variables())
+                aft = set(tf.global_variables())
                 self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
@@ -84,12 +84,12 @@ class LSTM(Template):
 
         with tf.variable_scope(self.scope) as scope:
             try:
-                bef = set(tf.all_variables())
+                bef = set(tf.global_variables())
                 outputs, last_states = tf.nn.dynamic_rnn(cell=self.lstm,
                                                          sequence_length=None,
                                                          inputs=state_below,
                                                          dtype=tf.float32)
-                aft = set(tf.all_variables())
+                aft = set(tf.global_variables())
                 self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
@@ -140,13 +140,13 @@ class DynamicBiLSTM(Template):
 
         with tf.variable_scope(self.scope) as scope:
             try:
-                bef = set(tf.all_variables())
+                bef = set(tf.global_variables())
                 outputs, last_states = tf.nn.bidirectional_dynamic_rnn(cell_fw=self.fw_lstm,
                                                                        cell_bw=self.bw_lstm,
                                                                        sequence_length=seqlen_sb,
                                                                        inputs=X_sb,
                                                                        dtype=tf.float32)
-                aft = set(tf.all_variables())
+                aft = set(tf.global_variables())
                 self.var = aft - bef
             except ValueError:
                 scope.reuse_variables()
