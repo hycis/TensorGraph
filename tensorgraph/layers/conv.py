@@ -110,7 +110,6 @@ class Conv2D_Transpose(Template):
         self.stride = stride
         self.padding = padding
 
-        height, width = self.output_shape
         self.filter_shape = kernel_size + (self.num_filters, self.input_channels)
         self.filter = filter
         if self.filter is None:
@@ -126,7 +125,7 @@ class Conv2D_Transpose(Template):
         state_below: (b, h, w, c)
         '''
         batch_size = tf.shape(state_below)[0]
-        width, height = self.output_shape
+        height, width = self.output_shape
         deconv_shape = tf.stack((batch_size, int(height), int(width), self.num_filters))
         conv_out = tf.nn.conv2d_transpose(value=state_below, filter=self.filter, output_shape=deconv_shape,
                                           strides=(1,)+self.stride+(1,), padding=self.padding)
