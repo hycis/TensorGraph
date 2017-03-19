@@ -87,7 +87,7 @@ def split_arr(arr, train_valid_ratio=[5, 1], randomize=False, seed=None):
         print('..randomizing dataset')
         if seed:
             np.random.seed(seed)
-        ridx = np.random.permutation(range(len(arr)))
+        ridx = np.random.permutation(range(len(arr))).astype(int)
         arr = arr[ridx]
 
     num_train = train_valid_ratio[0] / float(sum(train_valid_ratio)) * len(arr)
@@ -101,7 +101,7 @@ def split_df(df, train_valid_ratio=[5, 1], randomize=False, seed=None):
         print('..randomizing dataset')
         if seed:
             np.random.seed(seed)
-        df = df.reindex(np.random.permutation(df.index))
+        df = df.reindex(np.random.permutation(df.index).astype(int))
 
     num_train = train_valid_ratio[0] / float(sum(train_valid_ratio)) * len(df)
     num_train = int(num_train)
