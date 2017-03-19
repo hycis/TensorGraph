@@ -1,5 +1,6 @@
 from math import ceil
 import numpy as np
+from datetime import datetime
 
 def same(in_height, in_width, stride, kernel_size):
     '''
@@ -78,3 +79,36 @@ def cat_to_num(cat, start_idx=0):
 def cat_to_one_hot(cat):
     nums, cat_dict = cat_to_num(cat, start_idx=0)
     return make_one_hot(nums, len(cat_dict)), cat_dict
+
+
+def split_arr(arr, train_valid_ratio=[5, 1], randomize=False, seed=None):
+    assert isinstance(train_valid_ratio, (list, tuple))
+    if randomize:
+        print('..randomizing dataset')
+        if seed:
+            np.random.seed(seed)
+        ridx = np.random.permutation(range(len(arr)))
+        arr = arr[ridx]
+
+    num_train = train_valid_ratio[0] / float(sum(train_valid_ratio)) * len(arr)
+    num_train = int(num_train)
+    return arr[:num_train], arr[num_train:]
+
+
+def split_df(df, train_valid_ratio=[5, 1], randomize=False, seed=None):
+    assert isinstance(train_valid_ratio, (list, tuple))
+    if randomize:
+        print('..randomizing dataset')
+        if seed:
+            np.random.seed(seed)
+        df = df.reindex(np.random.permutation(df.index))
+
+    num_train = train_valid_ratio[0] / float(sum(train_valid_ratio)) * len(df)
+    num_train = int(num_train)
+    return df[:num_train], df[num_train:]
+
+
+def ts():
+    dt = datetime.now()
+    dt = dt.strftime('%Y%m%d_%H%M_%S%f')
+    return dt
