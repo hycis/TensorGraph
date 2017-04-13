@@ -12,6 +12,14 @@ class RELU6(Template):
         return tf.nn.relu6(state_below)
 
 
+class LeakyRELU(Template):
+    def __init__(self, leak=0.2):
+        self.leak = leak
+
+    def _train_fprop(self, state_below):
+        return tf.maximum(state_below, self.leak*state_below)
+
+
 class ELU(Template):
     def _train_fprop(self, state_below):
         return tf.nn.elu(state_below)
