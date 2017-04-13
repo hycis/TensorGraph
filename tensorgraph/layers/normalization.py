@@ -1,5 +1,6 @@
 import tensorflow as tf
 from .template import Template
+from ..utils import ts
 
 # TODO
 class L2_Normalize(Template):
@@ -63,6 +64,61 @@ class BatchNormalization(Template):
     @property
     def _variables(self):
         return [self.gamma, self.beta]
+
+
+
+class TFBatchNormalization(Template):
+
+    def __init__(self, name, epsilon=1e-5, decay=0.9):
+        '''
+        REFERENCE:
+            Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift
+        PARAMS:
+            decay: decay for the moving average. Reasonable values for decay are close to 1.0,
+                   typically in the multiple-nines range: 0.999, 0.99, 0.9, etc.
+                   Lower decay value (recommend trying decay=0.9) if model experiences
+                   reasonably good training performance but poor validation and/or
+                   test performance. Try zero_debias_moving_mean=True for improved stability.
+            epislon: small float added to variance to avoid dividing by zero.
+        '''
+        self.decay = decay
+        self.epsilon = epsilon
+        self.name = name
+        self.first_call = True
+        with tf.variable_scope(name):
+            try:
+                tf.get_variable(name, [])
+            except:
+                raise Exception('Variable {} exists, choose a different name!'.format(name))
+
+    def _train_fprop(self, state_below):
+        with tf.variable_scope(self.name) as scope:
+            if not self.first_call:
+                scope.reuse_variables()
+            out = tf.contrib.layers.batch_norm(state_below,
+                              decay=self.decay,
+                              updates_collections=None,
+                              epsilon=self.epsilon,
+                              scale=True,
+                              is_training=True,
+                              scope='TFBatchNormalization')
+        self.first_call = False
+        return out
+
+
+    def _test_fprop(self, state_below):
+        with tf.variable_scope(self.name) as scope:
+            if not self.first_call:
+                scope.reuse_variables()
+            out = tf.contrib.layers.batch_norm(state_below,
+                              decay=self.decay,
+                              updates_collections=None,
+                              epsilon=self.epsilon,
+                              scale=True,
+                              is_training=False,
+                              scope='TFBatchNormalization')
+        self.first_call = False
+        return out
 
 
 class LRN(Template):
