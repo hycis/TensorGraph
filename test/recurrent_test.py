@@ -16,9 +16,12 @@ def test_lstm(layer, seq_len, fea_dim):
     with tf.Session() as sess:
         sess.run(init)
         feed_dict = {x_ph:np.random.rand(100, seq_len, fea_dim)}
-        sess.run(train_sb, feed_dict=feed_dict)
+        outputs, last_states = sess.run(train_sb, feed_dict=feed_dict)
+        C, h = last_states
+        print('outputs: {}'.format(outputs.shape))
+        print('last_states: {}, {}'.format(C.shape, h.shape))
+        # import pdb; pdb.set_trace()
         sess.run(test_sb, feed_dict=feed_dict)
-        sess.run(train_sb, feed_dict=feed_dict)
         print(layer.__class__.__name__ + ' test done!')
 
 
@@ -45,13 +48,37 @@ def test_dynamic_lstm(layer, seq_len, fea_dim):
         print(layer.__class__.__name__ + ' test done!')
 
 
-if __name__ == '__main__':
-    lstm = LSTM(num_units=10, scope='lstm')
-    dylstm = DynamicLSTM(num_units=10, scope='dylstm')
-    dybilstm = DynamicBiLSTM(fw_num_units=10, bw_num_units=20, scope='bilstm')
+def test_lstm_cell():
+    batch_size = 32
+    num_steps = 3
+    lstm_size = 2
+    words = tf.placeholder(tf.int32, [batch_size, num_steps])
+    # import pdb; pdb.set_trace()
+    lstm = tf.contrib.rnn.BasicLSTMCell(lstm_size, state_is_tuple=True)
+    # Initial state of the LSTM memory.
+    initial_context = context = tf.zeros([batch_size, lstm_size])
+    # import pdb; pdb.set_trace()
+    hidden = words[:, 0]
+    for i in range(num_steps):
+        # The value of state is updated after processing each batch of words.
+        context, hidden = lstm(words[:, i], state=(context, hidden))
 
+        # The rest of the code.
+        # ...
+
+    final_state = state
+    import pdb; pdb.set_trace()
+    print()
+
+
+if __name__ == '__main__':
+    # test_lstm_cell()
+    lstm = LSTM(num_units=21, state_is_tuple=True, scope='lstm')
+    # dylstm = DynamicLSTM(num_units=10, scope='dylstm')
+    # dybilstm = DynamicBiLSTM(fw_num_units=10, bw_num_units=20, scope='bilstm')
+    #
     for layer in [lstm]:
         test_lstm(layer, seq_len=15, fea_dim=8)
-
-    for layer in [dylstm, dybilstm]:
-        test_dynamic_lstm(layer, seq_len=15, fea_dim=8)
+    #
+    # for layer in [dylstm, dybilstm]:
+    #     test_dynamic_lstm(layer, seq_len=15, fea_dim=8)

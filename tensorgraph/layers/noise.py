@@ -9,8 +9,9 @@ class Dropout(Template):
         '''
         PARAMS:
             dropout_below(float): probability of the inputs from the layer below
-            been masked out
-            noise_shape (list): list of
+                been masked out
+            noise_shape (list or tuple): shape of the noise: example [-1, 2, -1] which applies
+                noise to the second dimension only
         '''
         self.dropout_below = dropout_below
         self.noise_shape = noise_shape

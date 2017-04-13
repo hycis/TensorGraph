@@ -1,7 +1,7 @@
 
 import tensorflow as tf
 import tensorgraph as tg
-from tensorgraph.layers import SequenceMask, MaskSoftmax
+from tensorgraph.layers import SequenceMask, MaskSoftmax, SelectedMaskSoftmax
 import numpy as np
 
 def test_SequenceMask():
@@ -60,6 +60,35 @@ def test_MaskSoftmax():
         print('test passed!')
 
 
+def test_SelectedMaskSoftmax():
+    X_ph = tf.placeholder('float32', [None, 20])
+    mask_ph = tf.placeholder('float32', [20])
+
+    X_sn = tg.StartNode(input_vars=[X_ph])
+    mask_sn = tg.StartNode(input_vars=[mask_ph])
+
+    merge_hn = tg.HiddenNode(prev=[X_sn, mask_sn], input_merge_mode=SelectedMaskSoftmax())
+
+    y_en = tg.EndNode(prev=[merge_hn])
+
+    graph = tg.Graph(start=[X_sn, mask_sn], end=[y_en])
+    y_sb, = graph.train_fprop()
+
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        mask_arr = np.zeros(20)
+        mask_arr[[2,3,4]] = 1
+        # import pdb; pdb.set_trace()
+        feed_dict = {X_ph:np.random.rand(3, 20),
+                     mask_ph:mask_arr}
+        out = sess.run(y_sb, feed_dict=feed_dict)
+        assert (out.sum(1) == 1).any()
+        print(out)
+        print('test passed!')
+
+
+
 if __name__ == '__main__':
     # test_SequenceMask()
-    test_MaskSoftmax()
+    # test_MaskSoftmax()
+    test_SelectedMaskSoftmax()

@@ -1,6 +1,11 @@
-from math import ceil
+from math import ceil, sqrt
 import numpy as np
 from datetime import datetime
+import tensorflow as tf
+from six.moves.urllib.request import urlretrieve
+from .progbar import ProgressBar
+import os, gzip
+
 
 def same(in_height, in_width, stride, kernel_size):
     '''
@@ -15,7 +20,17 @@ def same(in_height, in_width, stride, kernel_size):
     assert isinstance(kernel_size, (list, tuple))
     out_height = ceil(float(in_height) / float(stride[0]))
     out_width  = ceil(float(in_width) / float(stride[1]))
-    return out_height, out_width
+    return int(out_height), int(out_width)
+
+
+def desame(in_height, in_width, stride, kernel_size):
+    '''
+    calculate the input height and width from output height and width for deconvolution
+    with same padding
+    '''
+    out_height = ceil(in_height * float(stride[0]))
+    out_width = ceil(in_width * float(stride[1]))
+    return int(out_height), int(out_width)
 
 
 def valid(in_height, in_width, stride, kernel_size):
@@ -30,7 +45,20 @@ def valid(in_height, in_width, stride, kernel_size):
     assert isinstance(kernel_size, (list, tuple))
     out_height = ceil(float(in_height - kernel_size[0] + 1) / float(stride[0]))
     out_width  = ceil(float(in_width - kernel_size[1] + 1) / float(stride[1]))
-    return out_height, out_width
+    return int(out_height), int(out_width)
+
+
+def devalid(in_height, in_width, stride, kernel_size):
+    '''
+    calculate the input height and width from output height and width for deconvolution
+    with valid padding
+    '''
+    assert isinstance(stride, (list, tuple))
+    assert isinstance(kernel_size, (list, tuple))
+    out_height = ceil(in_height * float(stride[0])) - 1 + kernel_size[1]
+    out_width = ceil(in_width * float(stride[1])) - 1 + kernel_size[1]
+    return int(out_height), int(out_width)
+
 
 
 def make_one_hot(X, onehot_size):
@@ -112,3 +140,92 @@ def ts():
     dt = datetime.now()
     dt = dt.strftime('%Y%m%d_%H%M_%S%f')
     return dt
+
+
+def put_kernels_on_grid(kernel, pad = 1):
+
+    '''Visualize conv. features as an image (mostly for the 1st layer).
+    Place kernel into a grid, with some paddings between adjacent filters.
+    Args:
+      kernel:            tensor of shape [NumKernels, Y, X, NumChannels]
+      (grid_Y, grid_X):  shape of the grid. Require: NumKernels == grid_Y * grid_X
+                           User is responsible of how to break into two multiples.
+      num_kernels:      batchsize or number of kernels
+      pad:               number of black pixels around each filter (between them)
+    Return:
+      Tensor of shape [(Y+2*pad)*grid_Y, (X+2*pad)*grid_X, NumChannels, 1].
+    '''
+    kernel = tf.transpose(kernel, perm=[3, 0, 1, 2])
+
+    # get shape of the grid. NumKernels == grid_Y * grid_X
+    def factorization(n):
+        for i in range(int(sqrt(float(n))), 0, -1):
+            if n % i == 0:
+                if i == 1: print('Who would enter a prime number of filters')
+                return (i, int(n / i))
+    (grid_Y, grid_X) = factorization (num_kernels)
+    print ('grid: %d = (%d, %d)' % (num_kernels, grid_Y, grid_X))
+
+    x_min = tf.reduce_min(kernel)
+    x_max = tf.reduce_max(kernel)
+
+    kernel1 = (kernel - x_min) / (x_max - x_min)
+
+    # pad X and Y
+    x1 = tf.pad(kernel1, tf.constant( [[pad,pad],[pad, pad],[0,0],[0,0]] ), mode = 'CONSTANT')
+
+    # X and Y dimensions, w.r.t. padding
+    Y = kernel1.shape[0] + 2 * pad
+    X = kernel1.shape[1] + 2 * pad
+
+    channels = kernel1.shape[2]
+
+    # put NumKernels to the 1st dimension
+    x2 = tf.transpose(x1, (3, 0, 1, 2))
+    # organize grid on Y axis
+    x3 = tf.reshape(x2, tf.stack([grid_X, Y * grid_Y, X, channels]))
+
+    # switch X and Y axes
+    x4 = tf.transpose(x3, (0, 2, 1, 3))
+    # organize grid on X axis
+    x5 = tf.reshape(x4, tf.stack([1, X * grid_X, Y * grid_Y, channels]))
+
+    # back to normal order (not combining with the next step for clarity)
+    x6 = tf.transpose(x5, (2, 1, 3, 0))
+
+    # to tf.image_summary order [batch_size, height, width, channels],
+    #   where in this case batch_size == 1
+    x7 = tf.transpose(x6, (3, 0, 1, 2))
+
+    # scaling to [0, 255] is not necessary for tensorboard
+    return x7
+
+
+def get_file_from_url(save_path, origin):
+    datadir = os.path.dirname(save_path)
+    if not os.path.exists(datadir):
+        os.makedirs(datadir)
+
+    try:
+        f = open(save_path)
+    except:
+        print('Downloading data from',  origin)
+
+        global progbar
+        progbar = None
+        def dl_progress(count, block_size, total_size):
+            global progbar
+            if progbar is None:
+                progbar = ProgressBar(total_size)
+            else:
+                progbar.update(count*block_size)
+
+        urlretrieve(origin, save_path, dl_progress)
+
+        fin = gzip.open(save_path, 'rb')
+        fout = open(save_path, 'wb')
+        fout.write(fin.read())
+        fin.close()
+        fout.close()
+
+    return save_path

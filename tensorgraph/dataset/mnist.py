@@ -7,8 +7,7 @@ import gzip
 
 import tarfile, inspect, os
 from six.moves.urllib.request import urlretrieve
-# from mozi.utils.progbar import Progbar
-from tensorgraph.progbar import ProgressBar
+from ..progbar import ProgressBar
 
 MNIST_IMAGE_MAGIC = 2051
 MNIST_LABEL_MAGIC = 2049

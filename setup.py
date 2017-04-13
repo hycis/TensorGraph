@@ -1,7 +1,7 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-version = '3.0.5'
+version = '3.1.5'
 setup(
     name='tensorgraph',
     version=version,
@@ -15,7 +15,7 @@ setup(
     url='https://github.com/hycis/TensorGraph',
     download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(version),
     license='Apache 2.0, see LICENCE',
-    description='A high level tensorflow library for building models',
+    description='A high level tensorflow library for building deep learning models',
     long_description=open('README.md').read(),
     packages=find_packages(),
     zip_safe=False,
