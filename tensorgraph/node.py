@@ -24,12 +24,16 @@ class HiddenNode(object):
         self.input_vars = []
 
     def train_fprop(self):
+        if len(self.input_vars) == 0:
+            return []
         state = self.input_merge_mode._train_fprop(self.input_vars)
         for layer in self.layers:
             state = layer._train_fprop(state)
         return [state]
 
     def test_fprop(self):
+        if len(self.input_vars) == 0:
+            return []
         state = self.input_merge_mode._test_fprop(self.input_vars)
         for layer in self.layers:
             state = layer._test_fprop(state)
