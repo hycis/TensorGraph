@@ -3,15 +3,51 @@ from .template import Template
 import numpy as np
 
 
-class Flatten(Template):
+class Transpose(Template):
+    def __init__(self, perm):
+        '''
+        example:
+            X = [3, 5, 9], Y = tf.transpose(X, perm=[0,2,1]) gives
+            Y = [3, 9, 5]
+        '''
+        self.perm = perm
 
     def _train_fprop(self, state_below):
-        shape = state_below.get_shape().as_list()
-        return tf.reshape(state_below, [-1, np.prod(shape[1:])])
+        return tf.transpose(state_below, self.perm)
+
+
+class Reverse(Template):
+    def __init__(self, axis):
+        '''
+        axis (list): list of axis to reverse
+        '''
+        self.axis = axis
+
+    def _train_fprop(self, state_below):
+        return tf.reverse(state_below, axis=self.axis)
+
+
+class Flatten(Template):
+    def _train_fprop(self, state_below):
+        return tf.contrib.layers.flatten(state_below)
+
+
+class SetShape(Template):
+    def __init__(self, shape):
+        self.shape = shape
+
+    def _train_fprop(self, state_below):
+        shape = []
+        for idx, sh in zip(range(len(state_below.get_shape())), self.shape):
+            if sh <= 0:
+                shape.append(state_below.shape[idx])
+            else:
+                shape.append(sh)
+        state_below.set_shape(shape)
+        return state_below
 
 
 class Reshape(Template):
-
     def __init__(self, shape):
         self.shape = shape
 
@@ -20,7 +56,6 @@ class Reshape(Template):
 
 
 class ReduceSum(Template):
-
     def __init__(self, reduction_indices=None, keep_dims=False):
         self.reduction_indices = reduction_indices
         self.keep_dims = keep_dims
@@ -91,3 +126,32 @@ class Embedding(Template):
     @property
     def _variables(self):
         return [self.embedding]
+
+
+class Lambda(Template):
+    def __init__(self, func):
+        '''func can be a lambda or some function that takes state_below as first arg
+        '''
+        self.func = func
+
+    def _train_fprop(self, state_below):
+        return self.func(state_below)
+
+
+class OneHot(Template):
+    def __init__(self, onehot_size):
+        """
+        DESCRIPTION:
+            convert indexes to onehot
+        PARAM:
+            onehot_size (int): size of dictionary for onehot
+        RETURN: give state of shape [d1, d2, ..., dk], return
+            shape of [d1, d2, ..., dk, onehot_size]
+        """
+        self.diag = tf.diag([1.0] * onehot_size)
+
+
+    def _train_fprop(self, state_below):
+        '''state_below is a list of indices
+        '''
+        return tf.gather(self.diag, state_below)
