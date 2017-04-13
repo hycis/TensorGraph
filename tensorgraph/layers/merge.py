@@ -113,3 +113,26 @@ class MaskSoftmax(Merge):
         nonzeros = tf.to_float(tf.not_equal(exp_sum, 0))
         softmax = softmax * tf.expand_dims(nonzeros, -1)
         return softmax
+
+
+class SelectedMaskSoftmax(Merge):
+    def _train_fprop(self, state_list):
+        '''a generic mask over state and apply a softmax after which
+           state_list : [state_below, mask]
+                state_below (2d tf tensor): shape = [batchsize, layer_dim]
+                mask (1d tf tensor): shape = [layer_dim]
+        '''
+        assert len(state_list) == 2
+        state_below, mask = state_list
+        shape = state_below.get_shape()
+        assert len(shape) == 2, 'state below dimenion {} != 2'.format(len(shape))
+        shape = mask.get_shape()
+        assert len(shape) == 1, 'mask dimenion {} != 1'.format(len(shape))
+        mask = tf.expand_dims(mask, 0)
+        exp = tf.exp(state_below) * mask
+        exp_sum = tf.reduce_sum(exp, axis=1)
+        zeros = tf.to_float(tf.equal(exp_sum, 0))
+        softmax = tf.div(exp, tf.expand_dims(exp_sum + zeros, -1))
+        nonzeros = tf.to_float(tf.not_equal(exp_sum, 0))
+        softmax = softmax * tf.expand_dims(nonzeros, -1)
+        return softmax
