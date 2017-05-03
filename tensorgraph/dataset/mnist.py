@@ -155,22 +155,22 @@ def Mnist(binary=True, flatten=False, onehot=True, datadir='.'):
         path = get_mnist_file('{}/{}'.format(datadir,fname), origin='{}/{}.gz'.format(url,fname))
         paths.append(path)
 
-    train_X = read_mnist_images(paths[0], dtype='float32')[:,:,:,np.newaxis]
-    train_y = read_mnist_labels(paths[1])
+    X_train = read_mnist_images(paths[0], dtype='float32')[:,:,:,np.newaxis]
+    y_train = read_mnist_labels(paths[1])
 
-    test_X = read_mnist_images(paths[2], dtype='float32')[:,:,:,np.newaxis]
-    test_y = read_mnist_labels(paths[3])
+    X_test = read_mnist_images(paths[2], dtype='float32')[:,:,:,np.newaxis]
+    y_test = read_mnist_labels(paths[3])
 
     if flatten:
-        train_X = train_X.reshape(train_X.shape[0], np.prod(train_X.shape[1:]))
-        test_X = test_X.reshape(test_X.shape[0], np.prod(test_X.shape[1:]))
+        X_train = X_train.reshape(X_train.shape[0], np.prod(X_train.shape[1:]))
+        X_test = X_test.reshape(X_test.shape[0], np.prod(X_test.shape[1:]))
 
-    X = np.concatenate((train_X, test_X), axis=0)
+    X = np.concatenate((X_train, X_test), axis=0)
     if binary:
         X = (X >= 0.5).astype(int)
 
     if onehot:
-        train_y = make_one_hot(train_y, 10)
-        test_y = make_one_hot(test_y, 10)
+        y_train = make_one_hot(y_train, 10)
+        y_test = make_one_hot(y_test, 10)
 
-    return train_X, train_y, test_X, test_y
+    return X_train, y_train, X_test, y_test
