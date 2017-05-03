@@ -23,10 +23,14 @@ class EarlyStopper(object):
         self.epoch = 0
 
 
-    def continue_learning(self, valid_error):
-        '''check if should continue learning
+    def continue_learning(self, valid_error, epoch=None):
+        '''check if should continue learning, by default first epoch starts with
+           1.
         '''
-        self.epoch += 1
+        if epoch:
+            self.epoch = epoch
+        else:
+            self.epoch += 1
         if valid_error < self.best_valid_error:
             self.best_valid_error = valid_error
         if valid_error < self.best_valid_last_update:

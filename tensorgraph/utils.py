@@ -4,7 +4,7 @@ from datetime import datetime
 import tensorflow as tf
 from six.moves.urllib.request import urlretrieve
 from .progbar import ProgressBar
-import os, gzip
+import os, gzip, tarfile
 
 
 def same(in_height, in_width, stride, kernel_size):
@@ -133,10 +133,13 @@ def split_df(df, train_valid_ratio=[5, 1], randomize=False, seed=None):
 
     num_train = train_valid_ratio[0] / float(sum(train_valid_ratio)) * len(df)
     num_train = int(num_train)
-    return df[:num_train], df[num_train:]
+    df_train = df[:num_train].reset_index(drop=True)
+    df_test = df[num_train:].reset_index(drop=True)
+    return df_train, df_test
 
 
 def ts():
+    '''timestamp'''
     dt = datetime.now()
     dt = dt.strftime('%Y%m%d_%H%M_%S%f')
     return dt
@@ -201,7 +204,7 @@ def put_kernels_on_grid(kernel, pad = 1):
     return x7
 
 
-def get_file_from_url(save_path, origin):
+def get_file_from_url(save_path, origin, untar=False):
     datadir = os.path.dirname(save_path)
     if not os.path.exists(datadir):
         os.makedirs(datadir)
@@ -222,10 +225,16 @@ def get_file_from_url(save_path, origin):
 
         urlretrieve(origin, save_path, dl_progress)
 
-        fin = gzip.open(save_path, 'rb')
-        fout = open(save_path, 'wb')
-        fout.write(fin.read())
-        fin.close()
-        fout.close()
+    if untar:
+        tfile = tarfile.open(save_path, 'r:*')
+        names = tfile.getnames()
+        dirname = names[0]
+        not_exists = [int(not os.path.exists("{}/{}".format(datadir, fname))) for fname in names]
+        if sum(not_exists) > 0:
+            print('Untaring file...')
+            tfile.extractall(path=datadir)
+        else:
+            print('Files already downloaded and untarred')
+        tfile.close()
 
-    return save_path
+    return datadir

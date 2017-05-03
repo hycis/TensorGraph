@@ -131,7 +131,7 @@ if __name__ == '__main__':
             if best_valid_accu < mean_valid_accu:
                 best_valid_accu = mean_valid_accu
 
-            if es.continue_learning(valid_error=mean_valid_cost):
+            if es.continue_learning(valid_error=mean_valid_cost, epoch=epoch):
                 print('epoch', epoch)
                 print('best epoch last update:', es.best_epoch_last_update)
                 print('best valid last update:', es.best_valid_last_update)
