@@ -129,8 +129,7 @@ class Depthwise_Conv2D(Template):
                                  name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
-        '''
-        state_below: (b, h, w, c)
+        '''state_below: (b, h, w, c)
         '''
         conv_out = tf.nn.depthwise_conv2d(state_below, self.filter, strides=(1,)+self.stride+(1,),
                                           padding=self.padding)
@@ -139,6 +138,32 @@ class Depthwise_Conv2D(Template):
     @property
     def _variables(self):
         return [self.filter, self.b]
+
+
+class ZeroPad(Template):
+
+    def __init__(self, pad_along_height=[0,0], pad_along_width=[0,0]):
+        '''
+        PARAM:
+            pad (tuple): pad_along_height = (h_top, h_bottom)
+                         pad_along_width = (w_left, w_right)
+                example:
+                image = (a, b, c, d) and pad_along_height = (h_top, h_bottom) and
+                        pad_along_width = (w_left, w_right)
+                padded_mage = (a, b+h_top+h_bottom, c+w_left+w_right, d)
+        '''
+
+        assert isinstance(pad_along_height, (tuple, list)) and len(pad_along_height) == 2
+        assert isinstance(pad_along_width, (tuple, list)) and len(pad_along_width) == 2
+        self.pad = [[0,0],pad_along_height, pad_along_width,[0,0]]
+
+
+    def _train_fprop(self, state_below):
+        '''state_below: (b, h, w, c)
+        '''
+        return tf.pad(state_below, self.pad)
+
+
 
 
 class Conv2D_Transpose(Template):

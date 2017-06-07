@@ -129,13 +129,16 @@ class Embedding(Template):
 
 
 class Lambda(Template):
-    def __init__(self, func):
+    def __init__(self, func, *args, **kwargs):
         '''func can be a lambda or some function that takes state_below as first arg
         '''
         self.func = func
+        self.args = args
+        self.kwargs = kwargs
+
 
     def _train_fprop(self, state_below):
-        return self.func(state_below)
+        return self.func(state_below, *self.args, **self.kwargs)
 
 
 class OneHot(Template):
