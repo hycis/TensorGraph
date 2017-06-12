@@ -1,54 +1,71 @@
 # -*- coding: utf-8 -*-
 
-""" Convolutional Neural Network for MNIST dataset classification task.
-References:
-    Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based
-    learning applied to document recognition." Proceedings of the IEEE,
-    86(11):2278-2324, November 1998.
-Links:
-    [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
+"""
+From the paper: STRIVING FOR SIMPLICITY: THE ALL CONVOLUTIONAL NET
+https://arxiv.org/pdf/1412.6806.pdf
 """
 
 from __future__ import division, print_function, absolute_import
 
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
-                               Softmax, Flatten, Linear, TFBatchNormalization
-from tensorgraph.utils import same
+                               Softmax, Flatten, Linear, TFBatchNormalization, AvgPooling, \
+                               Lambda
+from tensorgraph.utils import same, valid
 import tensorgraph as tg
 import tensorflow as tf
 from tensorgraph.cost import entropy, accuracy
-from tensorgraph.dataset import Mnist
+from tensorgraph.dataset import Mnist, Cifar10
 
-def model():
-    with tf.name_scope('MnistCNN'):
+def model(nclass, h, w, c):
+    with tf.name_scope('Cifar10AllCNN'):
         seq = tg.Sequential()
-        seq.add(Conv2D(input_channels=1, num_filters=32, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(Conv2D(input_channels=c, num_filters=96, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
         seq.add(TFBatchNormalization(name='b1'))
-        h, w = same(in_height=28, in_width=28, stride=(1,1), kernel_size=(3,3))
-        seq.add(RELU())
-
-        seq.add(MaxPooling(poolsize=(2, 2), stride=(2,2), padding='SAME'))
-        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(2,2))
-        seq.add(LRN())
-
-        seq.add(Conv2D(input_channels=32, num_filters=64, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
-        seq.add(TFBatchNormalization(name='b2'))
         h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
-        seq.add(RELU())
 
-        seq.add(MaxPooling(poolsize=(2, 2), stride=(2,2), padding='SAME'))
-        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(2,2))
-        seq.add(LRN())
-        seq.add(Flatten())
-        seq.add(Linear(int(h*w*64), 128))
+        seq.add(Conv2D(input_channels=96, num_filters=96, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=96, num_filters=96, kernel_size=(3, 3), stride=(2, 2), padding='SAME'))
+        seq.add(RELU())
         seq.add(TFBatchNormalization(name='b3'))
-        seq.add(Tanh())
-        seq.add(Dropout(0.8))
-        seq.add(Linear(128, 256))
-        seq.add(TFBatchNormalization(name='b4'))
-        seq.add(Tanh())
-        seq.add(Dropout(0.8))
-        seq.add(Linear(256, 10))
+        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(3,3))
+
+        seq.add(Conv2D(input_channels=96, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        seq.add(TFBatchNormalization(name='b5'))
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(2, 2), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        seq.add(TFBatchNormalization(name='b7'))
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(1, 1), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(1,1))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=nclass, kernel_size=(1, 1), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        seq.add(TFBatchNormalization(name='b9'))
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(1,1))
+
+        seq.add(AvgPooling(poolsize=(h, w), stride=(1,1), padding='VALID'))
+        seq.add(Flatten())
         seq.add(Softmax())
     return seq
 
@@ -56,23 +73,27 @@ def model():
 if __name__ == '__main__':
 
     learning_rate = 0.001
-    batchsize = 32
+    batchsize = 64
 
     max_epoch = 300
     es = tg.EarlyStopper(max_epoch=max_epoch,
-                         epoch_look_back=3,
+                         epoch_look_back=None,
                          percent_decrease=0)
 
 
-    seq = model()
-    X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')
+
+    X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
+    # X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')
+    _, h, w, c = X_train.shape
+    _, nclass = y_train.shape
+
+    seq = model(nclass=nclass, h=h, w=w, c=c)
     iter_train = tg.SequentialIterator(X_train, y_train, batchsize=batchsize)
     iter_test = tg.SequentialIterator(X_test, y_test, batchsize=batchsize)
 
 
-
-    X_ph = tf.placeholder('float32', [None, 28, 28, 1])
-    y_ph = tf.placeholder('float32', [None, 10])
+    X_ph = tf.placeholder('float32', [None, h, w, c])
+    y_ph = tf.placeholder('float32', [None, nclass])
 
     y_train_sb = seq.train_fprop(X_ph)
     y_test_sb = seq.test_fprop(X_ph)
