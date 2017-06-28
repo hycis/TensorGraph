@@ -53,8 +53,7 @@ def model():
     return seq
 
 
-if __name__ == '__main__':
-
+def train():
     learning_rate = 0.001
     batchsize = 32
 
@@ -68,8 +67,6 @@ if __name__ == '__main__':
     X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')
     iter_train = tg.SequentialIterator(X_train, y_train, batchsize=batchsize)
     iter_test = tg.SequentialIterator(X_test, y_test, batchsize=batchsize)
-
-
 
     X_ph = tf.placeholder('float32', [None, 28, 28, 1])
     y_ph = tf.placeholder('float32', [None, 10])
@@ -131,3 +128,31 @@ if __name__ == '__main__':
             else:
                 print('training done!')
                 break
+
+
+def train_with_trainobject():
+    from tensorgraph.trainobject import train as mytrain
+    with tf.Session() as sess:
+        seq = model()
+        X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')
+        X_ph = tf.placeholder('float32', [None, 28, 28, 1])
+        y_ph = tf.placeholder('float32', [None, 10])
+        y_train_sb = seq.train_fprop(X_ph)
+        y_test_sb = seq.test_fprop(X_ph)
+        train_cost_sb = entropy(y_ph, y_train_sb)
+        optimizer = tf.train.AdamOptimizer(0.001).minimize(train_cost_sb)
+        test_accu_sb = accuracy(y_ph, y_test_sb)
+        init = tf.global_variables_initializer()
+        sess.run(init)
+        mytrain(session=sess,
+                feed_dict={X_ph:X_train, y_ph:y_train},
+                train_cost_sb=train_cost_sb,
+                valid_cost_sb=-test_accu_sb,
+                optimizer=optimizer,
+                epoch_look_back=5, max_epoch=100,
+                percent_decrease=0, train_valid_ratio=[5,1],
+                batchsize=64, randomize_split=False)
+
+
+if __name__ == '__main__':
+    train_with_trainobject()
