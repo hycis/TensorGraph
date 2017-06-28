@@ -61,15 +61,6 @@ def train():
             print('end')
         saver.save(sess, 'test.tf')
 
-def train2():
-    sess = tf.Session()
-    saver = tf.train.Saver()
-    model()
-    saver.restore(sess, 'test.tf')
-    import pdb; pdb.set_trace()
-    print()
-
 
 if __name__ == '__main__':
     train()
-    train2()
