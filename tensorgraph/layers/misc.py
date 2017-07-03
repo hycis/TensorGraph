@@ -65,6 +65,16 @@ class ReduceSum(Template):
                              keep_dims=self.keep_dims)
 
 
+class ReduceMax(Template):
+    def __init__(self, reduction_indices=None, keep_dims=False):
+        self.reduction_indices = reduction_indices
+        self.keep_dims = keep_dims
+
+    def _train_fprop(self, state_below):
+        return tf.reduce_max(state_below, axis=self.reduction_indices,
+                             keep_dims=self.keep_dims)
+
+
 class Squeeze(Template):
 
     def __init__(self, squeeze_dims=None):
