@@ -77,7 +77,7 @@ def smooth_iou(ytrue, ypred):
     I = tf.reduce_sum(ytrue * ypred, axis=1)
     y_area = tf.reduce_sum(ytrue, axis=1)
     ypred_area = tf.reduce_sum(ypred, axis=1)
-    IOU = I * 1.0 / (y_area + ypred_area - I)
+    IOU = I * 1.0 / (y_area + ypred_area - I + 1e-6)
     return tf.reduce_mean(IOU)
 
 def iou(ytrue, ypred, threshold=0.5):
@@ -87,5 +87,5 @@ def iou(ytrue, ypred, threshold=0.5):
     I = tf.reduce_sum(ytrue * ypred, axis=1)
     y_area = tf.reduce_sum(ytrue, axis=1)
     ypred_area = tf.reduce_sum(ypred, axis=1)
-    IOU = I * 1.0 / (y_area + ypred_area - I)
+    IOU = I * 1.0 / (y_area + ypred_area - I + 1e-6)
     return tf.reduce_mean(IOU)

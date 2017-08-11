@@ -28,6 +28,31 @@ class MaxPooling(Template):
                               data_format='NHWC', name=None)
 
 
+class MaxPooling3D(Template):
+    def __init__(self, poolsize=(2,2,2), stride=(1,1,1), padding='VALID'):
+        '''
+        DESCRIPTION:
+            pooling layer
+        PARAM:
+            input: A Tensor. Must be one of the following types: float32. Shape
+                [batch, depth, rows, cols, channels] tensor to pool over.
+            poolsize and stride: three-dimensional tuple (d, h, w)
+            padding: "SAME" pad_along_height = ((out_height - 1) * stride[0] + filter_height - in_height)
+                            pad_along_width = ((out_width - 1) * stride[1] + filter_width - in_width)
+                      or
+                     "VALID" padding is always 0
+        '''
+
+        self.poolsize = (1,) + poolsize + (1,)
+        self.stride = (1,) + stride + (1,)
+        self.padding = padding
+
+    def _train_fprop(self, state_below):
+        return tf.nn.max_pool3d(state_below, ksize=self.poolsize,
+                              strides=self.stride, padding=self.padding,
+                              data_format='NDHWC', name=None)
+
+
 class AvgPooling(Template):
     def __init__(self, poolsize=(2, 2), stride=(1,1), padding='VALID'):
         '''

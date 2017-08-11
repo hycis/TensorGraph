@@ -23,6 +23,17 @@ def same(in_height, in_width, stride, kernel_size):
     return int(out_height), int(out_width)
 
 
+def same_x(x, stride, kernel_size):
+    return ceil(float(x) / float(stride))
+
+
+def same_nd(shape, stride, kernel_size):
+    rshape = []
+    for sh, st, sz in zip(shape, stride, kernel_size):
+        rshape.append(int(same_x(sh, st, sz)))
+    return rshape
+
+
 def desame(in_height, in_width, stride, kernel_size):
     '''
     calculate the input height and width from output height and width for deconvolution
@@ -31,6 +42,17 @@ def desame(in_height, in_width, stride, kernel_size):
     out_height = ceil(in_height * float(stride[0]))
     out_width = ceil(in_width * float(stride[1]))
     return int(out_height), int(out_width)
+
+
+def desame_x(x, stride, kernel_size):
+    return ceil(x * float(stride))
+
+
+def desame_nd(shape, stride, kernel_size):
+    rshape = []
+    for sh, st, sz in zip(shape, stride, kernel_size):
+        rshape.append(int(desame_x(sh, st, sz)))
+    return rshape
 
 
 def valid(in_height, in_width, stride, kernel_size):
@@ -48,6 +70,17 @@ def valid(in_height, in_width, stride, kernel_size):
     return int(out_height), int(out_width)
 
 
+def valid_x(x, stride, kernel_size):
+    return ceil(float(x - kernel_size + 1) / float(stride))
+
+
+def valid_nd(shape, stride, kernel_size):
+    rshape = []
+    for sh, st, sz in zip(shape, stride, kernel_size):
+        rshape.append(int(valid_x(sh, st, sz)))
+    return rshape
+
+
 def devalid(in_height, in_width, stride, kernel_size):
     '''
     calculate the input height and width from output height and width for deconvolution
@@ -59,6 +92,16 @@ def devalid(in_height, in_width, stride, kernel_size):
     out_width = ceil(in_width * float(stride[1])) - 1 + kernel_size[1]
     return int(out_height), int(out_width)
 
+
+def devalid_x(x, stride, kernel_size):
+    return ceil(x * float(stride)) - 1 + kernel_size
+
+
+def devalid_nd(shape, stride, kernel_size):
+    rshape = []
+    for sh, st, sz in zip(shape, stride, kernel_size):
+        rshape.append(int(devalid_x(sh, st, sz)))
+    return rshape
 
 
 def make_one_hot(X, onehot_size):
@@ -238,3 +281,9 @@ def get_file_from_url(save_path, origin, untar=False):
         tfile.close()
 
     return datadir
+
+
+def shuffle(arr):
+    shf_idx = np.arange(len(arr))
+    np.random.shuffle(shf_idx)
+    return arr[shf_idx]
