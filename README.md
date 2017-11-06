@@ -75,7 +75,7 @@ Then define the `HiddenNode` for putting the sequential layers in each `HiddenNo
 h1 = HiddenNode(prev=[s1, s2],
                 input_merge_mode=Concat(),
                 layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()])
-h2 = HiddenNode(prev=[start2],
+h2 = HiddenNode(prev=[s2],
                 layers=[Linear(y2_dim, y2_dim), RELU()])
 h3 = HiddenNode(prev=[h1, h2],
                 input_merge_mode=Sum(),
