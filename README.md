@@ -3,8 +3,16 @@ TensorGraph is a framework for building any imaginable models based on TensorFlo
 
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
-build these models and that's why TensorGraph is born. It's a very simple and easy
-to use framework, but it allows you to build all kinds of imaginable models.
+build these models and that's what TensorGraph is designed for. It's a very simple
+and easy to use framework and allows you to build any imaginable models.
+
+-----
+### Target Audience
+TensorGraph is targeted more at intermediate to advance users who feel keras or
+other packages is having too much restrictions on model building, and someone who
+don't want to rewrite the standard layers in tensorflow constantly, and someone
+who want to use some higher level layers to build models quickly without the
+restrictions of most other deep learning package.
 
 -----
 ### Install
@@ -37,10 +45,12 @@ In TensorGraph, we defined three types of nodes
 3. EndNode : for getting outputs from the model
 
 We put all the sequential layers into a `HiddenNode`, and connect the hidden nodes
-together to build all kinds of architectures without worrying about how to design
-the forward propagation. We let the graph engine sort out all the forward propagations
-for you, so that you just focus on designing the architecture. The graph always
-starts with `StartNode` and ends with `EndNode`. Below shows an
+together to build the architecture that you want. The graph always
+starts with `StartNode` and ends with `EndNode`. The `StartNode` is where you place
+your starting point, it can be a `placeholder`, a symbolic output from another graph,
+or data output from `tfrecords`. `EndNode` is where you want to get an output from
+the graph, where the output can be used to calculate loss or simply just a peek at the
+outputs at that particular layer. Below shows an
 [example](examples/example.py) of building a tensor graph.
 
 -----
