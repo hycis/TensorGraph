@@ -287,3 +287,105 @@ def shuffle(arr):
     shf_idx = np.arange(len(arr))
     np.random.shuffle(shf_idx)
     return arr[shf_idx]
+
+
+class MakeTFRecords(object):
+    '''general framework for creating and reading tfrecords
+    '''
+
+    @staticmethod
+    def _bytes_feature(value):
+        return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+
+    @staticmethod
+    def _make_example(arr):
+        arr_str = arr.tostring()
+        feature[_data] = MakeTFRecords._bytes_feature(arr_str)
+        example = tf.train.Example(features=tf.train.Features(feature=feature))
+        return example
+
+
+    @staticmethod
+    def make_tfrecords_from_arrs(data_records, save_path, dtype=np.float32):
+        '''data_records: dictionary of arrs of format {'X': X_arr, 'y': y_arr, ...}
+           where first dimension of the array is the example number.
+        '''
+        first = True
+        for k in data_records:
+            if first:
+                arr_size = len(data_records[k])
+                first = False
+            else:
+                assert len(data_records[k]) == arr_size, 'not all array in data_records is of same size'
+
+        names = []
+        arr_grps = []
+        for name, arr_grp in data_records.items():
+            arr_grp = arr_grp.astype(dtype)
+            names.append(name)
+            arr_grps.append(arr_grp)
+
+        writer = tf.python_io.TFRecordWriter(save_path)
+        for record in zip(*arr_grps):
+            feature = {}
+            for name, arr in zip(names, record):
+                arr_str = arr.tostring()
+                feature[name] = MakeTFRecords._bytes_feature(arr_str)
+            example = tf.train.Example(features=tf.train.Features(feature=feature))
+            writer.write(example.SerializeToString())
+        writer.close()
+
+
+    @staticmethod
+    def read_arrs_from_tfrecords(tfrecords_filename, data_shapes, dtype=np.float32):
+        '''data_shapes (dict): dictionary of the record name and shape example: {'X':[32,32], 'y':[10]}
+                               where the shape is the shape per image
+        '''
+        record_iterator = tf.python_io.tf_record_iterator(path=tfrecords_filename)
+        arrs = []
+        for string_record in record_iterator:
+            example = tf.train.Example()
+            example.ParseFromString(string_record)
+            record = []
+            for name, shape in data_shapes.items():
+                data_raw = example.features.feature[name].bytes_list.value[0]
+                data_arr = np.fromstring(data_raw, dtype=dtype)
+                data_arr = data_arr.reshape(shape)
+                record.append(data_arr)
+            arrs.append(record)
+        return arrs
+
+
+    @staticmethod
+    def read_and_decode(tfrecords_filename_list, data_shapes, batch_size, dtype=tf.float32):
+        '''
+        tfrecords_filename_list (list): list of tfrecords paths
+        data_shapes (dict): dictionary of the record name and shape example: {'X':[32,32], 'y':[10]}
+                            where the shape is the shape per image
+        '''
+        filename_queue = tf.train.string_input_producer(tfrecords_filename_list)
+
+        reader = tf.TFRecordReader()
+        _, serialized_example = reader.read(filename_queue)
+
+        features = {}
+        for name in data_shapes:
+            features[name] = tf.FixedLenFeature([], tf.string)
+
+        features = tf.parse_single_example(serialized_example, features=features)
+
+        records = []
+        names = []
+        for name, arr_raw in features.items():
+            data = tf.decode_raw(arr_raw, dtype)
+            data = tf.reshape(data, data_shapes[name])
+            records.append(data)
+            names.append(name)
+
+        batch_records = tf.train.shuffle_batch(records, batch_size=batch_size,
+                                               capacity=10*batch_size,
+                                               num_threads=4,
+                                               min_after_dequeue=5*batch_size)
+
+        return zip(names, batch_records)
