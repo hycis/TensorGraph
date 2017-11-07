@@ -1,7 +1,7 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-version = '3.4.6'
+version = '3.5.6'
 setup(
     name='tensorgraph',
     version=version,
@@ -12,7 +12,7 @@ setup(
                       'scikit-learn>=0.17',
                       'pandas>=0.17',
                       'scipy>=0.17',
-                      'tensorflow>=1.1'],
+                      'tensorflow>=1.2'],
     url='https://github.com/hycis/TensorGraph',
     download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(version),
     license='Apache 2.0, see LICENCE',
