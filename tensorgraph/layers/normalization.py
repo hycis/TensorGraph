@@ -1,6 +1,5 @@
 import tensorflow as tf
 from .template import Template
-from ..utils import ts
 
 # TODO
 class L2_Normalize(Template):
