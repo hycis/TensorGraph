@@ -1,9 +1,15 @@
 import tensorflow as tf
 from .template import Template
 
-# TODO
+
 class L2_Normalize(Template):
-    pass
+
+    def __init__(self, dim):
+        '''dim (int or list of ints): dimension to normalize'''
+        self.dim = dim
+
+    def _train_fprop(self, state_below):
+        return tf.nn.l2_normalize(state_below, dim=self.dim)
 
 
 class TFBatchNormalization(Template):
