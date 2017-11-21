@@ -4,7 +4,7 @@ from .template import Template
 
 class Linear(Template):
 
-    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None):
+    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, stddev=0.1):
         """
         DESCRIPTION:
             This is a fully connected layer
@@ -20,7 +20,7 @@ class Linear(Template):
 
         self.W = W
         if self.W is None:
-            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
+            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=stddev),
                                                   name=self.__class__.__name__ + '_W')
         self.b = b
         if self.b is None:
@@ -36,7 +36,7 @@ class Linear(Template):
 
 class LinearMasked(Template):
 
-    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, mask=None):
+    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, mask=None, stddev=0.1):
         """
         DESCRIPTION:
             This is a fully connected layer with an applied mask for partial connections
@@ -56,7 +56,7 @@ class LinearMasked(Template):
 
         self.W = W
         if self.W is None:
-            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
+            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=stddev),
                                                    name=self.__class__.__name__ + '_W')
         self.b = b
         if self.b is None:
@@ -72,7 +72,7 @@ class LinearMasked(Template):
 
 class SparseLinear(Template):
 
-    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, batchsize=None):
+    def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, batchsize=None, stddev=0.1):
         """
         DESCRIPTION:
             This is a fully connected layer with sparse inputs are two tensors
@@ -93,7 +93,7 @@ class SparseLinear(Template):
 
         self.W = W
         if self.W is None:
-            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=0.1),
+            self.W = tf.Variable(tf.random_normal([self.prev_dim, self.this_dim], stddev=stddev),
                                                    name=self.__class__.__name__ + '_W')
         self.b = b
         if self.b is None:
