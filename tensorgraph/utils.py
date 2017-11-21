@@ -382,10 +382,10 @@ class MakeTFRecords(object):
             data = tf.reshape(data, data_shapes[name])
             records.append(data)
             names.append(name)
-
         batch_records = tf.train.shuffle_batch(records, batch_size=batch_size,
                                                capacity=10*batch_size,
                                                num_threads=4,
                                                min_after_dequeue=5*batch_size)
-
+        if not isinstance(batch_records, (list, tuple)):
+            batch_records = [batch_records]
         return zip(names, batch_records)
