@@ -79,7 +79,7 @@ class AvgPooling(Template):
 
 class Conv2D(Template):
     def __init__(self, input_channels, num_filters, kernel_size=(3,3), stride=(1,1),
-                 filter=None, b=None, padding='VALID'):
+                 filter=None, b=None, padding='VALID', stddev=0.1):
         '''
         PARAM:
             padding: "SAME" pad_along_height = ((out_height - 1) * stride[0] + filter_height - in_height)
@@ -96,7 +96,7 @@ class Conv2D(Template):
         self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
                                       name=self.__class__.__name__ + '_filter')
 
         self.b = b
@@ -119,7 +119,7 @@ class Conv2D(Template):
 
 class Depthwise_Conv2D(Template):
     def __init__(self, input_channels, num_filters, kernel_size=(3,3), stride=(1,1),
-                 filter=None, b=None, padding='VALID'):
+                 filter=None, b=None, padding='VALID', stddev=0.1):
         '''
         DESCRIPTION:
             Depthwise 2-D convolution.
@@ -145,7 +145,7 @@ class Depthwise_Conv2D(Template):
         self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
                                       name=self.__class__.__name__ + '_filter')
 
         self.b = b
@@ -193,7 +193,7 @@ class ZeroPad(Template):
 
 class Conv2D_Transpose(Template):
     def __init__(self, input_channels, num_filters, output_shape, kernel_size=(3,3), stride=(1,1),
-                 filter=None, b=None, padding='VALID'):
+                 filter=None, b=None, padding='VALID', stddev=0.1):
         '''
         PARAM:
             input_channels (int)
@@ -213,7 +213,7 @@ class Conv2D_Transpose(Template):
         self.filter_shape = kernel_size + (self.num_filters, self.input_channels)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
                                       name=self.__class__.__name__ + '_filter')
 
         self.b = b
@@ -238,7 +238,7 @@ class Conv2D_Transpose(Template):
 
 class Conv3D(Template):
     def __init__(self, input_channels, num_filters, kernel_size=(3,3,3), stride=(1,1,1),
-                 filter=None, b=None, padding='VALID'):
+                 filter=None, b=None, padding='VALID', stddev=0.1):
         '''
         PARAM:
             kernel_size: [filter_depth, filter_height, filter_width]
@@ -259,7 +259,7 @@ class Conv3D(Template):
         self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
         self.filter = filter
         if self.filter is None:
-            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=0.1),
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
                                       name=self.__class__.__name__ + '_filter')
 
         self.b = b
