@@ -9,20 +9,22 @@ hvd.init()
 
 def cifar10(create_tfrecords=True, batch_size=32):
     tfrecords = tg.utils.MakeTFRecords()
+    tfpath = './cifar10.tfrecords'
     if create_tfrecords:
         X_train, y_train, X_test, y_test = tg.dataset.Cifar10()
-        tfrecords.make_tfrecords_from_arrs(data_records={'X':X_train, 'y':y_train}, save_path='./cifar10.tfrecords')
-    names_records = tfrecords.read_and_decode(tfrecords_filename_list=['./cifar10.tfrecords'],
+        tfrecords.make_tfrecords_from_arrs(data_records={'X':X_train, 'y':y_train}, save_path=tfpath)
+    names_records = tfrecords.read_and_decode(tfrecords_filename_list=[tfpath],
                                               data_shapes={'X':[32,32,3], 'y':[10]},
                                               batch_size=batch_size)
-    return dict(names_records)
+    n_exp = sum(1 for _ in tf.python_io.tf_record_iterator(tfpath))
+    return dict(names_records), n_exp
 
 
 def train():
     graph = tf.Graph()
     with graph.as_default():
         batch_size = 100
-        names_records = cifar10(create_tfrecords=True, batch_size=batch_size)
+        names_records, n_exp = cifar10(create_tfrecords=True, batch_size=batch_size)
         seq = cifar10_allcnn.model(nclass=10, h=32, w=32, c=3)
         y_train_sb = seq.train_fprop(names_records['X'])
         loss_train_sb = tg.cost.mse(y_train_sb, names_records['y'])
@@ -45,7 +47,6 @@ def train():
         sess.run(init_op)
         bcast.run()
 
-        n_exp = 50000
         for epoch in range(100):
             pbar = tg.ProgressBar(n_exp)
             ttl_train_loss = 0
