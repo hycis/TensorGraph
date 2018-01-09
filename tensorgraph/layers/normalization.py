@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.python.layers.normalization import BatchNormalization
 from .template import Template
 
 
@@ -65,6 +66,34 @@ class TFBatchNormalization(Template):
                               scope='TFBatchNormalization')
         self.first_call = False
         return out
+
+
+class TFBatchNormalization2(Template):
+
+    def __init__(self, input_shape):
+        '''
+        REFERENCE:
+            Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift
+        PARAMS:
+            input_shape (list): shape of the input, do not need the batch dimension
+
+        # To use this normalization, apply update ops below to update the mean and variance
+        from tensorflow.python.framework import ops
+        optimizer = tf.train.AdamOptimizer(learning_rate)
+        update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
+        with ops.control_dependencies(update_ops):
+            train_op = optimizer.minimize(train_cost_sb)
+        '''
+        self.bn = BatchNormalization()
+        self.bn.build(input_shape=[None] + list(input_shape))
+
+
+    def _train_fprop(self, state_below):
+        return self.bn.apply(state_below, training=True)
+
+
+    def _test_fprop(self, state_below):
+        return self.bn.apply(state_below, training=False)
 
 
 class LRN(Template):
