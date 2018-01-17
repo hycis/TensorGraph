@@ -153,7 +153,7 @@ def cat_to_one_hot(cat):
 
 
 def split_arr(arr, train_valid_ratio=[5, 1], randomize=False, seed=None):
-    assert isinstance(train_valid_ratio, (list, tuple))
+    assert isinstance(train_valid_ratio, (list, tuple)) and len(train_valid_ratio) == 2
     if randomize:
         print('..randomizing dataset')
         if seed:
@@ -167,7 +167,7 @@ def split_arr(arr, train_valid_ratio=[5, 1], randomize=False, seed=None):
 
 
 def split_df(df, train_valid_ratio=[5, 1], randomize=False, seed=None):
-    assert isinstance(train_valid_ratio, (list, tuple))
+    assert isinstance(train_valid_ratio, (list, tuple)) and len(train_valid_ratio) == 2
     if randomize:
         print('..randomizing dataset')
         if seed:
