@@ -98,6 +98,7 @@ def train():
     test_cost_sb = entropy(y_ph, y_test_sb)
     test_accu_sb = accuracy(y_ph, y_test_sb)
 
+    # required for BatchNormalization layer
     optimizer = tf.train.AdamOptimizer(learning_rate)
     update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
     with ops.control_dependencies(update_ops):
