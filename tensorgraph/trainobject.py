@@ -3,6 +3,8 @@ from .stopper import EarlyStopper
 from .progbar import ProgressBar
 from .utils import split_arr
 from .data_iterator import SequentialIterator
+from tensorflow.python.framework import ops
+import tensorflow as tf
 import logging
 logging.basicConfig(format='%(module)s.%(funcName)s %(lineno)d:%(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,6 +28,14 @@ def train(session, feed_dict, train_cost_sb, valid_cost_sb, optimizer, epoch_loo
 
     es = EarlyStopper(max_epoch, epoch_look_back, percent_decrease)
 
+    # required for BatchNormalization layer
+    update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
+    with ops.control_dependencies(update_ops):
+        train_op = optimizer.minimize(train_cost_sb)
+
+    init = tf.global_variables_initializer()
+    session.run(init)
+
     epoch = 0
     while True:
         epoch += 1
@@ -38,7 +48,7 @@ def train(session, feed_dict, train_cost_sb, valid_cost_sb, optimizer, epoch_loo
         mean_train_cost = 0
         for batches in iter_train:
             fd = dict(zip(phs, batches))
-            train_cost, _ = session.run([train_cost_sb, optimizer], feed_dict=fd)
+            train_cost, _ = session.run([train_cost_sb, train_op], feed_dict=fd)
             mean_train_cost += train_cost * len(batches[0])
             ttl_exp += len(batches[0])
             pbar.update(ttl_exp)
