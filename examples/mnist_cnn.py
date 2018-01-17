@@ -12,8 +12,7 @@ Links:
 from __future__ import division, print_function, absolute_import
 
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
-                               Softmax, Flatten, Linear, TFBatchNormalization, \
-                               BatchNormalization
+                               Softmax, Flatten, Linear, BatchNormalization
 from tensorgraph.utils import same
 import tensorgraph as tg
 import tensorflow as tf

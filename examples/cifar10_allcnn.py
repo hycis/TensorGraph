@@ -8,7 +8,7 @@ https://arxiv.org/pdf/1412.6806.pdf
 from __future__ import division, print_function, absolute_import
 
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
-                               Softmax, Flatten, Linear, TFBatchNormalization, AvgPooling, \
+                               Softmax, Flatten, Linear, AvgPooling, \
                                Lambda, BatchNormalization
 from tensorgraph.utils import same, valid, same_nd, valid_nd
 import tensorgraph as tg
