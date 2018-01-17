@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.python.layers.normalization import BatchNormalization
+from tensorflow.python.layers.normalization import BatchNormalization as TFBatchNorm
 from .template import Template
 
 
@@ -68,7 +68,7 @@ class TFBatchNormalization(Template):
         return out
 
 
-class TFBatchNormalization2(Template):
+class BatchNormalization(Template):
 
     def __init__(self, input_shape):
         '''
@@ -84,7 +84,7 @@ class TFBatchNormalization2(Template):
         with ops.control_dependencies(update_ops):
             train_op = optimizer.minimize(train_cost_sb)
         '''
-        self.bn = BatchNormalization()
+        self.bn = TFBatchNorm()
         self.bn.build(input_shape=[None] + list(input_shape))
 
 
