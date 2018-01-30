@@ -47,11 +47,11 @@ def train():
         opt = tf.train.RMSPropOptimizer(0.001)
         opt = hvd.DistributedOptimizer(opt)
 
-        # update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
-        # with ops.control_dependencies(update_ops):
-        #     train_op = opt.minimize(loss_train_sb)
+        # required for BatchNormalization layer
+        update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
+        with ops.control_dependencies(update_ops):
+            train_op = opt.minimize(loss_train_sb)
 
-        train_op = opt.minimize(loss_train_sb)
         init_op = tf.group(tf.global_variables_initializer(),
                            tf.local_variables_initializer())
         bcast = hvd.broadcast_global_variables(0)
