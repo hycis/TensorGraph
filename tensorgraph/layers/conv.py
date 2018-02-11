@@ -18,8 +18,8 @@ class MaxPooling(Template):
                      "VALID" padding is always 0
         '''
 
-        self.poolsize = (1,) + poolsize + (1,)
-        self.stride = (1,) + stride + (1,)
+        self.poolsize = (1,) + tuple(poolsize) + (1,)
+        self.stride = (1,) + tuple(stride) + (1,)
         self.padding = padding
 
     def _train_fprop(self, state_below):
@@ -43,8 +43,8 @@ class MaxPooling3D(Template):
                      "VALID" padding is always 0
         '''
 
-        self.poolsize = (1,) + poolsize + (1,)
-        self.stride = (1,) + stride + (1,)
+        self.poolsize = (1,) + tuple(poolsize) + (1,)
+        self.stride = (1,) + tuple(stride) + (1,)
         self.padding = padding
 
     def _train_fprop(self, state_below):
@@ -67,8 +67,8 @@ class AvgPooling(Template):
                      "VALID" padding is always 0
         '''
 
-        self.poolsize = (1,) + poolsize + (1,)
-        self.stride = (1,) + stride + (1,)
+        self.poolsize = (1,) + tuple(poolsize) + (1,)
+        self.stride = (1,) + tuple(stride) + (1,)
         self.padding = padding
 
     def _train_fprop(self, state_below):
@@ -107,7 +107,7 @@ class Conv2D(Template):
         '''
         state_below: (b, h, w, c)
         '''
-        conv_out = tf.nn.conv2d(state_below, self.filter, strides=(1,)+self.stride+(1,),
+        conv_out = tf.nn.conv2d(state_below, self.filter, strides=(1,)+tuple(self.stride)+(1,),
                                 padding=self.padding, data_format='NHWC')
         return tf.nn.bias_add(conv_out, self.b)
 
@@ -156,7 +156,7 @@ class Depthwise_Conv2D(Template):
     def _train_fprop(self, state_below):
         '''state_below: (b, h, w, c)
         '''
-        conv_out = tf.nn.depthwise_conv2d(state_below, self.filter, strides=(1,)+self.stride+(1,),
+        conv_out = tf.nn.depthwise_conv2d(state_below, self.filter, strides=(1,)+tuple(self.stride)+(1,),
                                           padding=self.padding)
         return tf.nn.bias_add(conv_out, self.b)
 
@@ -228,7 +228,7 @@ class Conv2D_Transpose(Template):
         height, width = self.output_shape
         deconv_shape = tf.stack((batch_size, int(height), int(width), self.num_filters))
         conv_out = tf.nn.conv2d_transpose(value=state_below, filter=self.filter, output_shape=deconv_shape,
-                                          strides=(1,)+self.stride+(1,), padding=self.padding)
+                                          strides=(1,)+tuple(self.stride)+(1,), padding=self.padding)
         return tf.nn.bias_add(conv_out, self.b)
 
     @property
@@ -271,7 +271,7 @@ class Conv3D(Template):
         '''
         state_below: (b, d, h, w, c)
         '''
-        conv_out = tf.nn.conv3d(state_below, self.filter, strides=(1,)+self.stride+(1,),
+        conv_out = tf.nn.conv3d(state_below, self.filter, strides=(1,)+tuple(self.stride)+(1,),
                                 padding=self.padding)
         return tf.nn.bias_add(conv_out, self.b)
 
