@@ -89,12 +89,8 @@ def train():
 
         # set cost and optimizer
         train_cost_sb = entropy(y_ph, y_train_sb)
-        optimizer = tf.train.AdamOptimizer(0.001).minimize(train_cost_sb)
+        optimizer = tf.train.AdamOptimizer(0.001)
         test_accu_sb = accuracy(y_ph, y_test_sb)
-
-        # initialize variables
-        init = tf.global_variables_initializer()
-        sess.run(init)
 
         # train model
         mytrain(session=sess,
