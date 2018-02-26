@@ -9,13 +9,15 @@ from __future__ import division, print_function, absolute_import
 
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
                                Softmax, Flatten, Linear, AvgPooling, \
-                               Lambda, BatchNormalization
+                               Lambda, BatchNormalization, IdentityBlock, \
+                               TransitionLayer, DenseNet
 from tensorgraph.utils import same, valid, same_nd, valid_nd
 import tensorgraph as tg
 import tensorflow as tf
-from tensorgraph.cost import entropy, accuracy
+from tensorgraph.cost import entropy, accuracy, mse
 from tensorgraph.dataset import Mnist, Cifar10
 from tensorflow.python.framework import ops
+import numpy as np
 
 
 def model(nclass, h, w, c):
@@ -180,6 +182,122 @@ def train_with_trainobject():
                 percent_decrease=0, train_valid_ratio=[5,1],
                 batchsize=64, randomize_split=False)
 
+
+def train_with_VGG():
+    from tensorgraph.trainobject import train as mytrain
+    with tf.Session() as sess:
+        X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
+        _, h, w, c = X_train.shape
+        _, nclass = y_train.shape
+        print('X max', np.max(X_train))
+        print('X min', np.min(X_train))
+        from tensorgraph.layers import VGG19
+        seq = tg.Sequential()
+        layer = VGG19(input_channels=c, input_shape=(h,w))
+        seq.add(layer)
+        seq.add(Flatten())
+        seq.add(Linear(512,nclass))
+        seq.add(Softmax())
+        X_ph = tf.placeholder('float32', [None, h, w, c])
+        y_ph = tf.placeholder('float32', [None, nclass])
+
+        y_train_sb = seq.train_fprop(X_ph)
+        y_test_sb = seq.test_fprop(X_ph)
+        train_cost_sb = entropy(y_ph, y_train_sb)
+        optimizer = tf.train.AdamOptimizer(0.001)
+        test_accu_sb = accuracy(y_ph, y_test_sb)
+
+        mytrain(session=sess,
+                feed_dict={X_ph:X_train, y_ph:y_train},
+                train_cost_sb=train_cost_sb,
+                valid_cost_sb=-test_accu_sb,
+                optimizer=optimizer,
+                epoch_look_back=5, max_epoch=100,
+                percent_decrease=0, train_valid_ratio=[5,1],
+                batchsize=64, randomize_split=False)
+
+
+def train_with_Resnet():
+    from tensorgraph.trainobject import train as mytrain
+    with tf.Session() as sess:
+        X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
+        _, h, w, c = X_train.shape
+        _, nclass = y_train.shape
+        print('X max', np.max(X_train))
+        print('X min', np.min(X_train))
+        seq = tg.Sequential()
+        id1 = IdentityBlock(input_channels=c, input_shape=(h,w), nlayers=4, filters=[32, 64])
+        seq.add(id1)
+        trans1 = TransitionLayer(input_channels=id1.output_channels, input_shape=id1.output_shape)
+        seq.add(trans1)
+
+        id2 = IdentityBlock(input_channels=trans1.output_channels, input_shape=trans1.output_shape,
+                            nlayers=4, filters=[64, 128])
+        seq.add(id2)
+        trans2 = TransitionLayer(input_channels=id2.output_channels, input_shape=id2.output_shape)
+        seq.add(trans2)
+        seq.add(Flatten())
+        ldim = trans2.output_channels * np.prod(trans2.output_shape)
+        seq.add(Linear(ldim,nclass))
+        seq.add(Softmax())
+
+        X_ph = tf.placeholder('float32', [None, h, w, c])
+        y_ph = tf.placeholder('float32', [None, nclass])
+
+        y_train_sb = seq.train_fprop(X_ph)
+        y_test_sb = seq.test_fprop(X_ph)
+        train_cost_sb = entropy(y_ph, y_train_sb)
+        optimizer = tf.train.AdamOptimizer(0.001)
+        test_accu_sb = accuracy(y_ph, y_test_sb)
+
+        mytrain(session=sess,
+                feed_dict={X_ph:X_train, y_ph:y_train},
+                train_cost_sb=train_cost_sb,
+                valid_cost_sb=-test_accu_sb,
+                optimizer=optimizer,
+                epoch_look_back=5, max_epoch=100,
+                percent_decrease=0, train_valid_ratio=[5,1],
+                batchsize=64, randomize_split=False)
+
+
+def train_with_Densenet():
+    from tensorgraph.trainobject import train as mytrain
+    with tf.Session() as sess:
+        X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
+        _, h, w, c = X_train.shape
+        _, nclass = y_train.shape
+        print('X max', np.max(X_train))
+        print('X min', np.min(X_train))
+        seq = tg.Sequential()
+        dense = DenseNet(input_channels=c, input_shape=(h,w), ndense=3, growth_rate=4, nlayer1blk=4)
+        seq.add(dense)
+        seq.add(Flatten())
+        ldim = dense.output_channels
+        seq.add(Linear(ldim,nclass))
+        seq.add(Softmax())
+
+        X_ph = tf.placeholder('float32', [None, h, w, c])
+        y_ph = tf.placeholder('float32', [None, nclass])
+
+        y_train_sb = seq.train_fprop(X_ph)
+        y_test_sb = seq.test_fprop(X_ph)
+        train_cost_sb = entropy(y_ph, y_train_sb)
+        optimizer = tf.train.AdamOptimizer(0.001)
+        test_accu_sb = accuracy(y_ph, y_test_sb)
+
+        mytrain(session=sess,
+                feed_dict={X_ph:X_train, y_ph:y_train},
+                train_cost_sb=train_cost_sb,
+                valid_cost_sb=-test_accu_sb,
+                optimizer=optimizer,
+                epoch_look_back=5, max_epoch=100,
+                percent_decrease=0, train_valid_ratio=[5,1],
+                batchsize=64, randomize_split=False)
+
+
 if __name__ == '__main__':
     # train()
-    train_with_trainobject()
+    # train_with_trainobject()
+    train_with_VGG()
+    # train_with_Resnet()
+    # train_with_Densenet()
