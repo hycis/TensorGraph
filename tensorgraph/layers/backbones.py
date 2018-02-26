@@ -1,7 +1,7 @@
 
 from ..sequential import Sequential
 from . import Conv2D, MaxPooling, RELU, ELU, BatchNormalization, Template, Sum, \
-              Concat, AvgPooling, Conv2D_Transpose
+              Concat, AvgPooling, Conv2D_Transpose, Dropout
 from ..utils import same_nd, valid_nd, devalid_nd, desame_nd
 import numpy as np
 import tensorgraph as tg
@@ -15,66 +15,74 @@ class VGG16(Template):
         self.seq = Sequential()
         # block 1
         self.seq.add(Conv2D(input_channels, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(input_shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[64]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(64, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[64]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(input_shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 2
         self.seq.add(Conv2D(64, num_filters=128, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[128]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(128, num_filters=128, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[128]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 3
         self.seq.add(Conv2D(128, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(256, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(256, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 4
         self.seq.add(Conv2D(256, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 5
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         assert np.prod(shape) > 0, 'output shape {} is <= 0'.format(shape)
@@ -99,75 +107,86 @@ class VGG19(Template):
         self.seq = Sequential()
         # block 1
         self.seq.add(Conv2D(input_channels, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(input_shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[64]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(64, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[64]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(input_shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 2
         self.seq.add(Conv2D(64, num_filters=128, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[128]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(128, num_filters=128, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[128]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 3
         self.seq.add(Conv2D(128, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(256, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(256, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(256, num_filters=256, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[256]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 4
         self.seq.add(Conv2D(256, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         # block 5
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(Conv2D(512, num_filters=512, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
+        self.seq.add(BatchNormalization(input_shape=shape+[512]))
         self.seq.add(RELU())
         self.seq.add(MaxPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-        shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
 
         assert np.prod(shape) > 0, 'output shape {} is <= 0'.format(shape)
@@ -304,7 +323,6 @@ class ResNet152(ResNetBase):
 
 
 class ShortCutBlock(BaseModel):
-
     '''
     REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
     '''
@@ -335,11 +353,13 @@ class ShortCutBlock(BaseModel):
         layers.append(Conv2D(f2, num_filters=f3, kernel_size=(1,1), stride=(1,1), padding='VALID'))
         shape = same_nd(shape, kernel_size=(1,1), stride=(1,1))
         layers.append(BatchNormalization(input_shape=shape+[f3]))
+        layers.append(RELU())
 
         shortcuts = []
         shortcuts.append(Conv2D(input_channels, num_filters=f3, kernel_size=(1,1), stride=stride, padding='VALID'))
         shape = valid_nd(input_shape, kernel_size=(1,1), stride=stride)
         shortcuts.append(BatchNormalization(input_shape=shape+[f3]))
+        shortcuts.append(RELU())
 
         self.startnode = tg.StartNode(input_vars=[None])
         conv_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
@@ -354,7 +374,8 @@ class IdentityBlock(BaseModel):
     def __init__(self, input_channels, input_shape, nlayers=2, filters=[32, 64]):
         '''
         DESCRIPTION:
-            one identity block of a resnet in the paper Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
+            one identity block of a resnet in the paper Deep Residual Learning
+            for Image Recognition (https://arxiv.org/abs/1512.03385)
         PARAMS:
             nlayers (int): number recurrent cycles within one identity block
             filters (list of 2 ints): number of filters within one identity block
@@ -376,6 +397,7 @@ class IdentityBlock(BaseModel):
             layers.append(Conv2D(f2, num_filters=input_channels, kernel_size=(1,1), stride=(1,1), padding='VALID'))
             shape = same_nd(shape, kernel_size=(1,1), stride=(1,1))
             layers.append(BatchNormalization(input_shape=shape+[input_channels]))
+            layers.append(RELU())
             out_hn = tg.HiddenNode(prev=[in_hn], layers=layers)
             return out_hn, shape
 
@@ -393,10 +415,11 @@ class IdentityBlock(BaseModel):
 
 class DenseBlock(BaseModel):
 
-    def __init__(self, input_channels, input_shape, growth_rate=3, nlayers=2):
+    def __init__(self, input_channels, input_shape, growth_rate, nlayers):
         '''
         DESCRIPTION:
-            one dense block from the densely connected CNN (Densely Connected Convolutional Networks https://arxiv.org/abs/1608.06993)
+            one dense block from the densely connected CNN (Densely Connected
+            Convolutional Networks https://arxiv.org/abs/1608.06993)
         PARAMS:
             growth_rate (int): number of filters to grow inside one denseblock
             nlayers (int): number of layers in one block, one layer refers to
@@ -405,19 +428,14 @@ class DenseBlock(BaseModel):
 
         def _conv_layer(in_hn, shape, in_channel):
             layers = []
-            layers.append(BatchNormalization(input_shape=shape+[in_channel]))
-            layers.append(RELU())
             layers.append(Conv2D(in_channel, num_filters=growth_rate, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+            layers.append(BatchNormalization(input_shape=shape+[growth_rate]))
+            layers.append(RELU())
             shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
             out_hn = tg.HiddenNode(prev=[in_hn], layers=layers)
             out_hn = tg.HiddenNode(prev=[in_hn, out_hn],
                                    input_merge_mode=Concat(axis=-1))
             return out_hn, shape, growth_rate+in_channel
-
-        def _dense_block(in_hn, shape, in_channel, nlayers):
-            for _ in range(nlayers):
-                in_hn, shape, in_channel = _conv_layer(in_hn, shape, in_channel)
-            return in_hn, shape, in_channel
 
         self.startnode = in_hn = tg.StartNode(input_vars=[None])
         shape = input_shape
@@ -437,13 +455,11 @@ class TransitionLayer(BaseModel):
             The transition layer of dense net (Densely Connected Convolutional Networks https://arxiv.org/abs/1608.06993)
         '''
         layers = []
+        layers.append(Conv2D(input_channels, num_filters=input_channels, kernel_size=(1,1), stride=(1,1), padding='SAME'))
         layers.append(BatchNormalization(input_shape=input_shape+[input_channels]))
         layers.append(RELU())
-        layers.append(Conv2D(input_channels, num_filters=input_channels, kernel_size=(1,1), stride=(1,1), padding='SAME'))
-        shape = same_nd(input_shape, kernel_size=(1,1), stride=(1,1))
-        layers.append(RELU())
         layers.append(AvgPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
-        shape = valid_nd(shape, kernel_size=(2,2), stride=(2,2))
+        shape = valid_nd(input_shape, kernel_size=(2,2), stride=(2,2))
 
         self.startnode = tg.StartNode(input_vars=[None])
         out_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
@@ -456,7 +472,7 @@ class DenseNet(BaseModel):
     '''
     REFERENCE: Densely Connected Convolutional Networks (https://arxiv.org/abs/1608.06993)
     '''
-    def __init__(self, input_channels, input_shape, ndense=3, growth_rate=3, nlayer1blk=2):
+    def __init__(self, input_channels, input_shape, ndense=3, growth_rate=12, nlayer1blk=12):
         '''
         PARAMS:
             ndense (int): number of dense blocks
@@ -464,17 +480,17 @@ class DenseNet(BaseModel):
                 one group of batchnorm, relu and conv2d
         '''
         layers = []
-        layers.append(BatchNormalization(input_shape=list(input_shape)+[input_channels]))
-        layers.append(RELU())
-        layers.append(Conv2D(input_channels, num_filters=growth_rate, kernel_size=(3,3), stride=(1,1), padding='SAME'))
+        layers.append(Conv2D(input_channels, num_filters=16, kernel_size=(3,3), stride=(1,1), padding='SAME'))
         shape = same_nd(input_shape, kernel_size=(3,3), stride=(1,1))
+        layers.append(BatchNormalization(input_shape=list(shape)+[16]))
+        layers.append(RELU())
 
-        dense = DenseBlock(growth_rate, shape, growth_rate=3, nlayers=2)
+        dense = DenseBlock(input_channels=16, input_shape=shape, growth_rate=growth_rate, nlayers=nlayer1blk)
         layers.append(dense)
         transit = TransitionLayer(input_channels=dense.output_channels, input_shape=dense.output_shape)
         layers.append(transit)
 
-        for _ in range(ndense):
+        for _ in range(ndense-1):
             dense = DenseBlock(transit.output_channels, transit.output_shape, growth_rate, nlayer1blk)
             layers.append(dense)
             transit = TransitionLayer(dense.output_channels, dense.output_shape)
@@ -482,6 +498,7 @@ class DenseNet(BaseModel):
 
         dense = DenseBlock(transit.output_channels, transit.output_shape, growth_rate, nlayer1blk)
         layers.append(dense)
+        layers.append(AvgPooling(poolsize=dense.output_shape, stride=(1,1), padding='VALID'))
 
         assert np.prod(dense.output_shape) > 0, 'output shape {} is <= 0'.format(dense.output_shape)
         self.startnode = tg.StartNode(input_vars=[None])
