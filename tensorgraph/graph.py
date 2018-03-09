@@ -59,7 +59,6 @@ class Graph(object):
 
 
     def train_fprop(self):
-        print('using new graph')
         outs = []
         for node in self.end:
             outs += self._output(node, Graph.TRAIN_FPROP)
