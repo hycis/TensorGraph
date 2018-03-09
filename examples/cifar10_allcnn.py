@@ -106,8 +106,9 @@ def train():
     with ops.control_dependencies(update_ops):
         train_ops = optimizer.minimize(train_cost_sb)
 
-    gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.9)
-    with tf.Session(config = tf.ConfigProto(gpu_options = gpu_options)) as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config = config) as sess:
         init = tf.global_variables_initializer()
         sess.run(init)
 
@@ -158,7 +159,9 @@ def train():
 
 def train_with_trainobject():
     from tensorgraph.trainobject import train as mytrain
-    with tf.Session() as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config = config) as sess:
         X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
         _, h, w, c = X_train.shape
         _, nclass = y_train.shape
@@ -185,7 +188,9 @@ def train_with_trainobject():
 
 def train_with_VGG():
     from tensorgraph.trainobject import train as mytrain
-    with tf.Session() as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config = config) as sess:
         X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
         _, h, w, c = X_train.shape
         _, nclass = y_train.shape
@@ -219,7 +224,9 @@ def train_with_VGG():
 
 def train_with_Resnet():
     from tensorgraph.trainobject import train as mytrain
-    with tf.Session() as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config = config) as sess:
         X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
         _, h, w, c = X_train.shape
         _, nclass = y_train.shape
@@ -262,7 +269,9 @@ def train_with_Resnet():
 
 def train_with_Densenet():
     from tensorgraph.trainobject import train as mytrain
-    with tf.Session() as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config = config) as sess:
         X_train, y_train, X_test, y_test = Cifar10(contrast_normalize=False, whiten=False)
         _, h, w, c = X_train.shape
         _, nclass = y_train.shape
@@ -285,6 +294,13 @@ def train_with_Densenet():
         optimizer = tf.train.AdamOptimizer(0.001)
         test_accu_sb = accuracy(y_ph, y_test_sb)
 
+        print(tf.global_variables())
+        print('..total number of global variables: {}'.format(len(tf.global_variables())))
+        count = 0
+        for var in tf.global_variables():
+            count += int(np.prod(var.get_shape()))
+        print('..total number of global parameters: {}'.format(count))
+
         mytrain(session=sess,
                 feed_dict={X_ph:X_train, y_ph:y_train},
                 train_cost_sb=train_cost_sb,
@@ -298,6 +314,6 @@ def train_with_Densenet():
 if __name__ == '__main__':
     # train()
     # train_with_trainobject()
-    train_with_VGG()
+    # train_with_VGG()
     # train_with_Resnet()
-    # train_with_Densenet()
+    train_with_Densenet()
