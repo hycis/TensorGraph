@@ -39,12 +39,7 @@ all the dependencies in [setup.py](setup.py) are installed.
 
 -----
 ### Everything in TensorGraph is about Layers
-Everything in TensorGraph is about layers. A model such as VGG or Resnet can be
-a layer. An identity block from Resnet or a dense block from Densenet can be a
-layer as well. Building models in TensorGraph is same as building a toy with lego.
-
-For example you can create a new model (layer) by subclass the `BaseModel` layer
-and use `DenseBlock` layer inside your `ModelA` layer.
+Everything in TensorGraph is about layers. A model such as VGG or Resnet can be a layer. An identity block from Resnet or a dense block from Densenet can be a layer as well. Building models in TensorGraph is same as building a toy with lego. For example you can create a new model (layer) by subclass the `BaseModel` layer and use `DenseBlock` layer inside your `ModelA` layer.
 
 ```python
 from tensorgraph.layers import DenseBlock, BaseModel, Flatten, Linear, Softmax
@@ -62,10 +57,8 @@ class ModelA(BaseModel):
         self.endnode = tg.EndNode(prev=[hn])
 ```
 
-if someone wants to use your `ModelA` in his `ModelB`, he can easily
-do this
+if someone wants to use your `ModelA` in his `ModelB`, he can easily do this
 ```python
-
 class ModelB(BaseModel):
     def __int__(self):
         layers = []
@@ -77,10 +70,9 @@ class ModelB(BaseModel):
         self.endnode = tg.EndNode(prev=[hn])
 ```
 
-once you have build you layer, you do a `_train_fprop(X)` or `_test_fprop(X)` to
-create the tensorflow graph
+creating a layer only created all the `Variables`. To connect the `Variables` into a graph, you can do a `_train_fprop(X)` or `_test_fprop(X)` to create the tensorflow graph. By abstracting `Variable` creation away from linking the `Variable` nodes into graph prevent the problem of certain tensorflow layers that always reinitialise its weights when it's called, example the `batchnormalization` layer. Also having a separate channel
 
-```
+```python
 modelb = ModelB()
 X_ph = tf.placeholder()
 y_train = modelb._train_fprop(X_ph)
