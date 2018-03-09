@@ -4,15 +4,16 @@ TensorGraph is a framework for building any imaginable models based on TensorFlo
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
 build these models and that's what TensorGraph is designed for. It's a very simple
-and easy to use framework and allows you to build any imaginable models.
+framework that adds a very thin layer above tensorflow. It is for more advanced
+users who want to have more control and flexibility over his model building and
+efficient at the same time.
 
 -----
 ### Target Audience
 TensorGraph is targeted more at intermediate to advance users who feel keras or
 other packages is having too much restrictions on model building, and someone who
-don't want to rewrite the standard layers in tensorflow constantly, and someone
-who want to use some higher level layers to build models quickly without the
-restrictions of most other deep learning package.
+don't want to rewrite the standard layers in tensorflow constantly. Also for enterprise
+users who want to share deep learning models easily between teams.
 
 -----
 ### Install
@@ -35,6 +36,63 @@ export PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH
 in order for the install to persist via export `PYTHONPATH`. Add `PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH` to your `.bashrc` for linux or
 `.bash_profile` for mac. While this method works, you will have to ensure that
 all the dependencies in [setup.py](setup.py) are installed.
+
+-----
+### Everything in TensorGraph is about Layers
+Everything in TensorGraph is about layers. A model such as VGG or Resnet can be
+a layer. An identity block from Resnet or a dense block from Densenet can be a
+layer as well. Building models in TensorGraph is same as building a toy with lego.
+
+For example you can create a new model (layer) by subclass the `BaseModel` layer
+and use `DenseBlock` layer inside your `ModelA` layer.
+
+```python
+from tensorgraph.layers import DenseBlock, BaseModel, Flatten, Linear, Softmax
+import tensorgraph as tg
+
+class ModelA(BaseModel):
+    def __init__(self):
+        layers = []
+        layers.append(DenseBlock())
+        layers.append(Flatten())
+        layers.append(Linear())
+        layers.append(Softmax())
+        self.startnode = tg.StartNode(input_vars=[None])
+        hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = tg.EndNode(prev=[hn])
+```
+
+if someone wants to use your model `ModelA` in his model `ModelB`, he can easily
+do this
+```python
+
+class ModelB(BaseModel):
+    def __int__(self):
+        layers = []
+        layers.append(ModelA())
+        layers.append(Linear())
+        layers.append(Softmax())
+        self.startnode = tg.StartNode(input_vars=[None])
+        hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = tg.EndNode(prev=[hn])
+```
+
+once you have build you layer, you do a `_train_fprop(X)` or `_test_fprop(X)` to
+create the tensorflow graph
+
+```
+modelb = ModelB()
+X_ph = tf.placeholder()
+y_train = modelb._train_fprop(X_ph)
+y_test = modelb._test_fprop(X_ph)
+```
+
+checkout some well known models in TensorGraph
+1. [VGG16](tensorgraph/layers/backbones.py#L11) [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [VGG19](tensorgraph/layers/backbones.py#L103) [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+3. [DenseNet](tensorgraph/layers/backbones.py#L473)
+4. [ResNet](tensorgraph/layers/backbones.py#L312) [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+5. [Unet](tensorgraph/layers/backbones.py#L527)
 
 -----
 ### How TensorGraph Works?
