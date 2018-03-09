@@ -1,6 +1,12 @@
 import tensorflow as tf
-from .layers.merge import Sum
 
+
+class Sum(object):
+    def _train_fprop(self, state_list):
+        return tf.add_n(state_list)
+
+    def _test_fprop(self, state_list):
+        return self._train_fprop(state_list)
 
 class StartNode(object):
     def __init__(self, input_vars):
