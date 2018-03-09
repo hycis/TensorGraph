@@ -62,7 +62,7 @@ class ModelA(BaseModel):
         self.endnode = tg.EndNode(prev=[hn])
 ```
 
-if someone wants to use your model `ModelA` in his model `ModelB`, he can easily
+if someone wants to use your `ModelA` in his `ModelB`, he can easily
 do this
 ```python
 
