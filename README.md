@@ -88,11 +88,11 @@ y_test = modelb._test_fprop(X_ph)
 ```
 
 checkout some well known models in TensorGraph
-1. [VGG16](tensorgraph/layers/backbones.py#L11) [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-2. [VGG19](tensorgraph/layers/backbones.py#L103) [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-3. [DenseNet](tensorgraph/layers/backbones.py#L473)
-4. [ResNet](tensorgraph/layers/backbones.py#L312) [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
-5. [Unet](tensorgraph/layers/backbones.py#L527)
+1. [VGG16 code](tensorgraph/layers/backbones.py#L11) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [VGG19 code](tensorgraph/layers/backbones.py#L103) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+3. [DenseNet code](tensorgraph/layers/backbones.py#L473) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
+4. [ResNet code](tensorgraph/layers/backbones.py#L312) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+5. [Unet code](tensorgraph/layers/backbones.py#L527)
 
 -----
 ### How TensorGraph Works?
