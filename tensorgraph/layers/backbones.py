@@ -1,10 +1,12 @@
 
 from ..sequential import Sequential
+from ..graph import Graph
+from ..node import StartNode, HiddenNode, EndNode
 from . import Conv2D, MaxPooling, RELU, ELU, BatchNormalization, Template, Sum, \
               Concat, AvgPooling, Conv2D_Transpose, Dropout
 from ..utils import same_nd, valid_nd, devalid_nd, desame_nd
 import numpy as np
-import tensorgraph as tg
+
 
 class VGG16(Template):
     '''
@@ -205,13 +207,13 @@ class VGG19(Template):
 class BaseModel(Template):
     def _train_fprop(self, state_below):
         self.startnode.input_vars = [state_below]
-        graph = tg.Graph(start=[self.startnode], end=[self.endnode])
+        graph = Graph(start=[self.startnode], end=[self.endnode])
         y, = graph.train_fprop()
         return y
 
     def _test_fprop(self, state_below):
         self.startnode.input_vars = [state_below]
-        graph = tg.Graph(start=[self.startnode], end=[self.endnode])
+        graph = Graph(start=[self.startnode], end=[self.endnode])
         y, = graph.test_fprop()
         return y
 
@@ -261,9 +263,9 @@ class ResNetBase(BaseModel):
                                  input_shape=shortcut.output_shape, nlayers=config[3])
         layers.append(identity)
 
-        self.startnode = tg.StartNode(input_vars=[None])
-        out_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
-        self.endnode = tg.EndNode(prev=[out_hn])
+        self.startnode = StartNode(input_vars=[None])
+        out_hn = HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = EndNode(prev=[out_hn])
         assert np.prod(shape) > 0, 'output shape {} is <= 0'.format(shape)
         self.output_shape = identity.output_shape
         self.output_channels = 2048
@@ -299,9 +301,9 @@ class ResNetSmall(ResNetBase):
                                  input_shape=shortcut.output_shape, nlayers=config[1])
         layers.append(identity)
 
-        self.startnode = tg.StartNode(input_vars=[None])
-        out_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
-        self.endnode = tg.EndNode(prev=[out_hn])
+        self.startnode = StartNode(input_vars=[None])
+        out_hn = HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = EndNode(prev=[out_hn])
         assert np.prod(shape) > 0, 'output shape {} is <= 0'.format(shape)
         self.output_shape = identity.output_shape
         self.output_channels = 128
@@ -361,11 +363,11 @@ class ShortCutBlock(BaseModel):
         shortcuts.append(BatchNormalization(input_shape=shape+[f3]))
         shortcuts.append(RELU())
 
-        self.startnode = tg.StartNode(input_vars=[None])
-        conv_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
-        shortcuts_hn = tg.HiddenNode(prev=[self.startnode], layers=shortcuts)
-        out_hn = tg.HiddenNode(prev=[conv_hn, shortcuts_hn], input_merge_mode=Sum())
-        self.endnode = tg.EndNode(prev=[out_hn])
+        self.startnode = StartNode(input_vars=[None])
+        conv_hn = HiddenNode(prev=[self.startnode], layers=layers)
+        shortcuts_hn = HiddenNode(prev=[self.startnode], layers=shortcuts)
+        out_hn = HiddenNode(prev=[conv_hn, shortcuts_hn], input_merge_mode=Sum())
+        self.endnode = EndNode(prev=[out_hn])
         self.output_shape = shape
         self.output_channels = f3
 
@@ -398,17 +400,17 @@ class IdentityBlock(BaseModel):
             shape = same_nd(shape, kernel_size=(1,1), stride=(1,1))
             layers.append(BatchNormalization(input_shape=shape+[input_channels]))
             layers.append(RELU())
-            out_hn = tg.HiddenNode(prev=[in_hn], layers=layers)
+            out_hn = HiddenNode(prev=[in_hn], layers=layers)
             return out_hn, shape
 
-        self.startnode = in_hn = tg.StartNode(input_vars=[None])
+        self.startnode = in_hn = StartNode(input_vars=[None])
 
         shape = input_shape
         for _ in range(nlayers):
             out_hn, shape = identity_layer(in_hn, shape)
-            in_hn = tg.HiddenNode(prev=[out_hn, in_hn], input_merge_mode=Sum())
+            in_hn = HiddenNode(prev=[out_hn, in_hn], input_merge_mode=Sum())
 
-        self.endnode = tg.EndNode(prev=[in_hn])
+        self.endnode = EndNode(prev=[in_hn])
         self.output_shape = shape
         self.output_channels = input_channels
 
@@ -432,17 +434,17 @@ class DenseBlock(BaseModel):
             layers.append(BatchNormalization(input_shape=shape+[growth_rate]))
             layers.append(RELU())
             shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
-            out_hn = tg.HiddenNode(prev=[in_hn], layers=layers)
-            out_hn = tg.HiddenNode(prev=[in_hn, out_hn],
+            out_hn = HiddenNode(prev=[in_hn], layers=layers)
+            out_hn = HiddenNode(prev=[in_hn, out_hn],
                                    input_merge_mode=Concat(axis=-1))
             return out_hn, shape, growth_rate+in_channel
 
-        self.startnode = in_hn = tg.StartNode(input_vars=[None])
+        self.startnode = in_hn = StartNode(input_vars=[None])
         shape = input_shape
         in_channel = input_channels
         for _ in range(nlayers):
             in_hn, shape, in_channel = _conv_layer(in_hn, shape, in_channel)
-        self.endnode = tg.EndNode(prev=[in_hn])
+        self.endnode = EndNode(prev=[in_hn])
         self.output_channels = in_channel
         self.output_shape = shape
 
@@ -461,9 +463,9 @@ class TransitionLayer(BaseModel):
         layers.append(AvgPooling(poolsize=(2,2), stride=(2,2), padding='VALID'))
         shape = valid_nd(input_shape, kernel_size=(2,2), stride=(2,2))
 
-        self.startnode = tg.StartNode(input_vars=[None])
-        out_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
-        self.endnode = tg.EndNode(prev=[out_hn])
+        self.startnode = StartNode(input_vars=[None])
+        out_hn = HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = EndNode(prev=[out_hn])
         self.output_channels = input_channels
         self.output_shape = shape
 
@@ -501,9 +503,9 @@ class DenseNet(BaseModel):
         layers.append(AvgPooling(poolsize=dense.output_shape, stride=(1,1), padding='VALID'))
 
         assert np.prod(dense.output_shape) > 0, 'output shape {} is <= 0'.format(dense.output_shape)
-        self.startnode = tg.StartNode(input_vars=[None])
-        model_hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
-        self.endnode = tg.EndNode(prev=[model_hn])
+        self.startnode = StartNode(input_vars=[None])
+        model_hn = HiddenNode(prev=[self.startnode], layers=layers)
+        self.endnode = EndNode(prev=[model_hn])
         self.output_shape = dense.output_shape
         self.output_channels = dense.output_channels
 
@@ -537,7 +539,7 @@ class UNet(BaseModel):
             blk.append(ELU())
             shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
             blk.append(BatchNormalization(input_shape=shape+[out_ch]))
-            out_hn = tg.HiddenNode(prev=[in_hn], layers=blk)
+            out_hn = HiddenNode(prev=[in_hn], layers=blk)
             return out_hn, shape
 
 
@@ -554,7 +556,7 @@ class UNet(BaseModel):
             dshape = desame_nd(input_shape, kernel_size=(2,2), stride=(2,2))
             blk.append(ELU())
             blk.append(BatchNormalization(input_shape=input_shape+[out_ch]))
-            out_hn = tg.HiddenNode(prev=[deblk_hn, blk_hn],
+            out_hn = HiddenNode(prev=[deblk_hn, blk_hn],
                                    input_merge_mode=Concat(axis=-1),
                                    layers=blk)
             return out_hn
@@ -571,8 +573,8 @@ class UNet(BaseModel):
         b1_shape = same_nd(shape, kernel_size=(3,3), stride=(1,1))
         blk1.append(BatchNormalization(input_shape=b1_shape+[64]))
 
-        self.startnode = tg.StartNode(input_vars=[None])
-        blk1_hn = tg.HiddenNode(prev=[self.startnode], layers=blk1)
+        self.startnode = StartNode(input_vars=[None])
+        blk1_hn = HiddenNode(prev=[self.startnode], layers=blk1)
         blk2_hn, b2_shape = _encode_block(blk1_hn, b1_shape, 64, 128)
         blk3_hn, b3_shape = _encode_block(blk2_hn, b2_shape, 128, 256)
         blk4_hn, b4_shape = _encode_block(blk3_hn, b3_shape, 256, 512)
@@ -597,7 +599,7 @@ class UNet(BaseModel):
         deblk4.append(BatchNormalization(input_shape=shape+[1024]))
 
         # decode and merge
-        deblk4_hn = tg.HiddenNode(prev=[blk4_hn], layers=deblk4)
+        deblk4_hn = HiddenNode(prev=[blk4_hn], layers=deblk4)
         deblk3_hn = _merge_decode_block(deblk4_hn, blk4_hn, b4_shape, b3_shape, in_ch=1024+512, out_ch=256)
         deblk2_hn = _merge_decode_block(deblk3_hn, blk3_hn, b3_shape, b2_shape, in_ch=256+256, out_ch=128)
         deblk1_hn = _merge_decode_block(deblk2_hn, blk2_hn, b2_shape, b1_shape, in_ch=128+128, out_ch=64)
@@ -610,11 +612,11 @@ class UNet(BaseModel):
         blk.append(Conv2D(input_channels=32, num_filters=16, kernel_size=(3,3), stride=(1,1), padding='SAME'))
         blk.append(ELU())
         blk.append(BatchNormalization(input_shape=list(input_shape)+[16]))
-        deblk0_hn = tg.HiddenNode(prev=[deblk1_hn, blk1_hn],
+        deblk0_hn = HiddenNode(prev=[deblk1_hn, blk1_hn],
                                   input_merge_mode=Concat(axis=-1),
                                   layers=blk)
 
-        self.endnode = tg.EndNode(prev=[deblk0_hn])
+        self.endnode = EndNode(prev=[deblk0_hn])
         self.output_shape = input_shape
         self.output_channels = 16
         assert np.prod(shape) > 0, 'output shape {} is <= 0'.format(shape)
