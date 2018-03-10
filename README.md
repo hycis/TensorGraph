@@ -70,7 +70,7 @@ class ModelB(BaseModel):
         self.endnode = tg.EndNode(prev=[hn])
 ```
 
-creating a layer only created all the `Variables`. To connect the `Variables` into a graph, you can do a `_train_fprop(X)` or `_test_fprop(X)` to create the tensorflow graph. By abstracting `Variable` creation away from linking the `Variable` nodes into graph prevent the problem of certain tensorflow layers that always reinitialise its weights when it's called, example the `batchnormalization` layer. Also having a separate channel for training and testing is to cater to layers with different training and testing behaviours such as batchnorm and dropout.
+creating a layer only created all the `Variables`. To connect the `Variables` into a graph, you can do a `_train_fprop(X)` or `_test_fprop(X)` to create the tensorflow graph. By abstracting `Variable` creation away from linking the `Variable` nodes into graph prevent the problem of certain tensorflow layers that always reinitialise its weights when it's called, example the [`tf.nn.batch_normalization`](https://www.tensorflow.org/api_docs/python/tf/nn/batch_normalization) layer. Also having a separate channel for training and testing is to cater to layers with different training and testing behaviours such as batchnorm and dropout.
 
 ```python
 modelb = ModelB()
