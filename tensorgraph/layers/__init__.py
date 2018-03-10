@@ -7,7 +7,6 @@ from .noise import *
 from .normalization import *
 from .random import *
 from .misc import *
-from .iterative import *
 from .recurrent import *
 from .cast import *
 from .template import *
