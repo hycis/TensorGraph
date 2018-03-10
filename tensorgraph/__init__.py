@@ -1,4 +1,5 @@
 __version__ = '4.4.4'
+
 import sys
 
 from .stopper import EarlyStopper
