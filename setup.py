@@ -1,10 +1,10 @@
 from distutils.core import setup
 from setuptools import find_packages
-
-version = '4.4.3'
+from .tensorgraph import __version__
+# __version__ = '4.4.3'
 setup(
     name='tensorgraph',
-    version=version,
+    version=__version__,
     author='Wu Zhen Zhou',
     author_email='hyciswu@gmail.com',
     install_requires=['numpy>=1.7.1',
