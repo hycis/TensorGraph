@@ -70,7 +70,7 @@ class ModelB(BaseModel):
         self.endnode = tg.EndNode(prev=[hn])
 ```
 
-creating a layer only created all the `Variables`. To connect the `Variables` into a graph, you can do a `_train_fprop(X)` or `_test_fprop(X)` to create the tensorflow graph. By abstracting `Variable` creation away from linking the `Variable` nodes into graph prevent the problem of certain tensorflow layers that always reinitialise its weights when it's called, example the `batchnormalization` layer. Also having a separate channel
+creating a layer only created all the `Variables`. To connect the `Variables` into a graph, you can do a `_train_fprop(X)` or `_test_fprop(X)` to create the tensorflow graph. By abstracting `Variable` creation away from linking the `Variable` nodes into graph prevent the problem of certain tensorflow layers that always reinitialise its weights when it's called, example the `batchnormalization` layer. Also having a separate channel for training and testing is to cater to layers with different training and testing behaviours such as batchnorm and dropout.
 
 ```python
 modelb = ModelB()
@@ -80,11 +80,10 @@ y_test = modelb._test_fprop(X_ph)
 ```
 
 checkout some well known models in TensorGraph
-1. [VGG16 code](tensorgraph/layers/backbones.py#L11) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-2. [VGG19 code](tensorgraph/layers/backbones.py#L103) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-3. [DenseNet code](tensorgraph/layers/backbones.py#L473) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
-4. [ResNet code](tensorgraph/layers/backbones.py#L312) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
-5. [Unet code](tensorgraph/layers/backbones.py#L527)
+1. [VGG16 code](tensorgraph/layers/backbones.py#L11) and [VGG19 code](tensorgraph/layers/backbones.py#L103) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [DenseNet code](tensorgraph/layers/backbones.py#L473) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
+3. [ResNet code](tensorgraph/layers/backbones.py#L312) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+4. [Unet code](tensorgraph/layers/backbones.py#L527) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
 
 -----
 ### How TensorGraph Works?
