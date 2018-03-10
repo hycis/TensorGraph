@@ -9,17 +9,29 @@ import numpy as np
 
 
 class BaseModel(Template):
+
+    @staticmethod
+    def check_y(y):
+        if len(y) == 1:
+            return y[0]
+        elif len(y) > 1:
+            return y
+        else:
+            raise Exception('{} is empty or not a list'.format(y))
+
+
     def _train_fprop(self, state_below):
         self.startnode.input_vars = [state_below]
         graph = Graph(start=[self.startnode], end=[self.endnode])
-        y, = graph.train_fprop()
-        return y
+        y = graph.train_fprop()
+        return BaseModel.check_y(y)
+
 
     def _test_fprop(self, state_below):
         self.startnode.input_vars = [state_below]
         graph = Graph(start=[self.startnode], end=[self.endnode])
-        y, = graph.test_fprop()
-        return y
+        y = graph.test_fprop()
+        return BaseModel.check_y(y)
 
 
 class VGG16(BaseModel):
