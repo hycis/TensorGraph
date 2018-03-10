@@ -20,7 +20,7 @@ setup(
                       'scipy>=0.17',
                       'tensorflow-gpu>=1.2.1'],
     url='https://github.com/hycis/TensorGraph',
-    download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(version),
+    download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(__version__),
     license='Apache 2.0, see LICENCE',
     description='A high level tensorflow library for building deep learning models',
     long_description=open('README.md').read(),
