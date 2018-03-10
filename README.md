@@ -80,10 +80,59 @@ y_test = modelb._test_fprop(X_ph)
 ```
 
 checkout some well known models in TensorGraph
-1. [VGG16 code](tensorgraph/layers/backbones.py#L11) and [VGG19 code](tensorgraph/layers/backbones.py#L103) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-2. [DenseNet code](tensorgraph/layers/backbones.py#L473) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
-3. [ResNet code](tensorgraph/layers/backbones.py#L312) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
-4. [Unet code](tensorgraph/layers/backbones.py#L527) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
+1. [VGG16 code](tensorgraph/layers/backbones.py#L25) and [VGG19 code](tensorgraph/layers/backbones.py#L113) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [DenseNet code](tensorgraph/layers/backbones.py#L465) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
+3. [ResNet code](tensorgraph/layers/backbones.py#L304) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+4. [Unet code](tensorgraph/layers/backbones.py#L519) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
+
+-----
+### TensorGraph on Multiple GPUS
+To use tensorgraph on multiple gpus, you can easily integrate it with [horovod](https://github.com/uber/horovod).
+
+```python
+import horovod.tensorflow as hvd
+from tensorflow.python.framework import ops
+import tensorflow as tf
+hvd.init()
+
+# tensorgraph model derived previously
+modelb = ModelB()
+X_ph = tf.placeholder()
+y_ph = tf.placeholder()
+y_train = modelb._train_fprop(X_ph)
+y_test = modelb._test_fprop(X_ph)
+
+train_cost = mse(y_train, y_ph)
+test_cost = mse(y_test, y_ph)
+
+opt = tf.train.RMSPropOptimizer(0.001)
+opt = hvd.DistributedOptimizer(opt)
+
+# required for BatchNormalization layer
+update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)
+with ops.control_dependencies(update_ops):
+    train_op = opt.minimize(train_cost)
+
+init_op = tf.group(tf.global_variables_initializer(),
+                   tf.local_variables_initializer())
+bcast = hvd.broadcast_global_variables(0)
+
+# Pin GPU to be used to process local rank (one GPU per process)
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+config.gpu_options.visible_device_list = str(hvd.local_rank())
+
+with tf.Session(graph=graph, config=config) as sess:
+    sess.run(init_op)
+    bcast.run()
+
+    # training model
+    for epoch in range(100):
+        for X,y in train_data:
+            _, loss_train = sess.run([train_op, train_cost], feed_dict={X_ph:X, y_ph:y})
+```
+
+for a full example on [tensorgraph on horovod](./examples/multi_gpus_horovod.py)
 
 -----
 ### How TensorGraph Works?
