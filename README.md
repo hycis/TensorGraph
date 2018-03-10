@@ -6,14 +6,15 @@ and more complicated, it seems that we need some easy to use framework to quickl
 build these models and that's what TensorGraph is designed for. It's a very simple
 framework that adds a very thin layer above tensorflow. It is for more advanced
 users who want to have more control and flexibility over his model building and
-efficient at the same time.
+who wants efficiency at the same time.
 
 -----
 ### Target Audience
 TensorGraph is targeted more at intermediate to advance users who feel keras or
-other packages is having too much restrictions on model building, and someone who
-don't want to rewrite the standard layers in tensorflow constantly. Also for enterprise
-users who want to share deep learning models easily between teams.
+other packages is having too much restrictions and too much black box on model
+building, and someone who don't want to rewrite the standard layers in tensorflow
+constantly. Also for enterprise users who want to share deep learning models
+easily between teams.
 
 -----
 ### Install
