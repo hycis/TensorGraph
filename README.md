@@ -1,5 +1,5 @@
-# TensorGraph
-TensorGraph is a framework for building any imaginable models based on TensorFlow.
+# TensorGraph - Simplicity is Beauty
+TensorGraph is a simple, lean, and clean framework on TensorFlow for building any imaginable models.
 
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
