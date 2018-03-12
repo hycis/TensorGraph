@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hycis/TensorGraph.svg?branch=master)](https://travis-ci.org/hycis/TensorGraph)
+
 # TensorGraph - Simplicity is Beauty
 TensorGraph is a simple, lean, and clean framework on TensorFlow for building any imaginable models.
 
