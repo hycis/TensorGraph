@@ -1,38 +1,8 @@
 dist: trusty
 language: python
 install:
-  # code below is taken from http://conda.pydata.org/docs/travis.html
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  # Useful for debugging any issues with conda
-  - conda info -a
-
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION pytest pandas
-  - source activate test-environment
-  - pip install --only-binary=numpy,scipy numpy nose scipy
-  - conda install mkl mkl-service
-
-  # set library path
-  - export LD_LIBRARY_PATH=$HOME/miniconda/envs/test-environment/lib/:$LD_LIBRARY_PATH
-
-  # install PIL for preprocessing tests
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      conda install pil;
-    elif [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-      conda install Pillow;
-    fi
-
-  - pip install -e .[tests]
-
   # install TensorFlow (CPU version).
   - pip install tensorflow
+
+script:
+  - echo "TensorGraph"
