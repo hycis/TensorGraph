@@ -83,10 +83,10 @@ y_test = modelb._test_fprop(X_ph)
 ```
 
 checkout some well known models in TensorGraph
-1. [VGG16 code](tensorgraph/layers/backbones.py#L25) and [VGG19 code](tensorgraph/layers/backbones.py#L113) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-2. [DenseNet code](tensorgraph/layers/backbones.py#L465) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
-3. [ResNet code](tensorgraph/layers/backbones.py#L304) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
-4. [Unet code](tensorgraph/layers/backbones.py#L519) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
+1. [VGG16 code](tensorgraph/layers/backbones.py#L37) and [VGG19 code](tensorgraph/layers/backbones.py#L125) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [DenseNet code](tensorgraph/layers/backbones.py#L477) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
+3. [ResNet code](tensorgraph/layers/backbones.py#L225) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+4. [Unet code](tensorgraph/layers/backbones.py#L531) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
 
 -----
 ### TensorGraph on Multiple GPUS
