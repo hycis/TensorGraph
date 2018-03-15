@@ -1,3 +1,2 @@
 include README.md LICENCE
-include ./tensorgraph/pkg_info.json
 recursive-include tensorgraph *.py

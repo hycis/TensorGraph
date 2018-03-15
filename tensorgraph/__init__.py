@@ -1,9 +1,11 @@
-import json
-from os.path import dirname
+# import json
+# from os.path import dirname
+#
+# with open(dirname(__file__) + '/pkg_info.json') as fp:
+#     _info = json.load(fp)
+# __version__ = _info['version']
 
-with open(dirname(__file__) + '/pkg_info.json') as fp:
-    _info = json.load(fp)
-__version__ = _info['version']
+__version = "4.4.10"
 
 from .stopper import EarlyStopper
 from .sequential import Sequential
