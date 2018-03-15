@@ -358,7 +358,8 @@ class MakeTFRecords(object):
 
 
     @staticmethod
-    def read_and_decode(tfrecords_filename_list, data_shapes, batch_size, dtype=tf.float32):
+    def read_and_decode(tfrecords_filename_list, data_shapes, batch_size, dtype=tf.float32,
+                        capacity=None, min_after_dequeue=None):
         '''
         tfrecords_filename_list (list): list of tfrecords paths
         data_shapes (dict): dictionary of the record name and shape example: {'X':[32,32], 'y':[10]}
@@ -382,10 +383,12 @@ class MakeTFRecords(object):
             data = tf.reshape(data, data_shapes[name])
             records.append(data)
             names.append(name)
+        capacity = capacity if capacity else 10*batch_size
+        min_after_dequeue = min_after_dequeue if min_after_dequeue else 5*batch_size
         batch_records = tf.train.shuffle_batch(records, batch_size=batch_size,
-                                               capacity=10*batch_size,
+                                               capacity=capacity,
                                                num_threads=4,
-                                               min_after_dequeue=5*batch_size)
+                                               min_after_dequeue=min_after_dequeue)
         if not isinstance(batch_records, (list, tuple)):
             batch_records = [batch_records]
         return zip(names, batch_records)
