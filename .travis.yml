@@ -6,3 +6,5 @@ install:
 
 script:
   - echo "TensorGraph"
+  - sudo pip install --upgrade git+https://github.com/hycis/TensorGraph.git@master
+  - pytest test/cost_test.py
