@@ -52,11 +52,11 @@ def test_MaskSoftmax():
         feed_dict = {X_ph:np.random.rand(3, 20),
                      seq_ph:[5, 8, 0]}
         out = sess.run(y_sb, feed_dict=feed_dict)
-        assert out[0][5:].sum() == 0
-        assert out[0][:5].sum() == 1
-        assert out[1][8:].sum() == 0
-        assert out[1][:8].sum() == 1
-        assert out[2].sum() == 0
+        assert (out[0][5:].sum() - 0)**2 < 1e-6
+        assert (out[0][:5].sum() - 1)**2 < 1e-6
+        assert (out[1][8:].sum() - 0)**2 < 1e-6
+        assert (out[1][:8].sum() - 1)**2 < 1e-6
+        assert (out[2].sum() - 0)**2 < 1e-6
         print('test passed!')
 
 
@@ -89,6 +89,6 @@ def test_SelectedMaskSoftmax():
 
 
 if __name__ == '__main__':
-    # test_SequenceMask()
-    # test_MaskSoftmax()
+    test_SequenceMask()
+    test_MaskSoftmax()
     test_SelectedMaskSoftmax()
