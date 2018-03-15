@@ -1,7 +1,8 @@
 dist: trusty
 language: python
 install:
-  # install TensorFlow (CPU version).
+  - pip install --only-binary=numpy,scipy numpy nose scipy sklearn
+  - pip install git+https://github.com/hycis/TensorGraph.git@master
   - pip install tensorflow
 
 script:
