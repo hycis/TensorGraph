@@ -3,7 +3,6 @@ from tensorgraph.layers.backbones import *
 from tensorgraph.layers import Softmax, Flatten, Linear, MaxPooling
 import tensorflow as tf
 import os
-import cv2
 from tensorgraph.trainobject import train as mytrain
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
