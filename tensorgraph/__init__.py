@@ -5,7 +5,7 @@
 #     _info = json.load(fp)
 # __version__ = _info['version']
 
-__version = "4.4.10"
+__version__ = "4.4.10"
 
 from .stopper import EarlyStopper
 from .sequential import Sequential
