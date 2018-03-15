@@ -7,4 +7,4 @@ install:
 
 script:
   - echo "TensorGraph"
-  - pytest test/cost_test.py
+  - pytest test
