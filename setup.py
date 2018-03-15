@@ -2,9 +2,6 @@ from distutils.core import setup
 from setuptools import find_packages
 import json
 from tensorgraph import __version__
-# with open('./tensorgraph/pkg_info.json') as fp:
-#     _info = json.load(fp)
-# __version__ = _info['version']
 
 setup(
     name='tensorgraph',
