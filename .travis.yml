@@ -2,8 +2,8 @@ dist: trusty
 language: python
 install:
   - pip install --only-binary=numpy,scipy numpy nose scipy sklearn
-  - pip install git+https://github.com/hycis/TensorGraph.git@master
   - pip install tensorflow
+  - pip install git+https://github.com/hycis/TensorGraph.git@master
 
 script:
   - echo "TensorGraph"
