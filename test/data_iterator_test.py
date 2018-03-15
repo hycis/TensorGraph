@@ -4,7 +4,7 @@ import time
 
 
 def test_SimpleBlocks():
-    X = np.random.rand(1000, 200)
+    X = np.random.rand(100, 200)
     with open('X.npy', 'wb') as f:
         np.save(f, X)
 
@@ -41,7 +41,7 @@ def test_SimpleBlocks():
 
 
 def test_DataBlocks():
-    X = np.random.rand(1000, 200)
+    X = np.random.rand(100, 200)
     with open('X.npy', 'wb') as f:
         np.save(f, X)
 
@@ -62,7 +62,6 @@ def test_DataBlocks():
             pbar.update(n_exp)
         print()
 
-
-
 if __name__ == '__main__':
     test_DataBlocks()
+    test_SimpleBlocks()

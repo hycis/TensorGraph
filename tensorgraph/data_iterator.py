@@ -76,7 +76,7 @@ class StepIterator(DataIterator):
 
 
 def np_load_func(path):
-    with open(path) as fin:
+    with open(path, 'rb') as fin:
         arr = np.load(fin)
     return arr
 
