@@ -13,6 +13,8 @@ class RELU6(Template):
 
 
 class LeakyRELU(Template):
+
+    @Template.init_name_scope
     def __init__(self, leak=0.2):
         self.leak = leak
 

@@ -5,6 +5,7 @@ from .template import Template
 
 class Dropout(Template):
 
+    @Template.init_name_scope
     def __init__(self, dropout_below=0.5, noise_shape=None):
         '''
         PARAMS:
@@ -16,7 +17,6 @@ class Dropout(Template):
         self.dropout_below = dropout_below
         self.noise_shape = noise_shape
 
-
     def _test_fprop(self, state_below):
         """
         DESCRIPTION:
@@ -24,7 +24,6 @@ class Dropout(Template):
             testing, we don't need to scale the inputs again
         """
         return state_below
-
 
     def _train_fprop(self, state_below):
         """

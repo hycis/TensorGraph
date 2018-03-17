@@ -7,8 +7,8 @@ from tensorgraph.trainobject import train as mytrain
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
-X_train = np.random.rand(100, 96, 96, 3)
-y_train = np.random.rand(100, 10)
+X_train = np.random.rand(10, 32, 32, 1)
+y_train = np.random.rand(10, 1)
 _, h, w, c = X_train.shape
 _, nclass = y_train.shape
 X_ph = tf.placeholder('float32', [None, h, w, c])
@@ -29,7 +29,7 @@ def train(seq):
                 optimizer=optimizer,
                 epoch_look_back=5, max_epoch=1,
                 percent_decrease=0, train_valid_ratio=[5,1],
-                batchsize=64, randomize_split=False)
+                batchsize=1, randomize_split=False)
 
 
 def test_VGG16():
@@ -82,7 +82,6 @@ def test_ResNetBase():
     print('output shape:', model.output_shape)
     seq.add(model)
     seq.add(MaxPooling(poolsize=tuple(model.output_shape), stride=(1,1), padding='VALID'))
-
     outshape = valid_nd(model.output_shape, kernel_size=model.output_shape, stride=(1,1))
     print(outshape)
     out_dim = model.output_channels
@@ -97,7 +96,6 @@ def test_DenseNet():
     model = DenseNet(input_channels=c, input_shape=(h, w), ndense=1, growth_rate=1, nlayer1blk=1)
     print('output channels:', model.output_channels)
     print('output shape:', model.output_shape)
-    out_dim = np.prod(model.output_shape) * model.output_channels
     seq.add(model)
     seq.add(MaxPooling(poolsize=tuple(model.output_shape), stride=(1,1), padding='VALID'))
     seq.add(Flatten())

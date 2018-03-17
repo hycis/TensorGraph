@@ -4,6 +4,7 @@ from .template import Template
 
 class Linear(Template):
 
+    @Template.init_name_scope
     def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, stddev=0.1):
         """
         DESCRIPTION:
@@ -36,6 +37,7 @@ class Linear(Template):
 
 class LinearMasked(Template):
 
+    @Template.init_name_scope
     def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, mask=None, stddev=0.1):
         """
         DESCRIPTION:
@@ -72,6 +74,7 @@ class LinearMasked(Template):
 
 class SparseLinear(Template):
 
+    @Template.init_name_scope
     def __init__(self, prev_dim=None, this_dim=None, W=None, b=None, batchsize=None, stddev=0.1):
         """
         DESCRIPTION:

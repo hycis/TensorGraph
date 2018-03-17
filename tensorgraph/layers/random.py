@@ -3,6 +3,7 @@ import tensorflow as tf
 
 class OneSample(Template):
 
+    @Template.init_name_scope
     def __init__(self, dim):
         '''
         DESCRIPTION:

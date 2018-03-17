@@ -35,11 +35,13 @@ class BaseModel(Template):
 
 
 class VGG16(BaseModel):
-    '''
-    REFERENCE: Very Deep Convolutional Networks for Large-Scale Image Recognition
-               (https://arxiv.org/abs/1409.1556)
-    '''
+
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape):
+        '''
+        REFERENCE: Very Deep Convolutional Networks for Large-Scale Image Recognition
+                   (https://arxiv.org/abs/1409.1556)
+        '''
         layers = []
         # block 1
         layers.append(Conv2D(input_channels, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
@@ -123,11 +125,13 @@ class VGG16(BaseModel):
 
 
 class VGG19(BaseModel):
-    '''
-    REFERENCE: Very Deep Convolutional Networks for Large-Scale Image Recognition
-               (https://arxiv.org/abs/1409.1556)
-    '''
+
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape):
+        '''
+        REFERENCE: Very Deep Convolutional Networks for Large-Scale Image Recognition
+                   (https://arxiv.org/abs/1409.1556)
+        '''
         layers = []
         # block 1
         layers.append(Conv2D(input_channels, num_filters=64, kernel_size=(3,3), stride=(1,1), padding='SAME'))
@@ -223,12 +227,13 @@ class VGG19(BaseModel):
 
 
 class ResNetBase(BaseModel):
-    '''
-    REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
-    '''
 
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape, config):
-        '''config (list of ints): a list of 4 number of layers for each identity block
+        '''
+        REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
+        PARAMS:
+            config (list of ints): a list of 4 number of layers for each identity block
         '''
 
         layers = []
@@ -276,12 +281,13 @@ class ResNetBase(BaseModel):
 
 
 class ResNetSmall(ResNetBase):
-    '''
-    REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
-    '''
 
+    @ResNetBase.init_name_scope
     def __init__(self, input_channels, input_shape, config):
-        '''config (list of ints): a list of 2 number of layers for each identity block
+        '''
+        REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
+        PARAMS:
+            config (list of ints): a list of 2 number of layers for each identity block
         '''
         layers = []
         layers.append(Conv2D(input_channels, num_filters=64, kernel_size=(7,7), stride=(2,2), padding='SAME'))
@@ -329,10 +335,8 @@ class ResNet152(ResNetBase):
 
 
 class ShortCutBlock(BaseModel):
-    '''
-    REFERENCE: Deep Residual Learning for Image Recognition (https://arxiv.org/abs/1512.03385)
-    '''
 
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape, filters, kernel_size, stride):
         '''
         DESCRIPTION:
@@ -377,6 +381,8 @@ class ShortCutBlock(BaseModel):
 
 
 class IdentityBlock(BaseModel):
+
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape, nlayers=2, filters=[32, 64]):
         '''
         DESCRIPTION:
@@ -421,6 +427,7 @@ class IdentityBlock(BaseModel):
 
 class DenseBlock(BaseModel):
 
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape, growth_rate, nlayers):
         '''
         DESCRIPTION:
@@ -455,10 +462,11 @@ class DenseBlock(BaseModel):
 
 class TransitionLayer(BaseModel):
 
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape):
         '''
         DESCRIPTION:
-            The transition layer of dense net (Densely Connected Convolutional Networks https://arxiv.org/abs/1608.06993)
+            The transition layer of densenet (Densely Connected Convolutional Networks https://arxiv.org/abs/1608.06993)
         '''
         layers = []
         layers.append(Conv2D(input_channels, num_filters=input_channels, kernel_size=(1,1), stride=(1,1), padding='SAME'))
@@ -475,11 +483,11 @@ class TransitionLayer(BaseModel):
 
 
 class DenseNet(BaseModel):
-    '''
-    REFERENCE: Densely Connected Convolutional Networks (https://arxiv.org/abs/1608.06993)
-    '''
+
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape, ndense=3, growth_rate=12, nlayer1blk=12):
         '''
+        REFERENCE: Densely Connected Convolutional Networks (https://arxiv.org/abs/1608.06993)
         PARAMS:
             ndense (int): number of dense blocks
             nlayer1blk (int): number of layers in one block, one layer refers to
@@ -504,7 +512,7 @@ class DenseNet(BaseModel):
 
         dense = DenseBlock(transit.output_channels, transit.output_shape, growth_rate, nlayer1blk)
         layers.append(dense)
-        layers.append(AvgPooling(poolsize=dense.output_shape, stride=(1,1), padding='VALID'))
+        # layers.append(AvgPooling(poolsize=dense.output_shape, stride=(1,1), padding='VALID'))
 
         assert np.prod(dense.output_shape) > 0, 'output shape {} is <= 0'.format(dense.output_shape)
         self.startnode = StartNode(input_vars=[None])
@@ -529,6 +537,8 @@ class DenseNet(BaseModel):
 
 
 class UNet(BaseModel):
+
+    @BaseModel.init_name_scope
     def __init__(self, input_channels, input_shape):
 
         def _encode_block(in_hn, shape, in_ch, out_ch):

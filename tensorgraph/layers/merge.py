@@ -1,8 +1,8 @@
 
 import tensorflow as tf
+from .template import Template
 
-
-class Merge(object):
+class Merge(Template):
     '''
     Merge layer is used to merge the list of states from layer below into one state
     '''
@@ -25,6 +25,8 @@ class Merge(object):
 
 
 class Concat(Merge):
+
+    @Merge.init_name_scope
     def __init__(self, axis=1):
         self.axis = axis
 
@@ -56,6 +58,8 @@ class Multiply(Merge):
 
 
 class Select(Merge):
+
+    @Merge.init_name_scope
     def __init__(self, index=0):
         self.index = index
 
@@ -64,6 +68,8 @@ class Select(Merge):
 
 
 class SequenceMask(Merge):
+    
+    @Merge.init_name_scope
     def __init__(self, maxlen):
         '''
         DESCRIPTION:

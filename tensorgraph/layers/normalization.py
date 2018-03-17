@@ -5,6 +5,7 @@ from .template import Template
 
 class L2_Normalize(Template):
 
+    @Template.init_name_scope
     def __init__(self, dim):
         '''dim (int or list of ints): dimension to normalize'''
         self.dim = dim
@@ -15,6 +16,7 @@ class L2_Normalize(Template):
 
 class BatchNormalization(Template):
 
+    @Template.init_name_scope
     def __init__(self, input_shape):
         '''
         REFERENCE:
@@ -32,10 +34,8 @@ class BatchNormalization(Template):
         self.bn = TFBatchNorm()
         self.bn.build(input_shape=[None] + list(input_shape))
 
-
     def _train_fprop(self, state_below):
         return self.bn.apply(state_below, training=True)
-
 
     def _test_fprop(self, state_below):
         return self.bn.apply(state_below, training=False)
@@ -43,6 +43,7 @@ class BatchNormalization(Template):
 
 class LRN(Template):
 
+    @Template.init_name_scope
     def __init__(self, depth_radius=None, bias=None, alpha=None, beta=None):
         '''
         DESCRIPTION:

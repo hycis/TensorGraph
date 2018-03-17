@@ -6,6 +6,7 @@ import numpy as np
 
 class DynamicLSTM(Template):
 
+    @Template.init_name_scope
     def __init__(self, num_units, const_seq_len=False, state_is_tuple=True, scope=None):
         '''
         DESCRIPTION:
@@ -69,6 +70,7 @@ class DynamicLSTM(Template):
 
 class LSTM(Template):
 
+    @Template.init_name_scope
     def __init__(self, num_units, return_idx=[0,1,2], initial_state=None, state_is_tuple=True, scope=None):
         '''
         DESCRIPTION:
@@ -143,6 +145,7 @@ class LSTM(Template):
 
 class DynamicBiLSTM(Template):
 
+    @Template.init_name_scope
     def __init__(self, fw_num_units, bw_num_units, const_seq_len=False, state_is_tuple=True, scope=None):
         '''
         DESCRIPTION:
@@ -211,6 +214,7 @@ class DynamicBiLSTM(Template):
 
 class Seq2Seq(Template):
 
+    @Template.init_name_scope
     def __init__(self, num_units, state_is_tuple=True, scope=None):
         '''
         DESCRIPTION:
@@ -270,6 +274,7 @@ class Seq2Seq(Template):
 
 class BiLSTM_Merge(Template):
 
+    @Template.init_name_scope
     def __init__(self, merge_mode=Concat(axis=2)):
         '''
         DESCRIPTION:
@@ -290,6 +295,7 @@ class BiLSTM_Merge(Template):
 
 class BiLSTM_Last_Merge(Template):
 
+    @Template.init_name_scope
     def __init__(self, merge_mode=Concat(axis=1)):
         '''
         DESCRIPTION:

@@ -4,6 +4,8 @@ import numpy as np
 
 
 class Transpose(Template):
+
+    @Template.init_name_scope
     def __init__(self, perm):
         '''
         example:
@@ -17,6 +19,8 @@ class Transpose(Template):
 
 
 class Reverse(Template):
+
+    @Template.init_name_scope
     def __init__(self, axis):
         '''
         axis (list): list of axis to reverse
@@ -33,6 +37,8 @@ class Flatten(Template):
 
 
 class SetShape(Template):
+
+    @Template.init_name_scope
     def __init__(self, shape):
         self.shape = shape
 
@@ -48,6 +54,8 @@ class SetShape(Template):
 
 
 class Reshape(Template):
+
+    @Template.init_name_scope
     def __init__(self, shape):
         self.shape = shape
 
@@ -56,6 +64,8 @@ class Reshape(Template):
 
 
 class ReduceSum(Template):
+
+    @Template.init_name_scope
     def __init__(self, reduction_indices=None, keep_dims=False):
         self.reduction_indices = reduction_indices
         self.keep_dims = keep_dims
@@ -66,6 +76,8 @@ class ReduceSum(Template):
 
 
 class ReduceMax(Template):
+
+    @Template.init_name_scope
     def __init__(self, reduction_indices=None, keep_dims=False):
         self.reduction_indices = reduction_indices
         self.keep_dims = keep_dims
@@ -77,6 +89,7 @@ class ReduceMax(Template):
 
 class Squeeze(Template):
 
+    @Template.init_name_scope
     def __init__(self, squeeze_dims=None):
         '''
         PARAM:
@@ -93,6 +106,7 @@ class Squeeze(Template):
 
 class Expand_Dims(Template):
 
+    @Template.init_name_scope
     def __init__(self, dim):
         self.dim = dim
 
@@ -101,6 +115,8 @@ class Expand_Dims(Template):
 
 
 class Embedding(Template):
+
+    @Template.init_name_scope
     def __init__(self, cat_dim, encode_dim, embedding=None, zero_pad=False):
         """
         DESCRIPTION:
@@ -139,6 +155,8 @@ class Embedding(Template):
 
 
 class Lambda(Template):
+
+    @Template.init_name_scope
     def __init__(self, func, *args, **kwargs):
         '''func can be a lambda or some function that takes state_below as first arg
         '''
@@ -152,6 +170,8 @@ class Lambda(Template):
 
 
 class OneHot(Template):
+
+    @Template.init_name_scope
     def __init__(self, onehot_size):
         """
         DESCRIPTION:

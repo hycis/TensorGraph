@@ -2,11 +2,11 @@ import tensorflow as tf
 
 
 class Sum(object):
-    def _train_fprop(self, state_list):
+    def train_fprop(self, state_list):
         return tf.add_n(state_list)
 
-    def _test_fprop(self, state_list):
-        return self._train_fprop(state_list)
+    def test_fprop(self, state_list):
+        return self.train_fprop(state_list)
 
 class StartNode(object):
     def __init__(self, input_vars):
@@ -32,17 +32,17 @@ class HiddenNode(object):
     def train_fprop(self):
         if len(self.input_vars) == 0:
             return []
-        state = self.input_merge_mode._train_fprop(self.input_vars)
+        state = self.input_merge_mode.train_fprop(self.input_vars)
         for layer in self.layers:
-            state = layer._train_fprop(state)
+            state = layer.train_fprop(state)
         return [state]
 
     def test_fprop(self):
         if len(self.input_vars) == 0:
             return []
-        state = self.input_merge_mode._test_fprop(self.input_vars)
+        state = self.input_merge_mode.test_fprop(self.input_vars)
         for layer in self.layers:
-            state = layer._test_fprop(state)
+            state = layer.test_fprop(state)
         return [state]
 
     @property
@@ -68,7 +68,7 @@ class EndNode(object):
         self.input_vars = []
 
     def train_fprop(self):
-        return [self.input_merge_mode._train_fprop(self.input_vars)]
+        return [self.input_merge_mode.train_fprop(self.input_vars)]
 
     def test_fprop(self):
-        return [self.input_merge_mode._test_fprop(self.input_vars)]
+        return [self.input_merge_mode.test_fprop(self.input_vars)]
