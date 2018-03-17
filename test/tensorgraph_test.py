@@ -154,3 +154,4 @@ def test_models():
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=True)
 
 if __name__ == '__main__':
+    test_models()
