@@ -31,6 +31,7 @@ class CBR(BaseModel):
 
 class TGModel(BaseModel):
 
+    @BaseModel.init_name_scope
     def __init__(self, h, w, c, nclass):
         layers = []
         layers.append(CBR(h,w,c))
@@ -107,7 +108,7 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
             # tensorgraph model
             print('..using graph model')
             seq = TGModel(h, w, c, nclass)
-            y_train_sb = seq._train_fprop(X_ph)
+            y_train_sb = seq.train_fprop(X_ph)
 
         else:
             # tensorflow model
