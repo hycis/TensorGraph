@@ -49,6 +49,7 @@ from tensorgraph.layers import DenseBlock, BaseModel, Flatten, Linear, Softmax
 import tensorgraph as tg
 
 class ModelA(BaseModel):
+    @BaseModel.init_name_scope
     def __init__(self):
         layers = []
         layers.append(DenseBlock())
@@ -63,6 +64,7 @@ class ModelA(BaseModel):
 if someone wants to use your `ModelA` in his `ModelB`, he can easily do this
 ```python
 class ModelB(BaseModel):
+    @BaseModel.init_name_scope
     def __int__(self):
         layers = []
         layers.append(ModelA())
