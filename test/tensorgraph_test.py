@@ -149,7 +149,8 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
             ttl_train_loss /= n_exp
             print('epoch {}, train loss {}'.format(epoch, ttl_train_loss))
 
-
-if __name__ == '__main__':
+def test_models():
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=False)
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=True)
+
+if __name__ == '__main__':
