@@ -2,53 +2,6 @@
 import tensorflow as tf
 
 
-# def init_name_scope(self, func):
-#     def decorated(obj, *args, **kwargs):
-#         with tf.name_scope(self.__class__.__name__) as self.scope:
-#             return func(self, *args, **kwargs)
-#     return decorated
-#
-# def train_name_scope(func):
-#     def decorated(self, *args, **kwargs):
-#         with tf.name_scope(self.scope):
-#             with tf.name_scope('train'):
-#                 return func(self, *args, **kwargs)
-#     return decorated
-#
-# def test_name_scope(func):
-#     def decorated(self, *args, **kwargs):
-#         with tf.name_scope(self.scope):
-#             with tf.name_scope('test'):
-#                 return func(self, *args, **kwargs)
-#     return decorated
-#
-
-# class init_name_scope(object):
-#     def __init__(self, fun):
-#         self.func = fun
-#     def __call__(self, *args, **kwargs):
-#         with tf.name_scope(self.__class__.__name__) as self.scope:
-#             self.func(*args, **kwargs)
-#
-#
-# class test_name_scope(object):
-#     def __init__(self, fun):
-#         self.func = fun
-#     def __call__(self, *args, **kwargs):
-#         with tf.name_scope(self.scope):
-#             with tf.name_scope('test'):
-#                 self.func(*args, **kwargs)
-#
-#
-# class train_name_scope(object):
-#     def __init__(self, fun):
-#         self.func = fun
-#     def __call__(self, *args, **kwargs):
-#         with tf.name_scope(self.scope):
-#             with tf.name_scope('train'):
-#                 self.func(*args, **kwargs)
-
-
 class ScopeDeco(object):
 
     @classmethod
@@ -61,17 +14,25 @@ class ScopeDeco(object):
     @classmethod
     def train_name_scope(cls, func):
         def decorated(self, *args, **kwargs):
-            with tf.name_scope(self.scope):
-                with tf.name_scope('train'):
-                    return func(self, *args, **kwargs)
+            if hasattr(self, 'scope'):
+                with tf.name_scope(self.scope):
+                    with tf.name_scope('train'):
+                        return func(self, *args, **kwargs)
+            else:
+                print('train_fprop: scope not initiated for {}'.format(self.__class__.__name__))
+                return func(self, *args, **kwargs)
         return decorated
 
     @classmethod
     def test_name_scope(cls, func):
         def decorated(self, *args, **kwargs):
-            with tf.name_scope(self.scope):
-                with tf.name_scope('test'):
-                    return func(self, *args, **kwargs)
+            if hasattr(self, 'scope'):
+                with tf.name_scope(self.scope):
+                    with tf.name_scope('test'):
+                        return func(self, *args, **kwargs)
+            else:
+                print('test_fprop: scope not initiated for {}'.format(self.__class__.__name__))
+                return func(self, *args, **kwargs)
         return decorated
 
 
