@@ -18,4 +18,5 @@ def test_OneHot():
         print(sess.run(y2, feed_dict={X2:np.random.random_integers(0, 2, [5,6,7,8])}).shape)
 
 if __name__ == '__main__':
+    
     test_OneHot()
