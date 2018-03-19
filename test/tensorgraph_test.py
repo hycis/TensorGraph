@@ -84,13 +84,19 @@ def data(n_exp, h, w, c, nclass, batch_size):
 
 
 def TFModel(state_below, h, w, c, nclass):
-    state_below = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
-    state_below = batchnorm(state_below, input_shape=[h,w,1])
-    state_below = tf.nn.relu(state_below)
-    state_below = tf.contrib.layers.flatten(state_below)
-    state_below = linear(state_below,1*h*w, nclass)
-    return state_below
+    state_below1 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
+    state_below1 = batchnorm(state_below1, input_shape=[h,w,1])
+    state_below1 = tf.nn.relu(state_below1)
 
+    state_below2 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
+    state_below2 = batchnorm(state_below2, input_shape=[h,w,1])
+    state_below2 = tf.nn.relu(state_below2)
+
+    state_below = state_below1 + state_below2
+    state_below = tf.contrib.layers.flatten(state_below)
+    state_below = linear(state_below, 1*h*w, nclass)
+
+    return state_below
 
 
 def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
@@ -150,9 +156,28 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
             ttl_train_loss /= n_exp
             print('epoch {}, train loss {}'.format(epoch, ttl_train_loss))
 
+
+def test_compare_total_nodes():
+    h, w, c, nclass = 20, 20, 5, 2
+    X_ph = tf.placeholder('float32', [None, h, w, c])
+    with tf.name_scope('tgmodel'):
+        seq = TGModel(h, w, c, nclass)
+        y_train_sb = seq.train_fprop(X_ph)
+        num_tg_nodes = [x for x in tf.get_default_graph().get_operations() if x.name.startswith('tgmodel/')]
+        print('num tg nodes:', len(num_tg_nodes))
+    with tf.name_scope('tfmodel'):
+        y_train_sb = TFModel(X_ph, h, w, c, nclass)
+        num_tf_nodes = [x for x in tf.get_default_graph().get_operations() if x.name.startswith('tfmodel/')]
+        print('num tf nodes:', len(num_tf_nodes))
+    assert len(num_tg_nodes) == len(num_tf_nodes)
+
+
 def test_models():
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=False)
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=True)
 
+
+
 if __name__ == '__main__':
     test_models()
+    test_compare_total_nodes()
