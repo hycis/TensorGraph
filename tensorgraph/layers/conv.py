@@ -95,22 +95,21 @@ class Conv2D(Template):
                       or
                      "VALID" padding is always 0
         '''
-        with tf.name_scope(self.__class__.__name__) as self.scope:
-            self.input_channels = input_channels
-            self.num_filters = num_filters
-            self.kernel_size = kernel_size
-            self.stride = stride
-            self.padding = padding
+        self.input_channels = input_channels
+        self.num_filters = num_filters
+        self.kernel_size = kernel_size
+        self.stride = stride
+        self.padding = padding
 
-            self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
-            self.filter = filter
-            if self.filter is None:
-                self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
-                                          name=self.__class__.__name__ + '_filter')
+        self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
+        self.filter = filter
+        if self.filter is None:
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
+                                      name=self.__class__.__name__ + '_filter')
 
-            self.b = b
-            if self.b is None:
-                self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
+        self.b = b
+        if self.b is None:
+            self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
 
     def _train_fprop(self, state_below):
         '''state_below: (b, h, w, c)
