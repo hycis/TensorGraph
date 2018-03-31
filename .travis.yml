@@ -7,10 +7,10 @@ python:
   - "3.4"
   - "3.5"
 install:
-  - pip install --only-binary=scipy numpy nose sklearn pytest
+  - pip install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
   - pip install tensorflow
   - pip install git+https://github.com/hycis/TensorGraph.git@master
-  - pip3 install --only-binary=scipy numpy nose sklearn pytest
+  - pip3 install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
   - pip3 install tensorflow
   - pip3 install git+https://github.com/hycis/TensorGraph.git@master
 script:
