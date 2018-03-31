@@ -1,19 +1,27 @@
 dist: trusty
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.3"
-  - "3.4"
   - "3.5"
 install:
-  - pip install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
-  - pip install tensorflow
-  - pip install git+https://github.com/hycis/TensorGraph.git@master
-  - pip3 install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
-  - pip3 install tensorflow
-  - pip3 install git+https://github.com/hycis/TensorGraph.git@master
+
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      pip install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
+      pip install tensorflow
+      pip install git+https://github.com/hycis/TensorGraph.git@master
+    fi
+
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+      pip3 install --only-binary=numpy,scipy numpy nose scipy pytest sklearn
+      pip3 install tensorflow
+      pip3 install git+https://github.com/hycis/TensorGraph.git@master
+    fi
+
 script:
   - echo "TensorGraph Testing.."
-  - python -m pytest test
-  - python3 -m pytest test
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      python -m pytest test
+    fi
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then 
+      python3 -m pytest test
+    fi
