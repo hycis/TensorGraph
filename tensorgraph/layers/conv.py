@@ -123,6 +123,50 @@ class Conv2D(Template):
         return [self.filter, self.b]
 
 
+class Atrous_Conv2D(Template):
+
+    @Template.init_name_scope
+    def __init__(self, input_channels, num_filters, rate=1, kernel_size=(3,3),
+                 filter=None, b=None, padding='VALID', stddev=0.1):
+        '''
+        PARAM:
+            padding: "SAME", same as input shape
+                     "VALID", 0 padding, output shape = h - 2*((k+(k-1)*(r-1))/2)
+                              where k: kernel_size, r: rate and effective filter
+                              size is k+(k-1)*(r-1) with (r-1) zeros inserted
+                              between every horizontal and vertical neighbouring
+                              filter values.
+        '''
+        self.input_channels = input_channels
+        self.num_filters = num_filters
+        self.kernel_size = kernel_size
+        self.rate = rate
+        self.padding = padding
+
+        self.filter_shape = self.kernel_size + (self.input_channels, self.num_filters)
+        self.filter = filter
+        if self.filter is None:
+            self.filter = tf.Variable(tf.random_normal(self.filter_shape, stddev=stddev),
+                                      name=self.__class__.__name__ + '_filter')
+
+        self.b = b
+        if self.b is None:
+            self.b = tf.Variable(tf.zeros([self.num_filters]), name=self.__class__.__name__ + '_b')
+
+
+    def _train_fprop(self, state_below):
+        '''state_below: (b, h, w, c)
+        '''
+        conv_out = tf.nn.atrous_conv2d(state_below, self.filter, rate=self.rate, padding=self.padding)
+        return tf.nn.bias_add(conv_out, self.b)
+
+
+    @property
+    def _variables(self):
+        return [self.filter, self.b]
+
+
+
 class Depthwise_Conv2D(Template):
 
     @Template.init_name_scope
