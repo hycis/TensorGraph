@@ -50,7 +50,7 @@ def test_Atrous_Conv2d():
         sess.run(init)
         out = sess.run(y_sb, feed_dict={X_ph:np.random.rand(32, h, w, c)})
         print(out.shape)
-        assert out.shape[1] == h - 2*((k+(k-1)*(r-1))/2), out.shape[2] == w - 2*((w+(w-1)*(r-1))/2)
+        assert out.shape[1] == h - 2*int((k+(k-1)*(r-1))/2), out.shape[2] == w - 2*int((w+(w-1)*(r-1))/2)
 
 
 
