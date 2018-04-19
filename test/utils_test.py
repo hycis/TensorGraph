@@ -39,5 +39,4 @@ def test_fetch_queue_tfrecords():
 
 if __name__ == '__main__':
     test_make_tfrecords()
-    
     test_fetch_queue_tfrecords()
