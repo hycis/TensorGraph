@@ -1,7 +1,7 @@
 
-import tensorgraph as tg
+import tensorgraphx as tg
 import tensorflow as tf
-from tensorgraph.layers import OneHot
+from tensorgraphx.layers import OneHot
 import numpy as np
 
 def test_OneHot():

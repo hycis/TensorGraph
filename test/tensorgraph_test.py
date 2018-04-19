@@ -1,10 +1,10 @@
 
 from tensorflow.python.layers.normalization import BatchNormalization as TFBatchNorm
-from tensorgraph.layers import Conv2D, BatchNormalization, RELU, Linear, Flatten, \
+from tensorgraphx.layers import Conv2D, BatchNormalization, RELU, Linear, Flatten, \
                                BaseModel, Sum
 import tensorflow as tf
 import numpy as np
-import tensorgraph as tg
+import tensorgraphx as tg
 from tensorflow.python.framework import ops
 import os
 
@@ -111,7 +111,7 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
         y_ph = tf.placeholder('float32', [None, nclass])
 
         if tgmodel:
-            # tensorgraph model
+            # tensorgraphx model
             print('..using graph model')
             seq = TGModel(h, w, c, nclass)
             y_train_sb = seq.train_fprop(X_ph)

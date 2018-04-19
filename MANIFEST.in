@@ -1,2 +1,2 @@
 include README.md LICENCE
-recursive-include tensorgraph *.py
+recursive-include tensorgraphx *.py

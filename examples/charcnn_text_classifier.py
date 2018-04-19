@@ -1,11 +1,11 @@
 
 import tensorflow as tf
-import tensorgraph as tg
-from tensorgraph.layers import Reshape, Embedding, Conv2D, RELU, Linear, Flatten, ReduceSum, Softmax
+import tensorgraphx as tg
+from tensorgraphx.layers import Reshape, Embedding, Conv2D, RELU, Linear, Flatten, ReduceSum, Softmax
 from nltk.tokenize import RegexpTokenizer
 from nlpbox import CharNumberEncoder, CatNumberEncoder
-from tensorgraph.utils import valid, split_df, make_one_hot
-from tensorgraph.cost import entropy, accuracy
+from tensorgraphx.utils import valid, split_df, make_one_hot
+from tensorgraphx.cost import entropy, accuracy
 import pandas
 import numpy as np
 
@@ -75,7 +75,7 @@ def tweets(word_len, sent_len, train_valid_ratio=[5,1]):
 
 
 def train():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     with tf.Session() as sess:
         word_len = 20
         sent_len = 50

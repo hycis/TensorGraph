@@ -1,18 +1,18 @@
-[![Build Status](https://travis-ci.org/hycis/TensorGraph.svg?branch=master)](https://travis-ci.org/hycis/TensorGraph)
+[![Build Status](https://travis-ci.org/hycis/TensorGraphX.svg?branch=master)](https://travis-ci.org/hycis/TensorGraphX)
 
-# TensorGraph - Simplicity is Beauty
-TensorGraph is a simple, lean, and clean framework on TensorFlow for building any imaginable models.
+# TensorGraphX - Simplicity is Beauty
+TensorGraphX is a simple, lean, and clean framework on TensorFlow for building any imaginable models.
 
 As deep learning becomes more and more common and the architectures becoming more
 and more complicated, it seems that we need some easy to use framework to quickly
-build these models and that's what TensorGraph is designed for. It's a very simple
+build these models and that's what TensorGraphX is designed for. It's a very simple
 framework that adds a very thin layer above tensorflow. It is for more advanced
 users who want to have more control and flexibility over his model building and
 who wants efficiency at the same time.
 
 -----
 ### Target Audience
-TensorGraph is targeted more at intermediate to advance users who feel keras or
+TensorGraphX is targeted more at intermediate to advance users who feel keras or
 other packages is having too much restrictions and too much black box on model
 building, and someone who don't want to rewrite the standard layers in tensorflow
 constantly. Also for enterprise users who want to share deep learning models
@@ -23,30 +23,30 @@ easily between teams.
 
 First you need to install [tensorflow](https://www.tensorflow.org/versions/r0.9/get_started/os_setup.html)
 
-To install tensorgraph simply do via pip
+To install tensorgraphx simply do via pip
 ```bash
-sudo pip install tensorgraph
+sudo pip install tensorgraphx
 ```
 or for bleeding edge version do
 ```bash
-sudo pip install --upgrade git+https://github.com/hycis/TensorGraph.git@master
+sudo pip install --upgrade git+https://github.com/hycis/TensorGraphX.git@master
 ```
 or simply clone and add to `PYTHONPATH`.
 ```bash
-git clone https://github.com/hycis/TensorGraph.git
-export PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH
+git clone https://github.com/hycis/TensorGraphX.git
+export PYTHONPATH=/path/to/TensorGraphX:$PYTHONPATH
 ```
-in order for the install to persist via export `PYTHONPATH`. Add `PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH` to your `.bashrc` for linux or
+in order for the install to persist via export `PYTHONPATH`. Add `PYTHONPATH=/path/to/TensorGraphX:$PYTHONPATH` to your `.bashrc` for linux or
 `.bash_profile` for mac. While this method works, you will have to ensure that
 all the dependencies in [setup.py](setup.py) are installed.
 
 -----
-### Everything in TensorGraph is about Layers
-Everything in TensorGraph is about layers. A model such as VGG or Resnet can be a layer. An identity block from Resnet or a dense block from Densenet can be a layer as well. Building models in TensorGraph is same as building a toy with lego. For example you can create a new model (layer) by subclass the `BaseModel` layer and use `DenseBlock` layer inside your `ModelA` layer.
+### Everything in TensorGraphX is about Layers
+Everything in TensorGraphX is about layers. A model such as VGG or Resnet can be a layer. An identity block from Resnet or a dense block from Densenet can be a layer as well. Building models in TensorGraphX is same as building a toy with lego. For example you can create a new model (layer) by subclass the `BaseModel` layer and use `DenseBlock` layer inside your `ModelA` layer.
 
 ```python
-from tensorgraph.layers import DenseBlock, BaseModel, Flatten, Linear, Softmax
-import tensorgraph as tg
+from tensorgraphx.layers import DenseBlock, BaseModel, Flatten, Linear, Softmax
+import tensorgraphx as tg
 
 class ModelA(BaseModel):
     @BaseModel.init_name_scope
@@ -84,15 +84,15 @@ y_train = modelb.train_fprop(X_ph)
 y_test = modelb.test_fprop(X_ph)
 ```
 
-checkout some well known models in TensorGraph
-1. [VGG16 code](tensorgraph/layers/backbones.py#L37) and [VGG19 code](tensorgraph/layers/backbones.py#L125) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
-2. [DenseNet code](tensorgraph/layers/backbones.py#L477) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
-3. [ResNet code](tensorgraph/layers/backbones.py#L225) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
-4. [Unet code](tensorgraph/layers/backbones.py#L531) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
+checkout some well known models in TensorGraphX
+1. [VGG16 code](tensorgraphx/layers/backbones.py#L37) and [VGG19 code](tensorgraphx/layers/backbones.py#L125) - [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+2. [DenseNet code](tensorgraphx/layers/backbones.py#L477) - [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
+3. [ResNet code](tensorgraphx/layers/backbones.py#L225) - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+4. [Unet code](tensorgraphx/layers/backbones.py#L531) - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
 
 -----
-### TensorGraph on Multiple GPUS
-To use tensorgraph on multiple gpus, you can easily integrate it with [horovod](https://github.com/uber/horovod).
+### TensorGraphX on Multiple GPUS
+To use tensorgraphx on multiple gpus, you can easily integrate it with [horovod](https://github.com/uber/horovod).
 
 ```python
 import horovod.tensorflow as hvd
@@ -100,7 +100,7 @@ from tensorflow.python.framework import ops
 import tensorflow as tf
 hvd.init()
 
-# tensorgraph model derived previously
+# tensorgraphx model derived previously
 modelb = ModelB()
 X_ph = tf.placeholder()
 y_ph = tf.placeholder()
@@ -137,11 +137,11 @@ with tf.Session(graph=graph, config=config) as sess:
             _, loss_train = sess.run([train_op, train_cost], feed_dict={X_ph:X, y_ph:y})
 ```
 
-for a full example on [tensorgraph on horovod](./examples/multi_gpus_horovod.py)
+for a full example on [tensorgraphx on horovod](./examples/multi_gpus_horovod.py)
 
 -----
-### How TensorGraph Works?
-In TensorGraph, we defined three types of nodes
+### How TensorGraphX Works?
+In TensorGraphX, we defined three types of nodes
 
 1. StartNode : for inputs to the graph
 2. HiddenNode : for putting sequential layers inside
@@ -255,7 +255,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 -----
 ### Transfer Learning Example
 Below is an example on transfer learning with bi-modality inputs and merge at
-the middle layer with shared representation, in fact, TensorGraph can be used
+the middle layer with shared representation, in fact, TensorGraphX can be used
 to build any number of modalities for transfer learning.
 
 <img src="draw/transferlearn.png" height="250">

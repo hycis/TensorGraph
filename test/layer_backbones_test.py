@@ -1,9 +1,9 @@
-import tensorgraph as tg
-from tensorgraph.layers.backbones import *
-from tensorgraph.layers import Softmax, Flatten, Linear, MaxPooling
+import tensorgraphx as tg
+from tensorgraphx.layers.backbones import *
+from tensorgraphx.layers import Softmax, Flatten, Linear, MaxPooling
 import tensorflow as tf
 import os
-from tensorgraph.trainobject import train as mytrain
+from tensorgraphx.trainobject import train as mytrain
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 

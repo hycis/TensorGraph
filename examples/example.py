@@ -1,9 +1,9 @@
 
 import tensorflow as tf
 import numpy as np
-from tensorgraph import Graph, StartNode, HiddenNode, EndNode
-from tensorgraph.layers import Linear, RELU, Concat, Mean, Sum
-from tensorgraph import ProgressBar, SequentialIterator
+from tensorgraphx import Graph, StartNode, HiddenNode, EndNode
+from tensorgraphx.layers import Linear, RELU, Concat, Mean, Sum
+from tensorgraphx import ProgressBar, SequentialIterator
 
 
 def model():

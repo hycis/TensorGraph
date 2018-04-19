@@ -1,4 +1,4 @@
-import tensorgraph as tg
+import tensorgraphx as tg
 import numpy as np
 import time
 

@@ -1,7 +1,7 @@
 
 import tensorflow as tf
-import tensorgraph as tg
-from tensorgraph.layers import Depthwise_Conv2D, Atrous_Conv2D
+import tensorgraphx as tg
+from tensorgraphx.layers import Depthwise_Conv2D, Atrous_Conv2D
 import numpy as np
 
 def test_Depthwise_Conv2d():

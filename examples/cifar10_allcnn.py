@@ -7,15 +7,15 @@ https://arxiv.org/pdf/1412.6806.pdf
 
 from __future__ import division, print_function, absolute_import
 
-from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
+from tensorgraphx.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
                                Softmax, Flatten, Linear, AvgPooling, \
                                Lambda, BatchNormalization, IdentityBlock, \
                                TransitionLayer, DenseNet
-from tensorgraph.utils import same, valid, same_nd, valid_nd
-import tensorgraph as tg
+from tensorgraphx.utils import same, valid, same_nd, valid_nd
+import tensorgraphx as tg
 import tensorflow as tf
-from tensorgraph.cost import entropy, accuracy, mse
-from tensorgraph.dataset import Mnist, Cifar10
+from tensorgraphx.cost import entropy, accuracy, mse
+from tensorgraphx.dataset import Mnist, Cifar10
 from tensorflow.python.framework import ops
 import numpy as np
 
@@ -158,7 +158,7 @@ def train():
 
 
 def train_with_trainobject():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -187,7 +187,7 @@ def train_with_trainobject():
 
 
 def train_with_VGG():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -196,7 +196,7 @@ def train_with_VGG():
         _, nclass = y_train.shape
         print('X max', np.max(X_train))
         print('X min', np.min(X_train))
-        from tensorgraph.layers import VGG19
+        from tensorgraphx.layers import VGG19
         seq = tg.Sequential()
         layer = VGG19(input_channels=c, input_shape=(h,w))
         seq.add(layer)
@@ -223,7 +223,7 @@ def train_with_VGG():
 
 
 def train_with_Resnet():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -268,7 +268,7 @@ def train_with_Resnet():
 
 
 def train_with_Densenet():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:

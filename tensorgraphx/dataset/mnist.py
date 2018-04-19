@@ -1,6 +1,6 @@
 
 import numpy as np
-from tensorgraph.utils import make_one_hot
+from tensorgraphx.utils import make_one_hot
 import struct
 import numpy
 import gzip

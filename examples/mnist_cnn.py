@@ -11,13 +11,13 @@ Links:
 
 from __future__ import division, print_function, absolute_import
 
-from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
+from tensorgraphx.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
                                Softmax, Flatten, Linear, BatchNormalization
-from tensorgraph.utils import same
-import tensorgraph as tg
+from tensorgraphx.utils import same
+import tensorgraphx as tg
 import tensorflow as tf
-from tensorgraph.cost import entropy, accuracy
-from tensorgraph.dataset import Mnist
+from tensorgraphx.cost import entropy, accuracy
+from tensorgraphx.dataset import Mnist
 from tensorflow.python.framework import ops
 
 def model():
@@ -135,7 +135,7 @@ def train():
 
 
 def train_with_trainobject():
-    from tensorgraph.trainobject import train as mytrain
+    from tensorgraphx.trainobject import train as mytrain
     with tf.Session() as sess:
         seq = model()
         X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')

@@ -1,7 +1,7 @@
 
 import tensorflow as tf
-import tensorgraph as tg
-from tensorgraph.layers import Linear, Dropout
+import tensorgraphx as tg
+from tensorgraphx.layers import Linear, Dropout
 import numpy as np
 
 def test_Dropout():

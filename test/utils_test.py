@@ -1,4 +1,4 @@
-from tensorgraph.utils import MakeTFRecords
+from tensorgraphx.utils import MakeTFRecords
 import numpy as np
 import tensorflow as tf
 
