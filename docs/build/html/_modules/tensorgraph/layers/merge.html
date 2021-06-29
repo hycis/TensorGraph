@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.layers.merge &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/tensorgraph.html">tensorgraph package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tensorgraph.layers.merge</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tensorgraph.layers.merge</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="k">import</span> <span class="n">BaseLayer</span>
+
+<div class="viewcode-block" id="Merge"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Merge">[docs]</a><span class="k">class</span> <span class="nc">Merge</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Descriptions:</span>
+<span class="sd">        Merge layer is used to merge the list of states from layer below into one state</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state_list (list): list of states to be merged</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_test_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Descriptions:</span>
+<span class="sd">            Defines the forward propogation through the layer during testing,</span>
+<span class="sd">            defaults to the same as train forward propogation</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_fprop</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Concat"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Concat">[docs]</a><span class="k">class</span> <span class="nc">Concat</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+
+    <span class="nd">@Merge</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Concat the list of tensors into one tensor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axis (int): axis of concatenation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">state_list</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Mean"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Mean">[docs]</a><span class="k">class</span> <span class="nc">Mean</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Sum">[docs]</a><span class="k">class</span> <span class="nc">Sum</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NoChange"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.NoChange">[docs]</a><span class="k">class</span> <span class="nc">NoChange</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">state_list</span></div>
+
+
+<div class="viewcode-block" id="Multiply"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Multiply">[docs]</a><span class="k">class</span> <span class="nc">Multiply</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">state_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">state_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="Select"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.Select">[docs]</a><span class="k">class</span> <span class="nc">Select</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+
+    <span class="nd">@Merge</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">state_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SequenceMask"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.SequenceMask">[docs]</a><span class="k">class</span> <span class="nc">SequenceMask</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+
+    <span class="nd">@Merge</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxlen</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Description:</span>
+<span class="sd">            Mask the sequence of shape [batchsize, max_seq_len, :, ..] at the</span>
+<span class="sd">            second dimension by using a mask tensor representing the first N</span>
+<span class="sd">            positions of each row.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; mask = tf.sequence_mask(lengths=[1, 3, 2], maxlen=5) =</span>
+<span class="sd">            &gt;&gt;&gt;       [[True, False, False, False, False],</span>
+<span class="sd">            &gt;&gt;&gt;       [True, True, True, False, False],</span>
+<span class="sd">            &gt;&gt;&gt;       [True, True, False, False, False]]</span>
+<span class="sd">            &gt;&gt;&gt; y = X * mask</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxlen</span> <span class="o">=</span> <span class="n">maxlen</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">state_below</span><span class="p">,</span> <span class="n">seqlen</span> <span class="o">=</span> <span class="n">state_list</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">sequence_mask</span><span class="p">(</span><span class="n">seqlen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxlen</span><span class="p">))</span>
+        <span class="n">num_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">state_below</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_dim</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state_below</span> <span class="o">*</span> <span class="n">mask</span></div>
+
+
+<div class="viewcode-block" id="MaskSoftmax"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.MaskSoftmax">[docs]</a><span class="k">class</span> <span class="nc">MaskSoftmax</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The softmax is apply to n units that is not masked specified by the</span>
+<span class="sd">           seqlen.</span>
+
+<span class="sd">           Args:</span>
+<span class="sd">               state_list : [state_below, seqlen]</span>
+<span class="sd">                    ``state_below`` (2d tf tensor) shape = [batchsize, layer_dim]</span>
+<span class="sd">                    ``seqlen`` (1d tf tensor) shape = [batchsize]</span>
+
+<span class="sd">           Example:</span>
+<span class="sd">               &gt;&gt;&gt; state_below = 3 x 5 matrix</span>
+<span class="sd">               &gt;&gt;&gt; seqlen = [2, 1, 4]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">state_below</span><span class="p">,</span> <span class="n">seqlen</span> <span class="o">=</span> <span class="n">state_list</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqlen</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">state_below</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;state below dimenion </span><span class="si">{}</span><span class="s1"> != 2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">sequence_mask</span><span class="p">(</span><span class="n">seqlen</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">state_below</span><span class="p">)</span> <span class="o">*</span> <span class="n">mask</span>
+        <span class="n">exp_sum</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">exp_sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">softmax</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">exp_sum</span> <span class="o">+</span> <span class="n">zeros</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">nonzeros</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">exp_sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">softmax</span> <span class="o">=</span> <span class="n">softmax</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">nonzeros</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">softmax</span></div>
+
+
+<div class="viewcode-block" id="SelectedMaskSoftmax"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.merge.SelectedMaskSoftmax">[docs]</a><span class="k">class</span> <span class="nc">SelectedMaskSoftmax</span><span class="p">(</span><span class="n">Merge</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;a generic mask over state and apply a softmax after which</span>
+
+<span class="sd">           Args:</span>
+<span class="sd">               state_list : [state_below, mask]</span>
+<span class="sd">                    ``state_below`` (2d tf tensor) shape = [batchsize, layer_dim]</span>
+<span class="sd">                    ``mask`` (1d tf tensor) shape = [layer_dim]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">state_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">state_below</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">state_list</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">state_below</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;state below dimenion </span><span class="si">{}</span><span class="s1"> != 2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mask dimenion </span><span class="si">{}</span><span class="s1"> != 1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">state_below</span><span class="p">)</span> <span class="o">*</span> <span class="n">mask</span>
+        <span class="n">exp_sum</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">exp_sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">softmax</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">exp_sum</span> <span class="o">+</span> <span class="n">zeros</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">nonzeros</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">exp_sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">softmax</span> <span class="o">=</span> <span class="n">softmax</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">nonzeros</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">softmax</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

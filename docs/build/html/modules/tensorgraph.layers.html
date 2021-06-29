@@ -1,0 +1,1477 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.layers package &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tensorgraph.models_zoo package" href="tensorgraph.models_zoo.html" />
+    <link rel="prev" title="tensorgraph.dataset package" href="tensorgraph.dataset.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tensorgraph.html">tensorgraph package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tensorgraph.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.dataset.html">tensorgraph.dataset package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tensorgraph.layers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.activation">tensorgraph.layers.activation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.backbones">tensorgraph.layers.backbones module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.cast">tensorgraph.layers.cast module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.conv">tensorgraph.layers.conv module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.linear">tensorgraph.layers.linear module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.merge">tensorgraph.layers.merge module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.misc">tensorgraph.layers.misc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.noise">tensorgraph.layers.noise module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.normalization">tensorgraph.layers.normalization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.recurrent">tensorgraph.layers.recurrent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.sampling">tensorgraph.layers.sampling module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers.template">tensorgraph.layers.template module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.cost">tensorgraph.cost module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.data_iterator">tensorgraph.data_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.graph">tensorgraph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.node">tensorgraph.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.progbar">tensorgraph.progbar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.sequential">tensorgraph.sequential module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.stopper">tensorgraph.stopper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.trainobject">tensorgraph.trainobject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.utils">tensorgraph.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tensorgraph.html">tensorgraph package</a> &raquo;</li>
+        
+      <li>tensorgraph.layers package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/tensorgraph.layers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorgraph-layers-package">
+<h1>tensorgraph.layers package<a class="headerlink" href="#tensorgraph-layers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tensorgraph.layers.activation">
+<span id="tensorgraph-layers-activation-module"></span><h2>tensorgraph.layers.activation module<a class="headerlink" href="#module-tensorgraph.layers.activation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.activation.ELU">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">ELU</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#ELU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.ELU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.LeakyRELU">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">LeakyRELU</code><span class="sig-paren">(</span><em>leak=0.2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#LeakyRELU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.LeakyRELU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.RELU">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">RELU</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#RELU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.RELU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.RELU6">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">RELU6</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#RELU6"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.RELU6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.Sigmoid">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">Sigmoid</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#Sigmoid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.Sigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.Softmax">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">Softmax</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#Softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.Softmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.Softplus">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">Softplus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#Softplus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.Softplus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.Softsign">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">Softsign</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#Softsign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.Softsign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.activation.Tanh">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.activation.</code><code class="descname">Tanh</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/activation.html#Tanh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.activation.Tanh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.backbones">
+<span id="tensorgraph-layers-backbones-module"></span><h2>tensorgraph.layers.backbones module<a class="headerlink" href="#module-tensorgraph.layers.backbones" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.DenseBlock">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">DenseBlock</code><span class="sig-paren">(</span><em>growth_rate</em>, <em>nlayers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#DenseBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.DenseBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>one dense block from the densely connected CNN (Densely Connected
+Convolutional Networks <a class="reference external" href="https://arxiv.org/abs/1608.06993">https://arxiv.org/abs/1608.06993</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>growth_rate</strong> (<em>int</em>) – number of filters to grow inside one denseblock</li>
+<li><strong>nlayers</strong> (<em>int</em>) – number of layers in one block, one layer refers to
+one group of batchnorm, relu and conv2d</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.DenseNet">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">DenseNet</code><span class="sig-paren">(</span><em>ndense=3</em>, <em>growth_rate=12</em>, <em>nlayer1blk=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#DenseNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.DenseNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Densely Connected Convolutional Networks (<a class="reference external" href="https://arxiv.org/abs/1608.06993">https://arxiv.org/abs/1608.06993</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ndense</strong> (<em>int</em>) – number of dense blocks</li>
+<li><strong>nlayer1blk</strong> (<em>int</em>) – number of layers in one block, one layer refers to
+one group of batchnorm, relu and conv2d</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.IdentityBlock">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">IdentityBlock</code><span class="sig-paren">(</span><em>nlayers=2, filters=[32, 64]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#IdentityBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.IdentityBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>one identity block of a resnet in the paper Deep Residual Learning
+for Image Recognition (<a class="reference external" href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nlayers</strong> (<em>int</em>) – number recurrent cycles within one identity block</li>
+<li><strong>filters</strong> (<em>list of 2 ints</em>) – number of filters within one identity block</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ResNet101">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ResNet101</code><span class="sig-paren">(</span><em>config=[2, 3, 22, 2]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ResNet101"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ResNet101" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.backbones.ResNetBase" title="tensorgraph.layers.backbones.ResNetBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.backbones.ResNetBase</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ResNet152">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ResNet152</code><span class="sig-paren">(</span><em>config=[2, 7, 35, 2]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ResNet152"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ResNet152" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.backbones.ResNetBase" title="tensorgraph.layers.backbones.ResNetBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.backbones.ResNetBase</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ResNet50">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ResNet50</code><span class="sig-paren">(</span><em>config=[2, 3, 5, 2]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ResNet50"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ResNet50" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.backbones.ResNetBase" title="tensorgraph.layers.backbones.ResNetBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.backbones.ResNetBase</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ResNetBase">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ResNetBase</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ResNetBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ResNetBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Deep Residual Learning for Image Recognition (<a class="reference external" href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>list of ints</em>) – a list of 4 number of layers for each identity block</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ResNetSmall">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ResNetSmall</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ResNetSmall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ResNetSmall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.backbones.ResNetBase" title="tensorgraph.layers.backbones.ResNetBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.backbones.ResNetBase</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Deep Residual Learning for Image Recognition (<a class="reference external" href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>list of ints</em>) – a list of 2 number of layers for each identity block</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.ShortCutBlock">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">ShortCutBlock</code><span class="sig-paren">(</span><em>filters</em>, <em>kernel_size=(3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#ShortCutBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.ShortCutBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>The shortcut block in Deep Residual Learning for Image Recognition (<a class="reference external" href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a>)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filters</strong> (<em>list of 3 ints</em>) – number of filters in different CNN layers</li>
+<li><strong>kernel_size</strong> (<em>tuple of 2 ints</em>) – </li>
+<li><strong>stride</strong> (<em>tuple of 2 ints</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.TransitionLayer">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">TransitionLayer</code><span class="sig-paren">(</span><em>num_filters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#TransitionLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.TransitionLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>The transition layer of densenet (Densely Connected Convolutional Networks <a class="reference external" href="https://arxiv.org/abs/1608.06993">https://arxiv.org/abs/1608.06993</a>)</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.UNet">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">UNet</code><span class="sig-paren">(</span><em>input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#UNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.UNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.VGG16">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">VGG16</code><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#VGG16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.VGG16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Very Deep Convolutional Networks for Large-Scale Image Recognition
+(<a class="reference external" href="https://arxiv.org/abs/1409.1556">https://arxiv.org/abs/1409.1556</a>)</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.backbones.VGG19">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.backbones.</code><code class="descname">VGG19</code><a class="reference internal" href="../_modules/tensorgraph/layers/backbones.html#VGG19"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.backbones.VGG19" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Very Deep Convolutional Networks for Large-Scale Image Recognition
+(<a class="reference external" href="https://arxiv.org/abs/1409.1556">https://arxiv.org/abs/1409.1556</a>)</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.cast">
+<span id="tensorgraph-layers-cast-module"></span><h2>tensorgraph.layers.cast module<a class="headerlink" href="#module-tensorgraph.layers.cast" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.cast.ToFloat">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.cast.</code><code class="descname">ToFloat</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/cast.html#ToFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.cast.ToFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.cast.ToInt32">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.cast.</code><code class="descname">ToInt32</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/cast.html#ToInt32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.cast.ToInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.conv">
+<span id="tensorgraph-layers-conv-module"></span><h2>tensorgraph.layers.conv module<a class="headerlink" href="#module-tensorgraph.layers.conv" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Atrous_Conv2D">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Atrous_Conv2D</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>rate=1</em>, <em>kernel_size=(3</em>, <em>3)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Atrous_Conv2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Atrous_Conv2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 4D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[kernel_size[0],</span> <span class="pre">kernel_size[1],</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>: same as input shape</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: 0 padding, output shape = h - 2((k+(k-1)(r-1))/2)</dt>
+<dd>where k: kernel_size, r: rate and effective filter
+size is k+(k-1)(r-1) with (r-1) zeros inserted
+between every horizontal and vertical neighbouring
+filter values.</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.AvgPooling">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">AvgPooling</code><span class="sig-paren">(</span><em>poolsize=(2</em>, <em>2)</em>, <em>stride=(1</em>, <em>1)</em>, <em>padding='VALID'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#AvgPooling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.AvgPooling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>Average pooling layer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride</strong> – two-dimensional tuple (a, b), the separation horizontally a
+or vertically b between two pools</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Conv2D">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Conv2D</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Conv2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Conv2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 4D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[kernel_size[0],</span> <span class="pre">kernel_size[1],</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Conv2D_Transpose">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Conv2D_Transpose</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Conv2D_Transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Conv2D_Transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 4D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[kernel_size[0],</span> <span class="pre">kernel_size[1],</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Conv3D">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Conv3D</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1</em>, <em>1)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Conv3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Conv3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>3d convolution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>kernel_size</strong> – [filter_depth, filter_height, filter_width]</li>
+<li><strong>stride</strong> – [stride_depth, stride_height, stride_width]</li>
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 5D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[filter_depth,</span> <span class="pre">filter_height,</span> <span class="pre">filter_width,</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_depth</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_depth</span> <span class="o">-</span> <span class="n">in_depth</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Conv3D_Transpose">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Conv3D_Transpose</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1</em>, <em>1)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Conv3D_Transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Conv3D_Transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 5D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[kernel_size[0],</span> <span class="pre">kernel_size[1],</span> <span class="pre">kernel_size[2],</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_depth</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_depth</span> <span class="o">-</span> <span class="n">in_depth</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.Depthwise_Conv2D">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">Depthwise_Conv2D</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1)</em>, <em>filter=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#Depthwise_Conv2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.Depthwise_Conv2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Descriptions:</dt>
+<dd>Depthwise 2-D convolution.
+Given an input tensor of shape [batch, in_height, in_width, in_channels]
+and a filter tensor of shape [filter_height, filter_width, in_channels, channel_multiplier]
+containing in_channels convolutional filters of depth 1, depthwise_conv2d
+applies a different filter to each input channel (expanding from 1 channel
+to channel_multiplier channels for each), then concatenates the results together.
+The output has in_channels * channel_multiplier channels.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<em>tensorflow.Variable</em>) – 4D Variable of shape
+<code class="docutils literal notranslate"><span class="pre">[kernel_size[0],</span> <span class="pre">kernel_size[1],</span> <span class="pre">input_channels,</span> <span class="pre">num_filters]</span></code></li>
+<li><strong>b</strong> (<em>tensorflow.Variable</em>) – 1D Variable of shape [num_filters]</li>
+<li><strong>stddev</strong> (<em>float</em>) – standard deviation for initializing the filter</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.MaxPooling">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">MaxPooling</code><span class="sig-paren">(</span><em>poolsize=(2</em>, <em>2)</em>, <em>stride=(1</em>, <em>1)</em>, <em>padding='VALID'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#MaxPooling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.MaxPooling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>Pooling layer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride</strong> – two-dimensional tuple (a, b), the separation horizontally a
+or vertically b between two pools</li>
+<li><strong>padding</strong> – <p>SAME``:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.MaxPooling3D">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">MaxPooling3D</code><span class="sig-paren">(</span><em>poolsize=(2</em>, <em>2</em>, <em>2)</em>, <em>stride=(1</em>, <em>1</em>, <em>1)</em>, <em>padding='VALID'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#MaxPooling3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.MaxPooling3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>3D pooling layer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input</strong> – A Tensor. Must be one of the following types: float32. Shape
+[batch, depth, rows, cols, channels] tensor to pool over.</li>
+<li><strong>and stride</strong> (<em>poolsize</em>) – three-dimensional tuple (d, h, w)</li>
+<li><strong>padding</strong> – <p><code class="docutils literal notranslate"><span class="pre">SAME</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">VALID</span></code>: padding is always 0</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.conv.ZeroPad">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.conv.</code><code class="descname">ZeroPad</code><span class="sig-paren">(</span><em>pad_along_height=[0, 0], pad_along_width=[0, 0]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/conv.html#ZeroPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.conv.ZeroPad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pad</strong> (<em>tuple</em>) – pad_along_height = (h_top, h_bottom)
+pad_along_width = (w_left, w_right)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_top</span><span class="p">,</span> <span class="n">h_bottom</span><span class="p">)</span> <span class="ow">and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_left</span><span class="p">,</span> <span class="n">w_right</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">padded_mage</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">+</span><span class="n">h_top</span><span class="o">+</span><span class="n">h_bottom</span><span class="p">,</span> <span class="n">c</span><span class="o">+</span><span class="n">w_left</span><span class="o">+</span><span class="n">w_right</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.linear">
+<span id="tensorgraph-layers-linear-module"></span><h2>tensorgraph.layers.linear module<a class="headerlink" href="#module-tensorgraph.layers.linear" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.linear.Linear">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.linear.</code><code class="descname">Linear</code><span class="sig-paren">(</span><em>this_dim=None</em>, <em>W=None</em>, <em>b=None</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/linear.html#Linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.linear.Linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>This is a fully connected layer</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>this_dim</strong> (<em>int</em>) – dimension of this layer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.linear.LinearMasked">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.linear.</code><code class="descname">LinearMasked</code><span class="sig-paren">(</span><em>this_dim=None</em>, <em>W=None</em>, <em>b=None</em>, <em>mask=None</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/linear.html#LinearMasked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.linear.LinearMasked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>This is a fully connected layer with an applied mask for partial connections</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>this_dim</strong> (<em>int</em>) – dimension of this layer</li>
+<li><strong>name</strong> (<em>string</em>) – name of the layer</li>
+<li><strong>W</strong> (<em>tensor variable</em>) – Weight of 2D tensor matrix</li>
+<li><strong>b</strong> (<em>tensor variable</em>) – bias of 2D tensor matrix</li>
+<li><strong>mask</strong> (<em>numpy.ndarray</em><em> or </em><em>tensorflow placeholder</em>) – mask for partial connection</li>
+<li><strong>params</strong> (<em>list</em>) – a list of params in layer that can be updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.linear.SparseLinear">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.linear.</code><code class="descname">SparseLinear</code><span class="sig-paren">(</span><em>prev_dim=None</em>, <em>this_dim=None</em>, <em>W=None</em>, <em>b=None</em>, <em>batchsize=None</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/linear.html#SparseLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.linear.SparseLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>This is a fully connected layer with sparse inputs are two tensors
+one is index tensor of dimension [N, prev_dim] and another one is value
+tensor of [N]</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prev_dim</strong> (<em>int</em>) – dimension of previous layer</li>
+<li><strong>this_dim</strong> (<em>int</em>) – dimension of this layer</li>
+<li><strong>name</strong> (<em>string</em>) – name of the layer</li>
+<li><strong>W</strong> (<em>tensor variable</em>) – Weight of 2D tensor matrix</li>
+<li><strong>b</strong> (<em>tensor variable</em>) – bias of 2D tensor matrix</li>
+<li><strong>params</strong> (<em>list</em>) – a list of params in layer that can be updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.merge">
+<span id="tensorgraph-layers-merge-module"></span><h2>tensorgraph.layers.merge module<a class="headerlink" href="#module-tensorgraph.layers.merge" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Concat">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Concat</code><span class="sig-paren">(</span><em>axis=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+<p>Concat the list of tensors into one tensor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<em>int</em>) – axis of concatenation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.MaskSoftmax">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">MaskSoftmax</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#MaskSoftmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.MaskSoftmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Mean">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Mean</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Merge">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Merge</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Descriptions:</dt>
+<dd>Merge layer is used to merge the list of states from layer below into one state</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Multiply">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Multiply</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.NoChange">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">NoChange</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#NoChange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.NoChange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Select">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Select</code><span class="sig-paren">(</span><em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.SelectedMaskSoftmax">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">SelectedMaskSoftmax</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#SelectedMaskSoftmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.SelectedMaskSoftmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.SequenceMask">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">SequenceMask</code><span class="sig-paren">(</span><em>maxlen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#SequenceMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.SequenceMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>Mask the sequence of shape [batchsize, max_seq_len, :, ..] at the
+second dimension by using a mask tensor representing the first N
+positions of each row.</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sequence_mask</span><span class="p">(</span><span class="n">lengths</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">*</span> <span class="n">mask</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.merge.Sum">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.merge.</code><code class="descname">Sum</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/merge.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.merge.Sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.merge.Merge" title="tensorgraph.layers.merge.Merge"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.merge.Merge</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.misc">
+<span id="tensorgraph-layers-misc-module"></span><h2>tensorgraph.layers.misc module<a class="headerlink" href="#module-tensorgraph.layers.misc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Embedding">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Embedding</code><span class="sig-paren">(</span><em>cat_dim</em>, <em>encode_dim</em>, <em>embedding=None</em>, <em>zero_pad=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Embedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cat_dim</strong> (<em>int</em>) – number of categories</li>
+<li><strong>encode_dim</strong> (<em>int</em>) – dense encoding of the categories</li>
+<li><strong>embedding</strong> (<em>tensor variable</em>) – embedding of 2D tensor variable matrix</li>
+<li><strong>zero_pad</strong> (<em>bool</em>) – whether should initialize zero embedding for sequence
+with zero paddings, zero pad is added to the first row of the embedding,
+and will not be updated by back-propagation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Expand_Dims">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Expand_Dims</code><span class="sig-paren">(</span><em>dim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Expand_Dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Expand_Dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Flatten">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Flatten</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Lambda">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Lambda</code><span class="sig-paren">(</span><em>func</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Lambda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Lambda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>func can be a lambda or some function that takes state_below as first arg</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.OneHot">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">OneHot</code><span class="sig-paren">(</span><em>onehot_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#OneHot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.OneHot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>convert indexes to onehot</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>onehot_size</strong> (<em>int</em>) – size of dictionary for onehot</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">given state of shape [d1, d2, …, dk], return
+shape of [d1, d2, …, dk, onehot_size]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.ReduceMax">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">ReduceMax</code><span class="sig-paren">(</span><em>reduction_indices=None</em>, <em>keep_dims=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#ReduceMax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.ReduceMax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.ReduceSum">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">ReduceSum</code><span class="sig-paren">(</span><em>reduction_indices=None</em>, <em>keep_dims=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#ReduceSum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.ReduceSum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Reshape">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Reshape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Reshape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Reverse">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Reverse</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Reverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<em>list</em>) – list of axis to reverse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.SetShape">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">SetShape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#SetShape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.SetShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Slim">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Slim</code><span class="sig-paren">(</span><em>start</em>, <em>layers</em>, <em>merge=&lt;tensorgraph.layers.merge.Sum object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Slim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Slim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+<p>Slim converts Tensorgraph Sequential Mode into Functional Mode.
+Similar to Keras Sequential and Functional.</p>
+<p>Example how to use Slim
+class SampleModel(BaseModel):</p>
+<blockquote>
+<div><p>&#64;BaseModel.init_name_scope
+def __init__(self):</p>
+<blockquote>
+<div>self.startnode = StartNode([None])
+conv1 = Slim([self.startnode], [Conv2D(num_filters=16, kernel_size=(3,3), stride=(1,1), padding=’SAME’)])
+flat  = Slim([conv1.endnode],  [Flatten()])
+batch = Slim([flat.endnode],   [BatchNormalization()])
+l1    = Slim([batch.endnode],  [Linear(this_dim=30) ])
+l2    = Slim([l1.endnode],     [Linear(this_dim=10) ])
+l3    = Slim([l2.endnode],     [Linear(this_dim=5)  ])
+self.endnode = EndNode(prev=[l3.endnode])</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Squeeze">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Squeeze</code><span class="sig-paren">(</span><em>squeeze_dims=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Squeeze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Squeeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>squeeze_dims</strong> – An optional list of ints. Defaults to []. If specified,</li>
+<li><strong>squeezes the dimensions listed. The dimension index starts at 0.</strong> (<em>only</em>) – </li>
+<li><strong>is an error to squeeze a dimension that is not 1. Refer to tensorflow</strong> (<em>It</em>) – </li>
+<li><strong>details.</strong> (<em>for</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.misc.Transpose">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.misc.</code><code class="descname">Transpose</code><span class="sig-paren">(</span><em>perm</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/misc.html#Transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.misc.Transpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="n">gives</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.noise">
+<span id="tensorgraph-layers-noise-module"></span><h2>tensorgraph.layers.noise module<a class="headerlink" href="#module-tensorgraph.layers.noise" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.noise.Dropout">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.noise.</code><code class="descname">Dropout</code><span class="sig-paren">(</span><em>dropout_below=0.5</em>, <em>noise_shape=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/noise.html#Dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.noise.Dropout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dropout_below</strong> (<em>float</em>) – probability of the inputs from the layer below
+been masked out</li>
+<li><strong>noise_shape</strong> (<em>list</em><em> or </em><em>tuple</em>) – shape of the noise: example [-1, 2, -1] which applies
+noise to the second dimension only</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.normalization">
+<span id="tensorgraph-layers-normalization-module"></span><h2>tensorgraph.layers.normalization module<a class="headerlink" href="#module-tensorgraph.layers.normalization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.normalization.BatchNormalization">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.normalization.</code><code class="descname">BatchNormalization</code><span class="sig-paren">(</span><em>axis=-1</em>, <em>momentum=0.99</em>, <em>epsilon=0.001</em>, <em>center=True</em>, <em>scale=True</em>, <em>beta_initializer=&lt;tensorflow.python.ops.init_ops.Zeros object&gt;</em>, <em>gamma_initializer=&lt;tensorflow.python.ops.init_ops.Ones object&gt;</em>, <em>moving_mean_initializer=&lt;tensorflow.python.ops.init_ops.Zeros object&gt;</em>, <em>moving_variance_initializer=&lt;tensorflow.python.ops.init_ops.Ones object&gt;</em>, <em>beta_regularizer=None</em>, <em>gamma_regularizer=None</em>, <em>beta_constraint=None</em>, <em>gamma_constraint=None</em>, <em>renorm=False</em>, <em>renorm_clipping=None</em>, <em>renorm_momentum=0.99</em>, <em>fused=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/normalization.html#BatchNormalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.normalization.BatchNormalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Reference:</dt>
+<dd>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift
+<a class="reference external" href="http://arxiv.org/abs/1502.03167">http://arxiv.org/abs/1502.03167</a></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> – Integer, the axis that should be normalized (typically the features
+axis). For instance, after a <cite>Conv2D</cite> layer with
+<cite>data_format=”channels_first”</cite>, set <cite>axis=1</cite> in <cite>BatchNormalization</cite>.</li>
+<li><strong>momentum</strong> – Momentum for the moving average.</li>
+<li><strong>epsilon</strong> – Small float added to variance to avoid dividing by zero.</li>
+<li><strong>center</strong> – If True, add offset of <cite>beta</cite> to normalized tensor. If False, <cite>beta</cite>
+is ignored.</li>
+<li><strong>scale</strong> – If True, multiply by <cite>gamma</cite>. If False, <cite>gamma</cite> is
+not used. When the next layer is linear (also e.g. <cite>nn.relu</cite>), this can be
+disabled since the scaling can be done by the next layer.</li>
+<li><strong>beta_initializer</strong> – Initializer for the beta weight.</li>
+<li><strong>gamma_initializer</strong> – Initializer for the gamma weight.</li>
+<li><strong>moving_mean_initializer</strong> – Initializer for the moving mean.</li>
+<li><strong>moving_variance_initializer</strong> – Initializer for the moving variance.</li>
+<li><strong>beta_regularizer</strong> – Optional regularizer for the beta weight.</li>
+<li><strong>gamma_regularizer</strong> – Optional regularizer for the gamma weight.</li>
+<li><strong>beta_constraint</strong> – An optional projection function to be applied to the <cite>beta</cite>
+weight after being updated by an <cite>Optimizer</cite> (e.g. used to implement
+norm constraints or value constraints for layer weights). The function
+must take as input the unprojected variable and must return the
+projected variable (which must have the same shape). Constraints are
+not safe to use when doing asynchronous distributed training.</li>
+<li><strong>gamma_constraint</strong> – An optional projection function to be applied to the
+<cite>gamma</cite> weight after being updated by an <cite>Optimizer</cite>.</li>
+<li><strong>renorm</strong> – Whether to use Batch Renormalization
+(<a class="reference external" href="https://arxiv.org/abs/1702.03275">https://arxiv.org/abs/1702.03275</a>). This adds extra variables during
+training. The inference is the same for either value of this parameter.</li>
+<li><strong>renorm_clipping</strong> – A dictionary that may map keys ‘rmax’, ‘rmin’, ‘dmax’ to
+scalar <cite>Tensors</cite> used to clip the renorm correction. The correction
+<cite>(r, d)</cite> is used as <cite>corrected_value = normalized_value * r + d</cite>, with
+<cite>r</cite> clipped to [rmin, rmax], and <cite>d</cite> to [-dmax, dmax]. Missing rmax, rmin,
+dmax are set to inf, 0, inf, respectively.</li>
+<li><strong>renorm_momentum</strong> – Momentum used to update the moving means and standard
+deviations with renorm. Unlike <cite>momentum</cite>, this affects training
+and should be neither too small (which would add noise) nor too large
+(which would give stale estimates). Note that <cite>momentum</cite> is still applied
+to get the means and variances for inference.</li>
+<li><strong>fused</strong> – if <cite>True</cite>, use a faster, fused implementation if possible.
+If <cite>None</cite>, use the system recommended implementation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># To use this normalization, apply update ops below to update the mean and variance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="k">import</span> <span class="n">ops</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_ops</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">GraphKeys</span><span class="o">.</span><span class="n">UPDATE_OPS</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ops</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">(</span><span class="n">update_ops</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">train_cost_sb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.normalization.L2_Normalize">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.normalization.</code><code class="descname">L2_Normalize</code><span class="sig-paren">(</span><em>dim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/normalization.html#L2_Normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.normalization.L2_Normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>dim (int or list of ints): dimension to normalize</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.normalization.LRN">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.normalization.</code><code class="descname">LRN</code><span class="sig-paren">(</span><em>depth_radius=None</em>, <em>bias=None</em>, <em>alpha=None</em>, <em>beta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/normalization.html#LRN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.normalization.LRN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd><p class="first">Local Response Normalization.
+The 4-D input tensor is treated as a 3-D array of 1-D vectors
+(along the last dimension), and each vector is normalized independently.
+Within a given vector, each component is divided by the weighted,
+squared sum of inputs within depth_radius. In detail,</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sqr_sum</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span>   <span class="nb">sum</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">-</span> <span class="n">depth_radius</span> <span class="p">:</span> <span class="n">d</span> <span class="o">+</span> <span class="n">depth_radius</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="nb">input</span> <span class="o">/</span> <span class="p">(</span><span class="n">bias</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">sqr_sum</span><span class="p">)</span> <span class="o">**</span> <span class="n">beta</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>depth_radius</strong> (<em>optional int</em>) – defaults to 5. 0-D. Half-width of the 1-D normalization window.</li>
+<li><strong>bias</strong> (<em>optional float</em>) – Defaults to 1. An offset (usually positive to avoid dividing by 0).</li>
+<li><strong>alpha</strong> (<em>optional float</em>) – Defaults to 1. A scale factor, usually positive.</li>
+<li><strong>beta</strong> (<em>optional float</em>) – Defaults to 0.5. An exponent.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.recurrent">
+<span id="tensorgraph-layers-recurrent-module"></span><h2>tensorgraph.layers.recurrent module<a class="headerlink" href="#module-tensorgraph.layers.recurrent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.BiLSTM_Last_Merge">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">BiLSTM_Last_Merge</code><span class="sig-paren">(</span><em>merge_mode=&lt;tensorgraph.layers.merge.Concat object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#BiLSTM_Last_Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.BiLSTM_Last_Merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>select last state from BiLSTM and DynamicLSTM and performs merge,
+default to concat</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.BiLSTM_Merge">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">BiLSTM_Merge</code><span class="sig-paren">(</span><em>merge_mode=&lt;tensorgraph.layers.merge.Concat object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#BiLSTM_Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.BiLSTM_Merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>merge the outputs from BiLSTM and DynamicLSTM, default to concat</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.DynamicBiLSTM">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">DynamicBiLSTM</code><span class="sig-paren">(</span><em>fw_num_units</em>, <em>bw_num_units</em>, <em>const_seq_len=False</em>, <em>state_is_tuple=True</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#DynamicBiLSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.DynamicBiLSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>BiDynamicLSTM is for sequences with dynamic length.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scope</strong> (<em>str</em>) – scope for the cells. For RNN with the same scope name,
+the rnn cell will be reused.</li>
+<li><strong>const_seq_len</strong> (<em>bool</em>) – if true, will use a constant sequence
+length equal to the max_time. state_below will just be
+singular input instead of tuple.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.DynamicLSTM">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">DynamicLSTM</code><span class="sig-paren">(</span><em>num_units</em>, <em>const_seq_len=False</em>, <em>state_is_tuple=True</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#DynamicLSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.DynamicLSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>DynamicLSTM is for sequences with dynamic length.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scope</strong> (<em>str</em>) – scope for the cells. For RNN with the same scope name,
+the rnn cell will be reused.</li>
+<li><strong>const_seq_len</strong> (<em>bool</em>) – if true, will use a constant sequence
+length equal to the max_time. state_below will just be
+singular input instead of tuple.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.LSTM">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">LSTM</code><span class="sig-paren">(</span><em>num_units, return_idx=[0, 1, 2], initial_state=None, state_is_tuple=True, scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#LSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.LSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>LSTM is for sequences with fixed length.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scope</strong> (<em>str</em>) – scope for the cells. For RNN with the same scope name,
+the rnn cell will be reused.</li>
+<li><strong>initial_state</strong> – An initial state for the RNN. If cell.state_size is an integer,
+this must be a Tensor of appropriate type and shape
+[batch_size, cell.state_size]. If cell.state_size is a tuple,
+this should be a tuple of tensors having shapes [batch_size, s]
+for s in cell.state_size.</li>
+<li><strong>return_idx</strong> (<em>list</em>) – list of index from the rnn outputs to return from
+[outputs, context, last_hid], indexes has to fall into
+[0, 1, 2]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.recurrent.Seq2Seq">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.recurrent.</code><code class="descname">Seq2Seq</code><span class="sig-paren">(</span><em>num_units</em>, <em>state_is_tuple=True</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/recurrent.html#Seq2Seq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.recurrent.Seq2Seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>Seq2Seq model</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scope</strong> (<em>str</em>) – scope for the cells. For RNN with the same scope name,
+the rnn cell will be reused.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.sampling">
+<span id="tensorgraph-layers-sampling-module"></span><h2>tensorgraph.layers.sampling module<a class="headerlink" href="#module-tensorgraph.layers.sampling" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.sampling.OneSample">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.sampling.</code><code class="descname">OneSample</code><span class="sig-paren">(</span><em>dim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/sampling.html#OneSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.sampling.OneSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<dl class="docutils">
+<dt>Description:</dt>
+<dd>multinomial sample one output from the softmax probability</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dim</strong> (<em>int</em>) – layer dimension</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers.template">
+<span id="tensorgraph-layers-template-module"></span><h2>tensorgraph.layers.template module<a class="headerlink" href="#module-tensorgraph.layers.template" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.layers.template.BaseLayer">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.template.</code><code class="descname">BaseLayer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#BaseLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.BaseLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.Template" title="tensorgraph.layers.template.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.Template</span></code></a></p>
+<p>renaming of Template to BaseLayer</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.template.BaseModel">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.template.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.Template" title="tensorgraph.layers.template.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.Template</span></code></a></p>
+<dl class="staticmethod">
+<dt id="tensorgraph.layers.template.BaseModel.check_y">
+<em class="property">static </em><code class="descname">check_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#BaseModel.check_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.BaseModel.check_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the output list contains one element or a list, if contains
+only one element, return the element, if contains more than one element,
+returns the entire list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.layers.template.BaseModel.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><em>*state_below</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#BaseModel.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.BaseModel.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.layers.template.BaseModel.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><em>*state_below</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#BaseModel.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.BaseModel.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.template.ScopeDeco">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.template.</code><code class="descname">ScopeDeco</code><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#ScopeDeco"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.ScopeDeco" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="classmethod">
+<dt id="tensorgraph.layers.template.ScopeDeco.fprop_name_scope">
+<em class="property">classmethod </em><code class="descname">fprop_name_scope</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#ScopeDeco.fprop_name_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.ScopeDeco.fprop_name_scope" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="tensorgraph.layers.template.ScopeDeco.init_name_scope">
+<em class="property">classmethod </em><code class="descname">init_name_scope</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#ScopeDeco.init_name_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.ScopeDeco.init_name_scope" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.layers.template.Template">
+<em class="property">class </em><code class="descclassname">tensorgraph.layers.template.</code><code class="descname">Template</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#Template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.Template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.layers.template.ScopeDeco" title="tensorgraph.layers.template.ScopeDeco"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.ScopeDeco</span></code></a></p>
+<dl class="method">
+<dt id="tensorgraph.layers.template.Template.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><em>state_below</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#Template.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.Template.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.layers.template.Template.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><em>state_below</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/layers/template.html#Template.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.layers.template.Template.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.layers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tensorgraph.layers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tensorgraph.models_zoo.html" class="btn btn-neutral float-right" title="tensorgraph.models_zoo package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tensorgraph.dataset.html" class="btn btn-neutral" title="tensorgraph.dataset package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

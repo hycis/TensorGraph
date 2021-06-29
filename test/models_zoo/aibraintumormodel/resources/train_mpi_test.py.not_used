@@ -1,0 +1,141 @@
+"""
+Author: Louis Lee
+Date: 2018_12_06
+Project: Tumor
+Purpose: Testing of training script executed on 2 GPUs
+"""
+# Python2 compatibility
+from __future__ import print_function
+
+import sys
+if sys.version_info < (3,2):
+    from backports import tempfile
+else:
+    import tempfile
+if sys.version_info < (3,):
+    from StringIO import StringIO
+    python_sh = 'python'
+else:
+    from io import StringIO
+    python_sh = 'python3'
+
+import numpy as np
+import pytest
+import os
+import re
+import signal
+import subprocess
+import time
+
+import csv
+import resources.generateDummyData as generateDummyData
+
+try:
+    import tensorgraph
+    tensorgraph_path = os.path.normpath(os.path.join(os.path.dirname( \
+        tensorgraph.__file__), "./models_zoo/aibraintumormodel"))
+    assert os.path.exists(tensorgraph_path)
+except:
+    tensorgraph_path = "../../../tensorgraph/models_zoo/aibraintumormodel"
+
+file_path = __file__
+script_dir = os.path.abspath(os.path.join(os.path.dirname(file_path)))
+
+class NoGPUs(Exception):
+    pass
+
+def get_free_gpu(num_req, mem_req=None):
+    if mem_req < 0:
+        mem_req = None
+    gpu_stats = subprocess.check_output(["nvidia-smi", "--format=csv", "--query-gpu=memory.used,memory.free"])
+    gpu_df = csv.reader(StringIO(gpu_stats.decode('utf-8')), delimiter=',')
+    next(gpu_df)
+    gpulist = []
+    for irow, row in enumerate(gpu_df):
+        gpulist.append([irow, int(row[0].rstrip('[MiB]')), int(row[1].rstrip('[MiB]'))])
+    assert num_req <= len(gpulist), "ERROR: num_req > # GPUs"
+
+    gpulist.sort(key=lambda x: (x[2], -(x[1]+x[2])))
+    if mem_req is not None:
+        gpusel = [gpu for gpu in gpulist if gpu[2] > mem_req]
+        #assert len(gpusel) >= num_req, "ERROR: Insufficient GPUs"
+        gpusel = gpusel[:num_req]
+        if len(gpusel) < num_req:
+            raise NoGPUs("Inadequate # of GPUs available")
+    else:
+        gpusel = gpulist[-num_req:]
+
+    idx = tuple([gpu[0] for gpu in gpusel])
+    return idx
+
+def test_model5_train():
+    gpus_found = False
+    t0 = time.time()
+    print("Finding free GPUs...", end="")
+    while not gpus_found:
+        try:
+            gpus = get_free_gpu(2, 5000)
+            gpus_found = True
+        except NoGPUs:
+            t1 = int(time.time() - t0)
+            if t1 >= 10:
+                print("\nStill waiting...", end="")
+                t0 = time.time()
+            gpus_found = False
+            continue
+    print("Done.\nUsing GPUs # " + str(gpus))
+
+    # Generate dummy data
+    with tempfile.TemporaryDirectory() as tempdir:
+        generateDummyData.generate_dummy_data(tempdir, 2, classes=['DNET','jjmql'], seed=1111)
+
+        #cmd = "./run_mpi.sh " + str(list(gpus))[1:-1].replace(" ", "") + " " + \
+        #    os.path.join(tensorgraph_path, "main_train.py") \
+        #    + " ./resources/test_train.ini --data_dir=\"" + os.path.join(script_dir, "resources/data/") + "\""
+        cmd = "./run_mpi.sh " + str(list(gpus))[1:-1].replace(" ", "") + " " + \
+            python_sh + " " + os.path.join(tensorgraph_path, "main_train.py") \
+            + " ./resources/test_train.ini --data_dir=\"" + tempdir + "\""
+        print("cmd: ", cmd)
+
+        with tempfile.TemporaryFile() as outfile:
+            start = time.time()
+            timeout = False
+            timeout_str = ""
+            print("Executing script in shell")
+            with subprocess.Popen(cmd, shell=True, stdout=outfile, \
+                stderr=subprocess.STDOUT, preexec_fn=os.setsid) as process:
+                try:
+                    output = process.communicate(timeout=240)[0]
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGINT) # send signal to the process group
+                    output = process.communicate()[0]
+                    timeout = True
+                    timeout_str = " (TIMEOUT)"
+            print("Time elapsed: %7.4f" % (time.time() - start) + timeout_str)
+
+            outfile.seek(0)
+            testlines = [re.findall(re.compile("^TEST.*"), line.decode()) for line in outfile.readlines()]
+            testlines = [line[0].strip() for line in testlines if len(line) > 0]
+
+            reffile = os.path.join(script_dir, "resources/test_train_ref.txt")
+            assert os.path.exists(reffile), "ERROR: ref file not found"
+            with open(reffile, 'r') as ref:
+                reflines = [line.strip() for line in ref]
+
+            print("Subprocess STDOUT:")
+            outfile.seek(0)
+            print(outfile.read().decode())
+            sys.stdout.flush()
+            print("")
+
+            print("Testing markers from logfile:")
+            for iline in testlines:
+                print("\t" + iline)
+            testlines.sort()
+            reflines.sort()
+
+            assert len(reflines) > 0, "ERROR: ref file has 0 entries"
+            assert len(set(testlines) & set(reflines)) == len(reflines), \
+                "ERROR: test output != ref output"
+
+            print("All testing markers passed")

@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.models_zoo.airnet.model &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/tensorgraph.html">tensorgraph package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tensorgraph.models_zoo.airnet.model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tensorgraph.models_zoo.airnet.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">...graph</span> <span class="k">import</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">...node</span> <span class="k">import</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">HiddenNode</span><span class="p">,</span> <span class="n">EndNode</span>
+<span class="kn">from</span> <span class="nn">...layers</span> <span class="k">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Conv3D</span><span class="p">,</span> <span class="n">RELU</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Linear</span><span class="p">,</span> <span class="n">MaxPooling3D</span><span class="p">,</span> <span class="n">Concat</span><span class="p">,</span> <span class="n">BatchNormalization</span>
+
+<div class="viewcode-block" id="AIRNet"><a class="viewcode-back" href="../../../../modules/tensorgraph.models_zoo.airnet.html#tensorgraph.models_zoo.airnet.model.AIRNet">[docs]</a><span class="k">class</span> <span class="nc">AIRNet</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+    <span class="nd">@BaseModel</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The model takes in two input tensors. The lower layers consists of</span>
+<span class="sd">        several convolutional blocks with both inputs passing through the</span>
+<span class="sd">        the same pathway (shared weights). The outputs of the encoder are</span>
+<span class="sd">        flatten and concatenated before passed into the fully connected layers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d: Depth of input tensors.</span>
+<span class="sd">            h: Height of input tensors.</span>
+<span class="sd">            w: Width of input tensors.</span>
+<span class="sd">            c: Number of channels of input tensors.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c1"># Encoder</span>
+        <span class="n">shared_layers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># 2D convolution</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="c1"># 3D convolution</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="n">num_filters</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">))</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MaxPooling3D</span><span class="p">(</span><span class="n">poolsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">))</span>
+
+        <span class="n">shared_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+
+        <span class="c1"># Fully connected</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="n">this_dim</span><span class="o">=</span><span class="mi">1024</span><span class="p">))</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="n">this_dim</span><span class="o">=</span><span class="mi">512</span><span class="p">))</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="n">this_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">))</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="n">this_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">))</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RELU</span><span class="p">())</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="n">this_dim</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">())))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span> <span class="o">=</span> <span class="n">StartNode</span><span class="p">(</span><span class="n">input_vars</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span> <span class="o">=</span> <span class="n">StartNode</span><span class="p">(</span><span class="n">input_vars</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+
+        <span class="n">h1</span> <span class="o">=</span> <span class="n">HiddenNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span><span class="p">],</span> <span class="n">layers</span><span class="o">=</span><span class="n">shared_layers</span><span class="p">)</span>
+        <span class="n">h2</span> <span class="o">=</span> <span class="n">HiddenNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span><span class="p">],</span> <span class="n">layers</span><span class="o">=</span><span class="n">shared_layers</span><span class="p">)</span>
+        <span class="n">h3</span> <span class="o">=</span> <span class="n">HiddenNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="p">[</span><span class="n">h1</span><span class="p">,</span><span class="n">h2</span><span class="p">],</span> <span class="n">input_merge_mode</span><span class="o">=</span><span class="n">Concat</span><span class="p">(),</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">endnode</span> <span class="o">=</span> <span class="n">EndNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="p">[</span><span class="n">h3</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below1</span><span class="p">,</span> <span class="n">state_below2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Forward propogation through the layer during training.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_below1: Tensor of shape [batch, d, h, w, c].</span>
+<span class="sd">            state_below2: Same shape as state_below1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor of shape [batch, 12].</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span><span class="o">.</span><span class="n">input_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">state_below1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span><span class="o">.</span><span class="n">input_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">state_below2</span><span class="p">]</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">endnode</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">train_fprop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">BaseModel</span><span class="o">.</span><span class="n">check_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_test_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below1</span><span class="p">,</span> <span class="n">state_below2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Forward propogation through the layer during testing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_below1: Tensor of shape [batch, d, h, w, c].</span>
+<span class="sd">            state_below2: Same shape as state_below1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor of shape [batch, 12].</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span><span class="o">.</span><span class="n">input_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">state_below1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span><span class="o">.</span><span class="n">input_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">state_below2</span><span class="p">]</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">startnode1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">startnode2</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">endnode</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">test_fprop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">BaseModel</span><span class="o">.</span><span class="n">check_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

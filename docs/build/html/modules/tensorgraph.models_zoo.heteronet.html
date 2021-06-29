@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.models_zoo.heteronet package &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tensorgraph.models_zoo.unet package" href="tensorgraph.models_zoo.unet.html" />
+    <link rel="prev" title="tensorgraph.models_zoo.hed_modified package" href="tensorgraph.models_zoo.hed_modified.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tensorgraph.html">tensorgraph package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tensorgraph.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.dataset.html">tensorgraph.dataset package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.layers.html">tensorgraph.layers package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="tensorgraph.models_zoo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html">tensorgraph.models_zoo.airnet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html">tensorgraph.models_zoo.attention_unet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html">tensorgraph.models_zoo.densenet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html">tensorgraph.models_zoo.hed_modified package</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">tensorgraph.models_zoo.heteronet package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#module-tensorgraph.models_zoo.heteronet.layers">tensorgraph.models_zoo.heteronet.layers module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#module-tensorgraph.models_zoo.heteronet.model">tensorgraph.models_zoo.heteronet.model module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#module-tensorgraph.models_zoo.heteronet.train">tensorgraph.models_zoo.heteronet.train module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#module-tensorgraph.models_zoo.heteronet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.unet.html">tensorgraph.models_zoo.unet package</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.html#module-tensorgraph.models_zoo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.cost">tensorgraph.cost module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.data_iterator">tensorgraph.data_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.graph">tensorgraph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.node">tensorgraph.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.progbar">tensorgraph.progbar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.sequential">tensorgraph.sequential module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.stopper">tensorgraph.stopper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.trainobject">tensorgraph.trainobject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.utils">tensorgraph.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tensorgraph.html">tensorgraph package</a> &raquo;</li>
+        
+          <li><a href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a> &raquo;</li>
+        
+      <li>tensorgraph.models_zoo.heteronet package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/tensorgraph.models_zoo.heteronet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorgraph-models-zoo-heteronet-package">
+<h1>tensorgraph.models_zoo.heteronet package<a class="headerlink" href="#tensorgraph-models-zoo-heteronet-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tensorgraph.models_zoo.heteronet.layers">
+<span id="tensorgraph-models-zoo-heteronet-layers-module"></span><h2>tensorgraph.models_zoo.heteronet.layers module<a class="headerlink" href="#module-tensorgraph.models_zoo.heteronet.layers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.layers.Conv3Dx">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.layers.</code><code class="descname">Conv3Dx</code><span class="sig-paren">(</span><em>num_filters=None</em>, <em>kernel_size=(3</em>, <em>3</em>, <em>3)</em>, <em>stride=(1</em>, <em>1</em>, <em>1)</em>, <em>filters=None</em>, <em>b=None</em>, <em>padding='VALID'</em>, <em>initializer='xavier'</em>, <em>stddev=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/layers.html#Conv3Dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.layers.Conv3Dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensorgraph.layers.html#tensorgraph.layers.template.BaseLayer" title="tensorgraph.layers.template.BaseLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseLayer</span></code></a></p>
+<p>3d convolution with customized initialization
+initializer options: ‘xavier’, ‘normal’</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.models_zoo.heteronet.model">
+<span id="tensorgraph-models-zoo-heteronet-model-module"></span><h2>tensorgraph.models_zoo.heteronet.model module<a class="headerlink" href="#module-tensorgraph.models_zoo.heteronet.model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.model.Conv3DBlock">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.model.</code><code class="descname">Conv3DBlock</code><span class="sig-paren">(</span><em>filters=32</em>, <em>kernel=(3</em>, <em>3</em>, <em>3)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/model.html#Conv3DBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.model.Conv3DBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensorgraph.layers.html#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.model.HeteroNet">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.model.</code><code class="descname">HeteroNet</code><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/model.html#HeteroNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.model.HeteroNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensorgraph.layers.html#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.model.MergeEncoder">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.model.</code><code class="descname">MergeEncoder</code><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/model.html#MergeEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.model.MergeEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensorgraph.layers.html#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.model.SingleEncoder">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.model.</code><code class="descname">SingleEncoder</code><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/model.html#SingleEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.model.SingleEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tensorgraph.layers.html#tensorgraph.layers.template.BaseModel" title="tensorgraph.layers.template.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.layers.template.BaseModel</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.models_zoo.heteronet.train">
+<span id="tensorgraph-models-zoo-heteronet-train-module"></span><h2>tensorgraph.models_zoo.heteronet.train module<a class="headerlink" href="#module-tensorgraph.models_zoo.heteronet.train" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.models_zoo.heteronet.train.HeteroTrain">
+<em class="property">class </em><code class="descclassname">tensorgraph.models_zoo.heteronet.train.</code><code class="descname">HeteroTrain</code><span class="sig-paren">(</span><em>model</em>, <em>t1_ph</em>, <em>t2_ph</em>, <em>tc_ph</em>, <em>y_ph</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/train.html#HeteroTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.train.HeteroTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="tensorgraph.models_zoo.heteronet.train.HeteroTrain.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>feed_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/models_zoo/heteronet/train.html#HeteroTrain.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.models_zoo.heteronet.train.HeteroTrain.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.models_zoo.heteronet">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tensorgraph.models_zoo.heteronet" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tensorgraph.models_zoo.unet.html" class="btn btn-neutral float-right" title="tensorgraph.models_zoo.unet package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tensorgraph.models_zoo.hed_modified.html" class="btn btn-neutral" title="tensorgraph.models_zoo.hed_modified package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

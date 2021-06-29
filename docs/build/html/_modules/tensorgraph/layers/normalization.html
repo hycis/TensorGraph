@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.layers.normalization &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/tensorgraph.html">tensorgraph package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tensorgraph.layers.normalization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tensorgraph.layers.normalization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.layers.normalization</span> <span class="k">import</span> <span class="n">BatchNormalization</span> <span class="k">as</span> <span class="n">TFBatchNorm</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="k">import</span> <span class="n">BaseLayer</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.ops</span> <span class="k">import</span> <span class="n">init_ops</span>
+
+<div class="viewcode-block" id="L2_Normalize"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.normalization.L2_Normalize">[docs]</a><span class="k">class</span> <span class="nc">L2_Normalize</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;dim (int or list of ints): dimension to normalize&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">l2_normalize</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BatchNormalization"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.normalization.BatchNormalization">[docs]</a><span class="k">class</span> <span class="nc">BatchNormalization</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">momentum</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>
+                 <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                 <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">beta_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(),</span>
+                 <span class="n">gamma_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">ones_initializer</span><span class="p">(),</span>
+                 <span class="n">moving_mean_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(),</span>
+                 <span class="n">moving_variance_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">ones_initializer</span><span class="p">(),</span>
+                 <span class="n">beta_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">gamma_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">beta_constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">gamma_constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">renorm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">renorm_clipping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">renorm_momentum</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>
+                 <span class="n">fused</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Reference:</span>
+<span class="sd">            Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</span>
+<span class="sd">            http://arxiv.org/abs/1502.03167</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axis: Integer, the axis that should be normalized (typically the features</span>
+<span class="sd">                axis). For instance, after a `Conv2D` layer with</span>
+<span class="sd">                `data_format=&quot;channels_first&quot;`, set `axis=1` in `BatchNormalization`.</span>
+<span class="sd">            momentum: Momentum for the moving average.</span>
+<span class="sd">            epsilon: Small float added to variance to avoid dividing by zero.</span>
+<span class="sd">            center: If True, add offset of `beta` to normalized tensor. If False, `beta`</span>
+<span class="sd">                is ignored.</span>
+<span class="sd">            scale: If True, multiply by `gamma`. If False, `gamma` is</span>
+<span class="sd">                not used. When the next layer is linear (also e.g. `nn.relu`), this can be</span>
+<span class="sd">                disabled since the scaling can be done by the next layer.</span>
+<span class="sd">            beta_initializer: Initializer for the beta weight.</span>
+<span class="sd">            gamma_initializer: Initializer for the gamma weight.</span>
+<span class="sd">            moving_mean_initializer: Initializer for the moving mean.</span>
+<span class="sd">            moving_variance_initializer: Initializer for the moving variance.</span>
+<span class="sd">            beta_regularizer: Optional regularizer for the beta weight.</span>
+<span class="sd">            gamma_regularizer: Optional regularizer for the gamma weight.</span>
+<span class="sd">            beta_constraint: An optional projection function to be applied to the `beta`</span>
+<span class="sd">                weight after being updated by an `Optimizer` (e.g. used to implement</span>
+<span class="sd">                norm constraints or value constraints for layer weights). The function</span>
+<span class="sd">                must take as input the unprojected variable and must return the</span>
+<span class="sd">                projected variable (which must have the same shape). Constraints are</span>
+<span class="sd">                not safe to use when doing asynchronous distributed training.</span>
+<span class="sd">            gamma_constraint: An optional projection function to be applied to the</span>
+<span class="sd">                `gamma` weight after being updated by an `Optimizer`.</span>
+<span class="sd">            renorm: Whether to use Batch Renormalization</span>
+<span class="sd">                (https://arxiv.org/abs/1702.03275). This adds extra variables during</span>
+<span class="sd">                training. The inference is the same for either value of this parameter.</span>
+<span class="sd">            renorm_clipping: A dictionary that may map keys &#39;rmax&#39;, &#39;rmin&#39;, &#39;dmax&#39; to</span>
+<span class="sd">                scalar `Tensors` used to clip the renorm correction. The correction</span>
+<span class="sd">                `(r, d)` is used as `corrected_value = normalized_value * r + d`, with</span>
+<span class="sd">                `r` clipped to [rmin, rmax], and `d` to [-dmax, dmax]. Missing rmax, rmin,</span>
+<span class="sd">                dmax are set to inf, 0, inf, respectively.</span>
+<span class="sd">            renorm_momentum: Momentum used to update the moving means and standard</span>
+<span class="sd">                deviations with renorm. Unlike `momentum`, this affects training</span>
+<span class="sd">                and should be neither too small (which would add noise) nor too large</span>
+<span class="sd">                (which would give stale estimates). Note that `momentum` is still applied</span>
+<span class="sd">                to get the means and variances for inference.</span>
+<span class="sd">            fused: if `True`, use a faster, fused implementation if possible.</span>
+<span class="sd">                If `None`, use the system recommended implementation.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            &gt;&gt;&gt; # To use this normalization, apply update ops below to update the mean and variance</span>
+<span class="sd">            &gt;&gt;&gt; from tensorflow.python.framework import ops</span>
+<span class="sd">            &gt;&gt;&gt; optimizer = tf.train.AdamOptimizer(learning_rate)</span>
+<span class="sd">            &gt;&gt;&gt; update_ops = ops.get_collection(ops.GraphKeys.UPDATE_OPS)</span>
+<span class="sd">            &gt;&gt;&gt; with ops.control_dependencies(update_ops):</span>
+<span class="sd">            &gt;&gt;&gt;     train_op = optimizer.minimize(train_cost_sb)</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="o">=</span><span class="n">momentum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">=</span><span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_initializer</span><span class="o">=</span><span class="n">beta_initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_initializer</span><span class="o">=</span><span class="n">gamma_initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moving_mean_initializer</span><span class="o">=</span><span class="n">moving_mean_initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moving_variance_initializer</span><span class="o">=</span><span class="n">moving_variance_initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_regularizer</span><span class="o">=</span><span class="n">beta_regularizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_regularizer</span><span class="o">=</span><span class="n">gamma_regularizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_constraint</span><span class="o">=</span><span class="n">beta_constraint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_constraint</span><span class="o">=</span><span class="n">gamma_constraint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renorm</span><span class="o">=</span><span class="n">renorm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renorm_clipping</span><span class="o">=</span><span class="n">renorm_clipping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renorm_momentum</span><span class="o">=</span><span class="n">renorm_momentum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fused</span><span class="o">=</span><span class="n">fused</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init_var__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="n">scope_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_default_graph</span><span class="p">()</span><span class="o">.</span><span class="n">get_name_scope</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">TFBatchNorm</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+                              <span class="n">momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span>
+                              <span class="n">epsilon</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                              <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
+                              <span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
+                              <span class="n">beta_initializer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_initializer</span><span class="p">,</span>
+                              <span class="n">gamma_initializer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma_initializer</span><span class="p">,</span>
+                              <span class="n">moving_mean_initializer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">moving_mean_initializer</span><span class="p">,</span>
+                              <span class="n">moving_variance_initializer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">moving_variance_initializer</span><span class="p">,</span>
+                              <span class="n">beta_regularizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_regularizer</span><span class="p">,</span>
+                              <span class="n">gamma_regularizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma_regularizer</span><span class="p">,</span>
+                              <span class="n">beta_constraint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_constraint</span><span class="p">,</span>
+                              <span class="n">gamma_constraint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma_constraint</span><span class="p">,</span>
+                              <span class="n">renorm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">renorm</span><span class="p">,</span>
+                              <span class="n">renorm_clipping</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">renorm_clipping</span><span class="p">,</span>
+                              <span class="n">renorm_momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">renorm_momentum</span><span class="p">,</span>
+                              <span class="n">fused</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fused</span><span class="p">,</span>
+                              <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">scope_</span><span class="p">))</span>
+        <span class="n">input_shape</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">state_below</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_test_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LRN"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.normalization.LRN">[docs]</a><span class="k">class</span> <span class="nc">LRN</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Description:</span>
+<span class="sd">            Local Response Normalization.</span>
+<span class="sd">            The 4-D input tensor is treated as a 3-D array of 1-D vectors</span>
+<span class="sd">            (along the last dimension), and each vector is normalized independently.</span>
+<span class="sd">            Within a given vector, each component is divided by the weighted,</span>
+<span class="sd">            squared sum of inputs within depth_radius. In detail,</span>
+
+<span class="sd">            &gt;&gt;&gt; sqr_sum[a, b, c, d] =   sum(input[a, b, c, d - depth_radius : d + depth_radius + 1] ** 2)</span>
+<span class="sd">            &gt;&gt;&gt; output = input / (bias + alpha * sqr_sum) ** beta</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_radius (optional int): defaults to 5. 0-D. Half-width of the 1-D normalization window.</span>
+<span class="sd">            bias (optional float): Defaults to 1. An offset (usually positive to avoid dividing by 0).</span>
+<span class="sd">            alpha (optional float): Defaults to 1. A scale factor, usually positive.</span>
+<span class="sd">            beta (optional float): Defaults to 0.5. An exponent.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_radius</span> <span class="o">=</span> <span class="n">depth_radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span>
+
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">local_response_normalization</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">depth_radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_radius</span><span class="p">,</span>
+                                                  <span class="n">bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+                                                  <span class="n">beta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

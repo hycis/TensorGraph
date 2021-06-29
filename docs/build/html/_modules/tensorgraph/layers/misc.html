@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.layers.misc &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/tensorgraph.html">tensorgraph package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tensorgraph.layers.misc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tensorgraph.layers.misc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="k">import</span> <span class="n">BaseLayer</span><span class="p">,</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">.merge</span> <span class="k">import</span> <span class="n">Sum</span>
+<span class="kn">from</span> <span class="nn">..node</span> <span class="k">import</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">HiddenNode</span><span class="p">,</span> <span class="n">EndNode</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Transpose"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Transpose">[docs]</a><span class="k">class</span> <span class="nc">Transpose</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; X = [3, 5, 9], Y = tf.transpose(X, perm=[0,2,1]) gives</span>
+<span class="sd">            &gt;&gt;&gt; Y = [3, 9, 5]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perm</span> <span class="o">=</span> <span class="n">perm</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">perm</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Reverse"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Reverse">[docs]</a><span class="k">class</span> <span class="nc">Reverse</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            axis (list): list of axis to reverse</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Flatten"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Flatten">[docs]</a><span class="k">class</span> <span class="nc">Flatten</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">state_below</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SetShape"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.SetShape">[docs]</a><span class="k">class</span> <span class="nc">SetShape</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sh</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state_below</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())),</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sh</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state_below</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+        <span class="n">state_below</span><span class="o">.</span><span class="n">set_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state_below</span></div>
+
+
+<div class="viewcode-block" id="Reshape"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Reshape">[docs]</a><span class="k">class</span> <span class="nc">Reshape</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ReduceSum"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.ReduceSum">[docs]</a><span class="k">class</span> <span class="nc">ReduceSum</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reduction_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_dims</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reduction_indices</span> <span class="o">=</span> <span class="n">reduction_indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_dims</span> <span class="o">=</span> <span class="n">keep_dims</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reduction_indices</span><span class="p">,</span>
+                             <span class="n">keep_dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_dims</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ReduceMax"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.ReduceMax">[docs]</a><span class="k">class</span> <span class="nc">ReduceMax</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reduction_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_dims</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reduction_indices</span> <span class="o">=</span> <span class="n">reduction_indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_dims</span> <span class="o">=</span> <span class="n">keep_dims</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reduction_indices</span><span class="p">,</span>
+                             <span class="n">keep_dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_dims</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Squeeze"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Squeeze">[docs]</a><span class="k">class</span> <span class="nc">Squeeze</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">squeeze_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            squeeze_dims: An optional list of ints. Defaults to []. If specified,</span>
+<span class="sd">            only squeezes the dimensions listed. The dimension index starts at 0.</span>
+<span class="sd">            It is an error to squeeze a dimension that is not 1. Refer to tensorflow</span>
+<span class="sd">            for details.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">squeeze_dims</span> <span class="o">=</span> <span class="n">squeeze_dims</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">squeeze_dims</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Expand_Dims"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Expand_Dims">[docs]</a><span class="k">class</span> <span class="nc">Expand_Dims</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Embedding"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Embedding">[docs]</a><span class="k">class</span> <span class="nc">Embedding</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cat_dim</span><span class="p">,</span> <span class="n">encode_dim</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zero_pad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            cat_dim (int): number of categories</span>
+<span class="sd">            encode_dim (int): dense encoding of the categories</span>
+<span class="sd">            embedding (tensor variable): embedding of 2D tensor variable matrix</span>
+<span class="sd">            zero_pad (bool): whether should initialize zero embedding for sequence</span>
+<span class="sd">                with zero paddings, zero pad is added to the first row of the embedding,</span>
+<span class="sd">                and will not be updated by back-propagation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cat_dim</span> <span class="o">=</span> <span class="n">cat_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encode_dim</span> <span class="o">=</span> <span class="n">encode_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">embed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cat_dim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode_dim</span><span class="p">],</span> <span class="n">minval</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">embed</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;_embedding&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">zero_pad</span><span class="p">:</span>
+                <span class="n">zeros</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode_dim</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">zeros</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span>
+
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state_below: is a list of indices</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_W</span><span class="p">,</span> <span class="n">state_below</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Lambda"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Lambda">[docs]</a><span class="k">class</span> <span class="nc">Lambda</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;func can be a lambda or some function that takes state_below as first arg</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">state_below</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OneHot"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.OneHot">[docs]</a><span class="k">class</span> <span class="nc">OneHot</span><span class="p">(</span><span class="n">BaseLayer</span><span class="p">):</span>
+
+    <span class="nd">@BaseLayer</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">onehot_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Description:</span>
+<span class="sd">            convert indexes to onehot</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            onehot_size (int): size of dictionary for onehot</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            given state of shape [d1, d2, ..., dk], return</span>
+<span class="sd">            shape of [d1, d2, ..., dk, onehot_size]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diag</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">onehot_size</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_train_fprop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_below</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state_below: is a list of indices</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag</span><span class="p">,</span> <span class="n">state_below</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Slim"><a class="viewcode-back" href="../../../modules/tensorgraph.layers.html#tensorgraph.layers.misc.Slim">[docs]</a><span class="k">class</span> <span class="nc">Slim</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slim converts Tensorgraph Sequential Mode into Functional Mode.</span>
+<span class="sd">        Similar to Keras Sequential and Functional.</span>
+<span class="sd">        </span>
+<span class="sd">        Example how to use Slim</span>
+<span class="sd">        class SampleModel(BaseModel):</span>
+<span class="sd">            @BaseModel.init_name_scope</span>
+<span class="sd">            def __init__(self):</span>
+<span class="sd">                self.startnode = StartNode([None])</span>
+<span class="sd">                conv1 = Slim([self.startnode], [Conv2D(num_filters=16, kernel_size=(3,3), stride=(1,1), padding=&#39;SAME&#39;)])</span>
+<span class="sd">                flat  = Slim([conv1.endnode],  [Flatten()])</span>
+<span class="sd">                batch = Slim([flat.endnode],   [BatchNormalization()])</span>
+<span class="sd">                l1    = Slim([batch.endnode],  [Linear(this_dim=30) ])</span>
+<span class="sd">                l2    = Slim([l1.endnode],     [Linear(this_dim=10) ])</span>
+<span class="sd">                l3    = Slim([l2.endnode],     [Linear(this_dim=5)  ])</span>
+<span class="sd">                self.endnode = EndNode(prev=[l3.endnode])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@BaseModel</span><span class="o">.</span><span class="n">init_name_scope</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="n">Sum</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startnode</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="n">out_hn</span>         <span class="o">=</span> <span class="n">HiddenNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">input_merge_mode</span><span class="o">=</span><span class="n">merge</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endnode</span>   <span class="o">=</span> <span class="n">EndNode</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="p">[</span><span class="n">out_hn</span><span class="p">])</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

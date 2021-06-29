@@ -1,0 +1,8 @@
+*pyc
+.DS_Store
+doctrees/
+.buildinfo
+.remote-sync.json
+*tensorboard*
+.coverage.*
+__pycache__/

@@ -1,0 +1,1329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph package &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tensorgraph.dataset package" href="tensorgraph.dataset.html" />
+    <link rel="prev" title="Welcome to TensorGraph’s documentation!" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tensorgraph package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.dataset.html">tensorgraph.dataset package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.layers.html">tensorgraph.layers package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.cost">tensorgraph.cost module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.data_iterator">tensorgraph.data_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.graph">tensorgraph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.node">tensorgraph.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.progbar">tensorgraph.progbar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.sequential">tensorgraph.sequential module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.stopper">tensorgraph.stopper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.trainobject">tensorgraph.trainobject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph.utils">tensorgraph.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tensorgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>tensorgraph package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/tensorgraph.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorgraph-package">
+<h1>tensorgraph package<a class="headerlink" href="#tensorgraph-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.dataset.html">tensorgraph.dataset package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#module-tensorgraph.dataset.cifar10">tensorgraph.dataset.cifar10 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#module-tensorgraph.dataset.cifar100">tensorgraph.dataset.cifar100 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#module-tensorgraph.dataset.mnist">tensorgraph.dataset.mnist module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#module-tensorgraph.dataset.preprocess">tensorgraph.dataset.preprocess module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.dataset.html#module-tensorgraph.dataset">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.layers.html">tensorgraph.layers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.activation">tensorgraph.layers.activation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.backbones">tensorgraph.layers.backbones module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.cast">tensorgraph.layers.cast module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.conv">tensorgraph.layers.conv module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.linear">tensorgraph.layers.linear module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.merge">tensorgraph.layers.merge module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.misc">tensorgraph.layers.misc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.noise">tensorgraph.layers.noise module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.normalization">tensorgraph.layers.normalization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.recurrent">tensorgraph.layers.recurrent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.sampling">tensorgraph.layers.sampling module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers.template">tensorgraph.layers.template module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.layers.html#module-tensorgraph.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html">tensorgraph.models_zoo.airnet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet.model">tensorgraph.models_zoo.airnet.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet.train">tensorgraph.models_zoo.airnet.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html">tensorgraph.models_zoo.attention_unet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet.model">tensorgraph.models_zoo.attention_unet.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet.train">tensorgraph.models_zoo.attention_unet.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html">tensorgraph.models_zoo.densenet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet.model">tensorgraph.models_zoo.densenet.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet.train">tensorgraph.models_zoo.densenet.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html">tensorgraph.models_zoo.hed_modified package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified.model">tensorgraph.models_zoo.hed_modified.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified.train">tensorgraph.models_zoo.hed_modified.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html">tensorgraph.models_zoo.heteronet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.layers">tensorgraph.models_zoo.heteronet.layers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.model">tensorgraph.models_zoo.heteronet.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.train">tensorgraph.models_zoo.heteronet.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.unet.html">tensorgraph.models_zoo.unet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet.model">tensorgraph.models_zoo.unet.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet.train">tensorgraph.models_zoo.unet.train module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.html#module-tensorgraph.models_zoo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tensorgraph.cost">
+<span id="tensorgraph-cost-module"></span><h2>tensorgraph.cost module<a class="headerlink" href="#module-tensorgraph.cost" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.cost.accuracy">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">accuracy</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>ytrue and ypred is 2d</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.binary_f1">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">binary_f1</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#binary_f1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.binary_f1" title="Permalink to this definition">¶</a></dt>
+<dd><p>ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+since it is binary, the values must be 0 and 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.binary_precision">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">binary_precision</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#binary_precision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.binary_precision" title="Permalink to this definition">¶</a></dt>
+<dd><p>ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+since it is binary, the values must be 0 and 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.binary_recall">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">binary_recall</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#binary_recall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.binary_recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>ytrue and ypred is one-hot, and have to be of type int and shape [batchsize, 2]
+since it is binary, the values must be 0 and 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.entropy">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">entropy</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.entropy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.error">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">error</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>ytrue and ypred is 2d</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.generalised_dice">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">generalised_dice</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>smooth=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#generalised_dice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.generalised_dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dice Loss Cost Function, where smaller groundtruth channels is penalised more heavily
+y_true: tensor of shape (?, D, H, W, c)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.hingeloss">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">hingeloss</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#hingeloss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.hingeloss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.image_f1">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">image_f1</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#image_f1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.image_f1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.image_precision">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">image_precision</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#image_precision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.image_precision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.image_recall">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">image_recall</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#image_recall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.image_recall" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.inv_dice">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">inv_dice</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>smooth=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#inv_dice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.inv_dice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.iou">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">iou</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em>, <em>threshold=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#iou"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.iou" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.mean_dice">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">mean_dice</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>smooth=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#mean_dice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.mean_dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dice Loss Cost Function, where all output channels are penalised equally
+y_true: tensor of shape (?, D, H, W, c)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.mse">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">mse</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#mse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.cost.smooth_iou">
+<code class="descclassname">tensorgraph.cost.</code><code class="descname">smooth_iou</code><span class="sig-paren">(</span><em>ytrue</em>, <em>ypred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/cost.html#smooth_iou"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.cost.smooth_iou" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.data_iterator">
+<span id="tensorgraph-data-iterator-module"></span><h2>tensorgraph.data_iterator module<a class="headerlink" href="#module-tensorgraph.data_iterator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.data_iterator.DataBlocks">
+<em class="property">class </em><code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">DataBlocks</code><span class="sig-paren">(</span><em>data_paths, train_valid_ratio=[5, 1], batchsize=32, load_func=&lt;function np_load_func&gt;, allow_preload=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#DataBlocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.DataBlocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.data_iterator.SimpleBlocks" title="tensorgraph.data_iterator.SimpleBlocks"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.data_iterator.SimpleBlocks</span></code></a></p>
+<p>This is class for processing blocks of data, whereby dataset is loaded
+and unloaded into memory and split into train and valid one block at a time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_paths</strong> (<em>list</em><em> or </em><em>list of list</em>) – <p>contains list of paths for data loading,
+.. rubric:: example</p>
+<p>[f1a.npy, f1b.npy, f1c.npy]  or
+[(f1a.npy, f1b.npy, f1c.npy), (f2a.npy, f2b.npy, f2c.npy)]</p>
+</li>
+<li><strong>train_valid_ratio</strong> (<em>list</em>) – ratio for splitting the data into train and valid</li>
+<li><strong>load_func</strong> (<em>function</em>) – function for loading the data_paths, default to
+numpy file loader</li>
+<li><strong>allow_preload</strong> (<em>bool</em>) – by allowing preload, it will preload the next data block
+while training at the same time on the current datablock,
+this will reduce time but will also cost more memory.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.data_iterator.DataBlocks.load_file">
+<code class="descname">load_file</code><span class="sig-paren">(</span><em>paths</em>, <em>queue=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#DataBlocks.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.DataBlocks.load_file" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paths</strong> (<em>list</em><em> or </em><em>str</em>) – paths to be loaded</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.data_iterator.DataIterator">
+<em class="property">class </em><code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">DataIterator</code><span class="sig-paren">(</span><em>*data</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#DataIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.DataIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fullbatch</strong> (<em>bool</em>) – decides if the number of examples return after
+every iteration should be always a full batch.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.data_iterator.DataIterator.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#DataIterator.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.DataIterator.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>for python 2.7</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.data_iterator.SequentialIterator">
+<em class="property">class </em><code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">SequentialIterator</code><span class="sig-paren">(</span><em>*data</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#SequentialIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.SequentialIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.data_iterator.DataIterator" title="tensorgraph.data_iterator.DataIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.data_iterator.DataIterator</span></code></a></p>
+<p class="rubric">Example</p>
+<p>when <code class="docutils literal notranslate"><span class="pre">batchsize</span> <span class="pre">=</span> <span class="pre">3</span></code> then the generated index will be
+<code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2],</span> <span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">5],</span> <span class="pre">[6,</span> <span class="pre">7,</span> <span class="pre">8]</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fullbatch</strong> (<em>bool</em>) – decides if the number of examples return after
+every iteration should be always a full batch.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.data_iterator.SimpleBlocks">
+<em class="property">class </em><code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">SimpleBlocks</code><span class="sig-paren">(</span><em>data_paths</em>, <em>batchsize=32</em>, <em>load_func=&lt;function np_load_func&gt;</em>, <em>allow_preload=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#SimpleBlocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.SimpleBlocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is class for processing blocks of data, whereby dataset is loaded
+and unloaded into memory one block at a time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_paths</strong> (<em>list</em><em> or </em><em>list of list</em>) – <p>contains list of paths for data loading,
+.. rubric:: example</p>
+<p>[f1a.npy, f1b.npy, f1c.npy]  or
+[(f1a.npy, f1b.npy, f1c.npy), (f2a.npy, f2b.npy, f2c.npy)]</p>
+</li>
+<li><strong>load_func</strong> (<em>function</em>) – function for loading the data_paths, default to
+numpy file loader</li>
+<li><strong>allow_preload</strong> (<em>bool</em>) – by allowing preload, it will preload the next data block
+while training at the same time on the current datablock,
+this will reduce time but will also cost more memory.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.data_iterator.SimpleBlocks.load_file">
+<code class="descname">load_file</code><span class="sig-paren">(</span><em>paths</em>, <em>queue=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#SimpleBlocks.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.SimpleBlocks.load_file" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paths</strong> (<em>list</em><em> or </em><em>str</em>) – paths to be loaded</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tensorgraph.data_iterator.SimpleBlocks.nblocks">
+<code class="descname">nblocks</code><a class="headerlink" href="#tensorgraph.data_iterator.SimpleBlocks.nblocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.data_iterator.SimpleBlocks.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#SimpleBlocks.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.SimpleBlocks.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>for python 2.7</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.data_iterator.StepIterator">
+<em class="property">class </em><code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">StepIterator</code><span class="sig-paren">(</span><em>*data</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#StepIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.StepIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tensorgraph.data_iterator.DataIterator" title="tensorgraph.data_iterator.DataIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">tensorgraph.data_iterator.DataIterator</span></code></a></p>
+<p class="rubric">Example</p>
+<p>when <code class="docutils literal notranslate"><span class="pre">batchsize</span> <span class="pre">=</span> <span class="pre">3</span></code>
+<code class="docutils literal notranslate"><span class="pre">step</span> <span class="pre">=</span> <span class="pre">1</span></code> then the generated index wil be
+<code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2],</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[2,</span> <span class="pre">3,</span> <span class="pre">4]</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.data_iterator.np_load_func">
+<code class="descclassname">tensorgraph.data_iterator.</code><code class="descname">np_load_func</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/data_iterator.html#np_load_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.data_iterator.np_load_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.graph">
+<span id="tensorgraph-graph-module"></span><h2>tensorgraph.graph module<a class="headerlink" href="#module-tensorgraph.graph" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.graph.Graph">
+<em class="property">class </em><code class="descclassname">tensorgraph.graph.</code><code class="descname">Graph</code><span class="sig-paren">(</span><em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/graph.html#Graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>For building the graph that connects all the nodes together</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>list</em>) – list of start nodes</li>
+<li><strong>end</strong> (<em>list</em>) – list of end nodes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="tensorgraph.graph.Graph.TEST_FPROP">
+<code class="descname">TEST_FPROP</code><em class="property"> = 'test_fprop'</em><a class="headerlink" href="#tensorgraph.graph.Graph.TEST_FPROP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tensorgraph.graph.Graph.TRAIN_FPROP">
+<code class="descname">TRAIN_FPROP</code><em class="property"> = 'train_fprop'</em><a class="headerlink" href="#tensorgraph.graph.Graph.TRAIN_FPROP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.graph.Graph.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/graph.html#Graph.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.graph.Graph.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd><p>forward propagation for test mode that builds the final tensorflow graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.graph.Graph.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/graph.html#Graph.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.graph.Graph.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd><p>forward propagation for train mode that builds the final tensorflow graph</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.node">
+<span id="tensorgraph-node-module"></span><h2>tensorgraph.node module<a class="headerlink" href="#module-tensorgraph.node" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.node.EndNode">
+<em class="property">class </em><code class="descclassname">tensorgraph.node.</code><code class="descname">EndNode</code><span class="sig-paren">(</span><em>prev</em>, <em>input_merge_mode=&lt;tensorgraph.node.NoChangeState object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#EndNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.EndNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>EndNode is where we want to get the output from the graph. It can be
+connected to a HiddenNode or a StartNode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_merge_mode</strong> (<em>tensorgraph.layers.Merge</em>) – <code class="docutils literal notranslate"><span class="pre">Merge</span></code> Layer for merging
+the multiple inputs coming into this hidden node</li>
+<li><strong>prev</strong> (<em>list</em>) – list of previous nodes to link to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.node.EndNode.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#EndNode.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.EndNode.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.node.EndNode.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#EndNode.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.EndNode.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.node.HiddenNode">
+<em class="property">class </em><code class="descclassname">tensorgraph.node.</code><code class="descname">HiddenNode</code><span class="sig-paren">(</span><em>prev</em>, <em>input_merge_mode=&lt;tensorgraph.node.Sum object&gt;</em>, <em>layers=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#HiddenNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.HiddenNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>HiddenNode encapsulates a list of layers, it can be connected to a StartNode
+or another HiddenNode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_merge_mode</strong> (<em>tensorgraph.layers.Merge</em>) – <code class="docutils literal notranslate"><span class="pre">Merge</span></code> Layer for merging
+the multiple inputs coming into this hidden node</li>
+<li><strong>layers</strong> (<em>list</em>) – the sequential layers within the node</li>
+<li><strong>prev</strong> (<em>list</em>) – list of previous nodes to link to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.node.HiddenNode.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#HiddenNode.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.HiddenNode.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.node.HiddenNode.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#HiddenNode.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.HiddenNode.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tensorgraph.node.HiddenNode.variables">
+<code class="descname">variables</code><a class="headerlink" href="#tensorgraph.node.HiddenNode.variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.node.NoChangeState">
+<em class="property">class </em><code class="descclassname">tensorgraph.node.</code><code class="descname">NoChangeState</code><a class="reference internal" href="../_modules/tensorgraph/node.html#NoChangeState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.NoChangeState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="tensorgraph.node.NoChangeState.check_y">
+<em class="property">static </em><code class="descname">check_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#NoChangeState.check_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.NoChangeState.check_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the output list contains one element or a list, if contains
+only one element, return the element, if contains more than one element,
+returns the entire list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.node.NoChangeState.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><em>state_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#NoChangeState.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.NoChangeState.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.node.NoChangeState.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><em>state_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#NoChangeState.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.NoChangeState.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.node.StartNode">
+<em class="property">class </em><code class="descclassname">tensorgraph.node.</code><code class="descname">StartNode</code><span class="sig-paren">(</span><em>input_vars</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#StartNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.StartNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>StartNode defines the input to the graph</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_vars</strong> (<em>list of tensors</em>) – the input tensors to the graph, which
+can be a placeholder or output of another graph or a tensor.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.node.Sum">
+<em class="property">class </em><code class="descclassname">tensorgraph.node.</code><code class="descname">Sum</code><a class="reference internal" href="../_modules/tensorgraph/node.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.Sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="tensorgraph.node.Sum.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><em>state_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#Sum.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.Sum.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.node.Sum.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><em>state_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/node.html#Sum.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.node.Sum.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.progbar">
+<span id="tensorgraph-progbar-module"></span><h2>tensorgraph.progbar module<a class="headerlink" href="#module-tensorgraph.progbar" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.progbar.ProgressBar">
+<em class="property">class </em><code class="descclassname">tensorgraph.progbar.</code><code class="descname">ProgressBar</code><span class="sig-paren">(</span><em>target</em>, <em>width=30</em>, <em>verbose=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/progbar.html#ProgressBar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.progbar.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target</strong> (<em>int</em>) – total number of steps expected</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.progbar.ProgressBar.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>n</em>, <em>values=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/progbar.html#ProgressBar.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.progbar.ProgressBar.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.progbar.ProgressBar.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>current</em>, <em>values=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/progbar.html#ProgressBar.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.progbar.ProgressBar.update" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<em>int</em>) – index of current step</li>
+<li><strong>values</strong> (<em>list of tuples</em>) – (name, value_for_last_step).
+The progress bar will display averages for these values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.sequential">
+<span id="tensorgraph-sequential-module"></span><h2>tensorgraph.sequential module<a class="headerlink" href="#module-tensorgraph.sequential" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.sequential.Sequential">
+<em class="property">class </em><code class="descclassname">tensorgraph.sequential.</code><code class="descname">Sequential</code><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="tensorgraph.sequential.Sequential.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>layer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.sequential.Sequential.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential.pop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.sequential.Sequential.test_fprop">
+<code class="descname">test_fprop</code><span class="sig-paren">(</span><em>input_state</em>, <em>layers=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential.test_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential.test_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.sequential.Sequential.total_num_parameters">
+<code class="descname">total_num_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential.total_num_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential.total_num_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.sequential.Sequential.train_fprop">
+<code class="descname">train_fprop</code><span class="sig-paren">(</span><em>input_state</em>, <em>layers=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/sequential.html#Sequential.train_fprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.sequential.Sequential.train_fprop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tensorgraph.sequential.Sequential.variables">
+<code class="descname">variables</code><a class="headerlink" href="#tensorgraph.sequential.Sequential.variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.stopper">
+<span id="tensorgraph-stopper-module"></span><h2>tensorgraph.stopper module<a class="headerlink" href="#module-tensorgraph.stopper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.stopper.EarlyStopper">
+<em class="property">class </em><code class="descclassname">tensorgraph.stopper.</code><code class="descname">EarlyStopper</code><span class="sig-paren">(</span><em>max_epoch=100</em>, <em>epoch_look_back=None</em>, <em>percent_decrease=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/stopper.html#EarlyStopper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.stopper.EarlyStopper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Use for doing early stopping during training</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_epoch</strong> (<em>int</em>) – if the training reach the <code class="docutils literal notranslate"><span class="pre">max_epoch</span></code>, it stops</li>
+<li><strong>epoch_look_back</strong> (<em>int</em>) – the number of epoch to look to check the percent
+decrease in validation loss. If the percent decrease is smaller than
+the desired value within the number of epoch look back then it stops</li>
+<li><strong>percent_decrease</strong> (<em>float</em>) – between <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">to</span> <span class="pre">1.0</span></code>, if within the <code class="docutils literal notranslate"><span class="pre">epoch_look_back</span></code>
+and the decrease in validation error is smaller than this percentage then it stops.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tensorgraph.stopper.EarlyStopper.continue_learning">
+<code class="descname">continue_learning</code><span class="sig-paren">(</span><em>valid_error</em>, <em>epoch=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/stopper.html#EarlyStopper.continue_learning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.stopper.EarlyStopper.continue_learning" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if should continue learning, by default first epoch starts with 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>valid_error</strong> (<em>float</em>) – validation error to be keep track by early stopper,
+smaller is better</li>
+<li><strong>epoch</strong> (<em>int</em>) – the training epoch, if not specified, the stopper will auto
+keep track</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tensorgraph.stopper.EarlyStopper.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/stopper.html#EarlyStopper.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.stopper.EarlyStopper.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.trainobject">
+<span id="tensorgraph-trainobject-module"></span><h2>tensorgraph.trainobject module<a class="headerlink" href="#module-tensorgraph.trainobject" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.trainobject.train">
+<code class="descclassname">tensorgraph.trainobject.</code><code class="descname">train</code><span class="sig-paren">(</span><em>session, feed_dict, train_cost_sb, valid_cost_sb, optimizer, epoch_look_back=5, max_epoch=100, percent_decrease=0, train_valid_ratio=[5, 1], batchsize=64, randomize_split=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/trainobject.html#train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.trainobject.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example training object for training a dataset</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.utils">
+<span id="tensorgraph-utils-module"></span><h2>tensorgraph.utils module<a class="headerlink" href="#module-tensorgraph.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tensorgraph.utils.MakeTFRecords">
+<em class="property">class </em><code class="descclassname">tensorgraph.utils.</code><code class="descname">MakeTFRecords</code><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>general framework for creating and reading tfrecords</p>
+<dl class="staticmethod">
+<dt id="tensorgraph.utils.MakeTFRecords.make_tfrecords_from_arrs">
+<em class="property">static </em><code class="descname">make_tfrecords_from_arrs</code><span class="sig-paren">(</span><em>save_path</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords.make_tfrecords_from_arrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords.make_tfrecords_from_arrs" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_records</strong> – dictionary of arrs of format {‘X’: X_arr, ‘y’: y_arr, …}
+where first dimension of the array is the example number.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="tensorgraph.utils.MakeTFRecords.read_and_decode">
+<em class="property">static </em><code class="descname">read_and_decode</code><span class="sig-paren">(</span><em>data_shapes</em>, <em>batch_size</em>, <em>dtype=tf.float32</em>, <em>capacity=None</em>, <em>min_after_dequeue=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords.read_and_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords.read_and_decode" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tfrecords_filename_list</strong> (<em>list</em>) – list of tfrecords paths</li>
+<li><strong>data_shapes</strong> (<em>dict</em>) – dictionary of the record name and shape example:
+{‘X’:[32,32], ‘y’:[10]} where the shape is the shape per image</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="tensorgraph.utils.MakeTFRecords.read_arrs_from_tfrecords">
+<em class="property">static </em><code class="descname">read_arrs_from_tfrecords</code><span class="sig-paren">(</span><em>data_shapes</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords.read_arrs_from_tfrecords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords.read_arrs_from_tfrecords" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_shapes</strong> (<em>dict</em>) – dictionary of the record name and shape example:
+{‘X’:[32,32], ‘y’:[10]} where the shape is the shape per image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.utils.MakeTFRecords_tfdata">
+<em class="property">class </em><code class="descclassname">tensorgraph.utils.</code><code class="descname">MakeTFRecords_tfdata</code><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords_tfdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords_tfdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>general framework for creating and reading tfrecords using tf.data API</p>
+<dl class="staticmethod">
+<dt id="tensorgraph.utils.MakeTFRecords_tfdata.make_tfrecords_from_arrs">
+<em class="property">static </em><code class="descname">make_tfrecords_from_arrs</code><span class="sig-paren">(</span><em>save_path, dtypes=[&lt;class 'numpy.float32'&gt;, &lt;class 'numpy.float32'&gt;]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords_tfdata.make_tfrecords_from_arrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords_tfdata.make_tfrecords_from_arrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make tfrecords from numpy array (and list of string (patientnames etc.))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data_records</strong> – dictionary. contains data to be made into tfrecords. Can be numpy array.</li>
+<li><strong>save_path</strong> – string. Path to save tfrecords.</li>
+<li><strong>dtypes</strong> – list of dtype in numpy. Should have same length of data_records.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="tensorgraph.utils.MakeTFRecords_tfdata.read_tensor_from_tfrecords">
+<em class="property">static </em><code class="descname">read_tensor_from_tfrecords</code><span class="sig-paren">(</span><em>tfrecords_filenames, data_shape, dtypes=[tf.float32, tf.float32], batch_size=8, num_epochs=1, phase='training'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#MakeTFRecords_tfdata.read_tensor_from_tfrecords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.MakeTFRecords_tfdata.read_tensor_from_tfrecords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read tensors from numpy array (and list of string (patientnames etc.))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_exp</strong> – total number of sample of all the tfrecords_filenames</li>
+<li><strong>tfrecords_filenames</strong> – list of tfrecords files</li>
+<li><strong>data_shape</strong> – dictionary of data shape</li>
+<li><strong>dtypes</strong> – list of dtypes in tf.</li>
+<li><strong>batch_size</strong> – integer. batch size.</li>
+<li><strong>num_epochs</strong> – integer. number of epochs.</li>
+<li><strong>phase</strong> – string. Either “training” or “validation”. To determine whether shuffle.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>trainiterator</em> – an iterator. To be initialize later!
+element: dictionary of data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.cat_to_num">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">cat_to_num</code><span class="sig-paren">(</span><em>cat</em>, <em>start_idx=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#cat_to_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.cat_to_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert categorical values to numeric values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cat</strong> (<em>list</em><em> or </em><em>1d array</em>) – an array of categorical values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">return numeric list and a categorical dictionary map</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.cat_to_one_hot">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">cat_to_one_hot</code><span class="sig-paren">(</span><em>cat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#cat_to_one_hot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.cat_to_one_hot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.desame">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">desame</code><span class="sig-paren">(</span><em>in_height</em>, <em>in_width</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#desame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.desame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the input height and width from output height and width for deconvolution
+with <code class="docutils literal notranslate"><span class="pre">SAME</span></code> padding</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_height</strong> (<em>int</em>) – input height</li>
+<li><strong>in_width</strong> (<em>int</em>) – input width</li>
+<li><strong>stride</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+<li><strong>kernel_size</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out_height</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_height</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_width</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_width</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.desame_nd">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">desame_nd</code><span class="sig-paren">(</span><em>shape</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#desame_nd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.desame_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the input height and width from output height and width for deconvolution
+with <code class="docutils literal notranslate"><span class="pre">SAME</span></code> padding for arbitrary n dimensional image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shape</strong> (<em>list of int</em>) – list of dimensions of n dimensional image</li>
+<li><strong>stride</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+<li><strong>kernel_size</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_height</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_width</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">..</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.desame_x">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">desame_x</code><span class="sig-paren">(</span><em>x</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#desame_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.desame_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.devalid">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">devalid</code><span class="sig-paren">(</span><em>in_height</em>, <em>in_width</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#devalid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.devalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the input height and width from output height and width for deconvolution
+with <code class="docutils literal notranslate"><span class="pre">VALID</span></code> padding</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_height</strong> (<em>int</em>) – input height</li>
+<li><strong>in_width</strong> (<em>int</em>) – input width</li>
+<li><strong>stride</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+<li><strong>kernel_size</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out_height</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_height</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">kernel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_width</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_width</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">kernel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.devalid_nd">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">devalid_nd</code><span class="sig-paren">(</span><em>shape</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#devalid_nd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.devalid_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the input height and width from output height and width for deconvolution
+with <code class="docutils literal notranslate"><span class="pre">VALID</span></code> padding for arbitrary n dimensional image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shape</strong> (<em>list of int</em>) – list of dimensions of n dimensional image</li>
+<li><strong>stride</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+<li><strong>kernel_size</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_height</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">kernel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">in_width</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">kernel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.devalid_x">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">devalid_x</code><span class="sig-paren">(</span><em>x</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#devalid_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.devalid_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.get_file_from_url">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">get_file_from_url</code><span class="sig-paren">(</span><em>save_path</em>, <em>origin</em>, <em>untar=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#get_file_from_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.get_file_from_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.make_one_hot">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">make_one_hot</code><span class="sig-paren">(</span><em>X</em>, <em>onehot_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#make_one_hot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.make_one_hot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a one-hot version of X</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> – 1d numpy with each value in X representing the class of X</li>
+<li><strong>onehot_size</strong> – length of the one hot vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">2d numpy tensor, with each row been the onehot vector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.put_kernels_on_grid">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">put_kernels_on_grid</code><span class="sig-paren">(</span><em>kernel</em>, <em>num_kernels</em>, <em>pad=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#put_kernels_on_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.put_kernels_on_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize conv. features as an image (mostly for the 1st layer).
+Place kernel into a grid, with some paddings between adjacent filters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kernel</strong> – tensor of shape [NumKernels, Y, X, NumChannels]</li>
+<li><strong>grid_X</strong><strong>)</strong> (<em>(</em><em>grid_Y</em><em>,</em>) – shape of the grid. Require: NumKernels == grid_Y * grid_X
+User is responsible of how to break into two multiples.</li>
+<li><strong>num_kernels</strong> – batchsize or number of kernels</li>
+<li><strong>pad</strong> – number of black pixels around each filter (between them)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tensor of shape [(Y+2*pad)*grid_Y, (X+2*pad)*grid_X, NumChannels, 1].</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.same">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">same</code><span class="sig-paren">(</span><em>in_height</em>, <em>in_width</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#same"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.same" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the output dimension of an input image during pooling or convolution
+using padded with <code class="docutils literal notranslate"><span class="pre">SAME</span></code> mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_height</strong> (<em>int</em>) – input height</li>
+<li><strong>in_width</strong> (<em>int</em>) – input width</li>
+<li><strong>stride</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+<li><strong>kernel_size</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_height</span> <span class="o">-</span> <span class="n">in_height</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter_width</span> <span class="o">-</span> <span class="n">in_width</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.same_nd">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">same_nd</code><span class="sig-paren">(</span><em>shape</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#same_nd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.same_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the output dimension of an input image during pooling or convolution
+when padded with <code class="docutils literal notranslate"><span class="pre">SAME</span></code> mode for arbitrary n dimensional array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>shape</strong> (<em>list of int</em>) – list of dimensions of n dimensional image</li>
+<li><strong>stride</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+<li><strong>kernel_size</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">return the new dimension of the image after convolve with <code class="docutils literal notranslate"><span class="pre">stride</span></code> and <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.same_x">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">same_x</code><span class="sig-paren">(</span><em>x</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#same_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.same_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.shuffle">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>arr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.split_arr">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">split_arr</code><span class="sig-paren">(</span><em>arr, train_valid_ratio=[5, 1], randomize=False, seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#split_arr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.split_arr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.split_df">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">split_df</code><span class="sig-paren">(</span><em>df, train_valid_ratio=[5, 1], randomize=False, seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#split_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.split_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.ts">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">ts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#ts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.valid">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">valid</code><span class="sig-paren">(</span><em>in_height</em>, <em>in_width</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describe the output dimension of an input image during pooling or convolution
+using padded with <code class="docutils literal notranslate"><span class="pre">VALID</span></code> mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_height</strong> (<em>int</em>) – input height</li>
+<li><strong>in_width</strong> (<em>int</em>) – input width</li>
+<li><strong>stride</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+<li><strong>kernel_size</strong> (<em>tuple</em>) – tuple of (h, w)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_height</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_width</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.valid_nd">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">valid_nd</code><span class="sig-paren">(</span><em>shape</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#valid_nd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.valid_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the output dimension of an input image during pooling or convolution
+when padded with <code class="docutils literal notranslate"><span class="pre">VALID</span></code> mode for arbitrary n dimensional array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>shape</strong> (<em>list of int</em>) – list of dimensions of n dimensional image</li>
+<li><strong>stride</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+<li><strong>kernel_size</strong> (<em>list of int</em>) – list of same dimension as shape</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">return the new dimension of the image after convolve with <code class="docutils literal notranslate"><span class="pre">stride</span></code> and <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.utils.valid_x">
+<code class="descclassname">tensorgraph.utils.</code><code class="descname">valid_x</code><span class="sig-paren">(</span><em>x</em>, <em>stride</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/utils.html#valid_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.utils.valid_x" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>int</em>) – input length</li>
+<li><strong>stride</strong> (<em>int</em>) – 1 number of stride</li>
+<li><strong>kernel_size</strong> (<em>int</em>) – 1 number of kernel_size</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">one int number after a valid convolve</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tensorgraph" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tensorgraph.dataset.html" class="btn btn-neutral float-right" title="tensorgraph.dataset package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to TensorGraph’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

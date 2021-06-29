@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.dataset package &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tensorgraph.layers package" href="tensorgraph.layers.html" />
+    <link rel="prev" title="tensorgraph package" href="tensorgraph.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tensorgraph.html">tensorgraph package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tensorgraph.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tensorgraph.dataset package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.dataset.cifar10">tensorgraph.dataset.cifar10 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.dataset.cifar100">tensorgraph.dataset.cifar100 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.dataset.mnist">tensorgraph.dataset.mnist module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.dataset.preprocess">tensorgraph.dataset.preprocess module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.dataset">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.layers.html">tensorgraph.layers package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.models_zoo.html">tensorgraph.models_zoo package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.cost">tensorgraph.cost module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.data_iterator">tensorgraph.data_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.graph">tensorgraph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.node">tensorgraph.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.progbar">tensorgraph.progbar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.sequential">tensorgraph.sequential module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.stopper">tensorgraph.stopper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.trainobject">tensorgraph.trainobject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.utils">tensorgraph.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tensorgraph.html">tensorgraph package</a> &raquo;</li>
+        
+      <li>tensorgraph.dataset package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/tensorgraph.dataset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorgraph-dataset-package">
+<h1>tensorgraph.dataset package<a class="headerlink" href="#tensorgraph-dataset-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tensorgraph.dataset.cifar10">
+<span id="tensorgraph-dataset-cifar10-module"></span><h2>tensorgraph.dataset.cifar10 module<a class="headerlink" href="#module-tensorgraph.dataset.cifar10" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.dataset.cifar10.Cifar10">
+<code class="descclassname">tensorgraph.dataset.cifar10.</code><code class="descname">Cifar10</code><span class="sig-paren">(</span><em>flatten=False</em>, <em>onehot=True</em>, <em>contrast_normalize=False</em>, <em>whiten=False</em>, <em>datadir='./cifar10/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/cifar10.html#Cifar10"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.cifar10.Cifar10" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.dataset.cifar100">
+<span id="tensorgraph-dataset-cifar100-module"></span><h2>tensorgraph.dataset.cifar100 module<a class="headerlink" href="#module-tensorgraph.dataset.cifar100" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.dataset.cifar100.Cifar100">
+<code class="descclassname">tensorgraph.dataset.cifar100.</code><code class="descname">Cifar100</code><span class="sig-paren">(</span><em>flatten=False</em>, <em>onehot=True</em>, <em>datadir='./cifar100/'</em>, <em>fine_label=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/cifar100.html#Cifar100"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.cifar100.Cifar100" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fine_label</strong> (<em>bool</em>) – True (100 classes) False (20 classes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.dataset.mnist">
+<span id="tensorgraph-dataset-mnist-module"></span><h2>tensorgraph.dataset.mnist module<a class="headerlink" href="#module-tensorgraph.dataset.mnist" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.dataset.mnist.Mnist">
+<code class="descclassname">tensorgraph.dataset.mnist.</code><code class="descname">Mnist</code><span class="sig-paren">(</span><em>binary=True</em>, <em>flatten=False</em>, <em>onehot=True</em>, <em>datadir='.'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/mnist.html#Mnist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.mnist.Mnist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.mnist.get_mnist_file">
+<code class="descclassname">tensorgraph.dataset.mnist.</code><code class="descname">get_mnist_file</code><span class="sig-paren">(</span><em>fpath</em>, <em>origin</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/mnist.html#get_mnist_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.mnist.get_mnist_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="tensorgraph.dataset.mnist.open_if_filename">
+<em class="property">class </em><code class="descclassname">tensorgraph.dataset.mnist.</code><code class="descname">open_if_filename</code><span class="sig-paren">(</span><em>f</em>, <em>mode='r'</em>, <em>buffering=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/mnist.html#open_if_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.mnist.open_if_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.mnist.read_mnist_images">
+<code class="descclassname">tensorgraph.dataset.mnist.</code><code class="descname">read_mnist_images</code><span class="sig-paren">(</span><em>fn</em>, <em>dtype=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/mnist.html#read_mnist_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.mnist.read_mnist_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read MNIST images from the original ubyte file format.
+If the dtype provided was boolean, the resulting array will
+be boolean with <cite>True</cite> if the corresponding pixel had a value
+greater than or equal to 128, <cite>False</cite> otherwise.
+If the dtype provided was a float or complex dtype, the values
+will be mapped to the unit interval [0, 1], with pixel values
+that were 255 in the original unsigned byte representation
+equal to 1.0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>str</em><em> or </em><em>object</em>) – Filename/path from which to read labels, or an open file
+object for the same (will not be closed for you).</li>
+<li><strong>dtype</strong> (<em>str</em><em> or </em><em>object</em><em>, </em><em>optional</em>) – A NumPy dtype or string that can be converted to one.
+If unspecified, images will be returned in their original
+unsigned byte format.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>images (ndarray, shape (n_images, n_rows, n_cols))</em> –     An image array, with individual examples indexed along the
+first axis and the image dimensions along the second and
+third axis.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.mnist.read_mnist_labels">
+<code class="descclassname">tensorgraph.dataset.mnist.</code><code class="descname">read_mnist_labels</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/mnist.html#read_mnist_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.mnist.read_mnist_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read MNIST labels from the original ubyte file format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>str</em><em> or </em><em>object</em>) – Filename/path from which to read labels, or an open file
+object for the same (will not be closed for you).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>labels (ndarray, shape (nlabels,))</em> –     A one-dimensional unsigned byte array containing the
+labels as integers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.dataset.preprocess">
+<span id="tensorgraph-dataset-preprocess-module"></span><h2>tensorgraph.dataset.preprocess module<a class="headerlink" href="#module-tensorgraph.dataset.preprocess" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.apply_transform">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">apply_transform</code><span class="sig-paren">(</span><em>x</em>, <em>transform_matrix</em>, <em>channel_axis=0</em>, <em>fill_mode='nearest'</em>, <em>cval=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#apply_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.apply_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the image transformation specified by a matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – 2D numpy array, single image.</li>
+<li><strong>transform_matrix</strong> – Numpy array specifying the geometric transformation.</li>
+<li><strong>channel_axis</strong> – Index of axis for channels in the input tensor.</li>
+<li><strong>fill_mode</strong> – Points outside the boundaries of the input
+are filled according to the given mode
+(one of <cite>{‘constant’, ‘nearest’, ‘reflect’, ‘wrap’}</cite>).</li>
+<li><strong>cval</strong> – Value used for points outside the boundaries
+of the input if <cite>mode=’constant’</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The transformed version of the input.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.global_contrast_normalize">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">global_contrast_normalize</code><span class="sig-paren">(</span><em>X</em>, <em>scale=1.0</em>, <em>min_divisor=1e-08</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#global_contrast_normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.global_contrast_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract mean and normalize by vector norm.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.random_channel_shift">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">random_channel_shift</code><span class="sig-paren">(</span><em>x</em>, <em>intensity</em>, <em>channel_axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#random_channel_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.random_channel_shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.random_rotation">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">random_rotation</code><span class="sig-paren">(</span><em>x</em>, <em>rg</em>, <em>row_axis=1</em>, <em>col_axis=2</em>, <em>channel_axis=0</em>, <em>fill_mode='nearest'</em>, <em>cval=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#random_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.random_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a random rotation of a Numpy image tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – Input tensor. Must be 3D.</li>
+<li><strong>rg</strong> – Rotation range, in degrees.</li>
+<li><strong>row_axis</strong> – Index of axis for rows in the input tensor.</li>
+<li><strong>col_axis</strong> – Index of axis for columns in the input tensor.</li>
+<li><strong>channel_axis</strong> – Index of axis for channels in the input tensor.</li>
+<li><strong>fill_mode</strong> – Points outside the boundaries of the input
+are filled according to the given mode
+(one of <cite>{‘constant’, ‘nearest’, ‘reflect’, ‘wrap’}</cite>).</li>
+<li><strong>cval</strong> – Value used for points outside the boundaries
+of the input if <cite>mode=’constant’</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Rotated Numpy image tensor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.random_shear">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">random_shear</code><span class="sig-paren">(</span><em>x</em>, <em>intensity</em>, <em>row_axis=1</em>, <em>col_axis=2</em>, <em>channel_axis=0</em>, <em>fill_mode='nearest'</em>, <em>cval=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#random_shear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.random_shear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a random spatial shear of a Numpy image tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – Input tensor. Must be 3D.</li>
+<li><strong>intensity</strong> – Transformation intensity.</li>
+<li><strong>row_axis</strong> – Index of axis for rows in the input tensor.</li>
+<li><strong>col_axis</strong> – Index of axis for columns in the input tensor.</li>
+<li><strong>channel_axis</strong> – Index of axis for channels in the input tensor.</li>
+<li><strong>fill_mode</strong> – Points outside the boundaries of the input
+are filled according to the given mode
+(one of <cite>{‘constant’, ‘nearest’, ‘reflect’, ‘wrap’}</cite>).</li>
+<li><strong>cval</strong> – Value used for points outside the boundaries
+of the input if <cite>mode=’constant’</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Sheared Numpy image tensor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.random_shift">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">random_shift</code><span class="sig-paren">(</span><em>x</em>, <em>wrg</em>, <em>hrg</em>, <em>row_axis=1</em>, <em>col_axis=2</em>, <em>channel_axis=0</em>, <em>fill_mode='nearest'</em>, <em>cval=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#random_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.random_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a random spatial shift of a Numpy image tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – Input tensor. Must be 3D.</li>
+<li><strong>wrg</strong> – Width shift range, as a float fraction of the width.</li>
+<li><strong>hrg</strong> – Height shift range, as a float fraction of the height.</li>
+<li><strong>row_axis</strong> – Index of axis for rows in the input tensor.</li>
+<li><strong>col_axis</strong> – Index of axis for columns in the input tensor.</li>
+<li><strong>channel_axis</strong> – Index of axis for channels in the input tensor.</li>
+<li><strong>fill_mode</strong> – Points outside the boundaries of the input
+are filled according to the given mode
+(one of <cite>{‘constant’, ‘nearest’, ‘reflect’, ‘wrap’}</cite>).</li>
+<li><strong>cval</strong> – Value used for points outside the boundaries
+of the input if <cite>mode=’constant’</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Shifted Numpy image tensor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.random_zoom">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">random_zoom</code><span class="sig-paren">(</span><em>x</em>, <em>zoom_range</em>, <em>row_axis=1</em>, <em>col_axis=2</em>, <em>channel_axis=0</em>, <em>fill_mode='nearest'</em>, <em>cval=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#random_zoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.random_zoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a random spatial zoom of a Numpy image tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – Input tensor. Must be 3D.</li>
+<li><strong>zoom_range</strong> – Tuple of floats; zoom range for width and height.</li>
+<li><strong>row_axis</strong> – Index of axis for rows in the input tensor.</li>
+<li><strong>col_axis</strong> – Index of axis for columns in the input tensor.</li>
+<li><strong>channel_axis</strong> – Index of axis for channels in the input tensor.</li>
+<li><strong>fill_mode</strong> – Points outside the boundaries of the input
+are filled according to the given mode
+(one of <cite>{‘constant’, ‘nearest’, ‘reflect’, ‘wrap’}</cite>).</li>
+<li><strong>cval</strong> – Value used for points outside the boundaries
+of the input if <cite>mode=’constant’</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Zoomed Numpy image tensor.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if <cite>zoom_range</cite> isn’t a tuple.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.transform_matrix_offset_center">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">transform_matrix_offset_center</code><span class="sig-paren">(</span><em>matrix</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#transform_matrix_offset_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.transform_matrix_offset_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tensorgraph.dataset.preprocess.zca_whiten">
+<code class="descclassname">tensorgraph.dataset.preprocess.</code><code class="descname">zca_whiten</code><span class="sig-paren">(</span><em>train</em>, <em>test</em>, <em>cache=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tensorgraph/dataset/preprocess.html#zca_whiten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tensorgraph.dataset.preprocess.zca_whiten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use train set statistics to apply the ZCA whitening transform to
+both train and test sets.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tensorgraph.dataset">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tensorgraph.dataset" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tensorgraph.layers.html" class="btn btn-neutral float-right" title="tensorgraph.layers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tensorgraph.html" class="btn btn-neutral" title="tensorgraph package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

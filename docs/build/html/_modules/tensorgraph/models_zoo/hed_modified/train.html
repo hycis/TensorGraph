@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.models_zoo.hed_modified.train &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/tensorgraph.html">tensorgraph package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tensorgraph.models_zoo.hed_modified.train</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tensorgraph.models_zoo.hed_modified.train</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">...utils</span> <span class="k">import</span> <span class="n">split_arr</span>
+<span class="kn">from</span> <span class="nn">...data_iterator</span> <span class="k">import</span> <span class="n">SequentialIterator</span>
+<span class="kn">from</span> <span class="nn">...cost</span> <span class="k">import</span> <span class="n">mean_dice</span><span class="p">,</span> <span class="n">inv_dice</span>
+
+
+
+<span class="n">D</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="train"><a class="viewcode-back" href="../../../../modules/tensorgraph.models_zoo.hed_modified.html#tensorgraph.models_zoo.hed_modified.train.train">[docs]</a><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">X_ph</span><span class="p">,</span> <span class="n">y_ph</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+    <span class="n">y_train_sb</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">train_fprop</span><span class="p">(</span><span class="n">X_ph</span><span class="p">)</span>
+    <span class="n">y_test_sb</span>  <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">test_fprop</span><span class="p">(</span><span class="n">X_ph</span><span class="p">)</span>
+
+    <span class="n">train_dice_tf</span>    <span class="o">=</span> <span class="n">mean_dice</span><span class="p">(</span><span class="n">y_ph</span><span class="p">,</span> <span class="n">y_train_sb</span><span class="p">)</span>
+    <span class="n">valid_dice_tf</span>    <span class="o">=</span> <span class="n">mean_dice</span><span class="p">(</span><span class="n">y_ph</span><span class="p">,</span> <span class="n">y_test_sb</span><span class="p">)</span>
+    <span class="n">train_invLoss_tf</span> <span class="o">=</span> <span class="n">inv_dice</span><span class="p">(</span><span class="n">y_ph</span><span class="p">,</span> <span class="n">y_train_sb</span><span class="p">)</span>
+    <span class="n">valid_invLoss_tf</span> <span class="o">=</span> <span class="n">inv_dice</span><span class="p">(</span><span class="n">y_ph</span><span class="p">,</span> <span class="n">y_test_sb</span><span class="p">)</span>
+
+    <span class="n">train_cost_tf</span>     <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">train_dice_tf</span> <span class="o">+</span> <span class="mf">0.0</span> <span class="o">*</span> <span class="n">train_invLoss_tf</span>
+    <span class="n">valid_cost_tf</span>     <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">valid_dice_tf</span> <span class="o">+</span> <span class="mf">0.0</span> <span class="o">*</span> <span class="n">valid_invLoss_tf</span>
+    <span class="n">reg_loss_tf</span>       <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">GraphKeys</span><span class="o">.</span><span class="n">REGULARIZATION_LOSSES</span><span class="p">)</span>
+    <span class="n">train_cost_reg_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">([</span><span class="n">train_cost_tf</span><span class="p">]</span> <span class="o">+</span> <span class="n">reg_loss_tf</span><span class="p">)</span>
+    <span class="n">valid_cost_reg_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">([</span><span class="n">valid_cost_tf</span><span class="p">]</span> <span class="o">+</span> <span class="n">reg_loss_tf</span><span class="p">)</span>
+
+    <span class="n">total_epochs</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">print_period</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">batchsize</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-3</span>
+    <span class="n">decay_steps</span> <span class="o">=</span> <span class="mi">380</span>
+    <span class="n">t_mul</span>       <span class="o">=</span> <span class="mf">1.027</span>
+    <span class="n">m_mul</span>       <span class="o">=</span> <span class="mf">0.987</span>
+    <span class="n">min_ratio</span>   <span class="o">=</span> <span class="mf">0.081</span>
+
+    <span class="n">global_step_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">decayed_lr_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">cosine_decay_restarts</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span>
+                                                   <span class="n">global_step_tf</span><span class="p">,</span>
+                                                   <span class="n">decay_steps</span><span class="p">,</span>
+                                                   <span class="n">t_mul</span><span class="p">,</span> <span class="n">m_mul</span><span class="p">,</span> <span class="n">min_ratio</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">decayed_lr_tf</span><span class="p">,</span>
+                                       <span class="n">epsilon</span><span class="o">=</span><span class="mi">10</span><span class="o">**-</span><span class="mi">6</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;AdamOptimizer&#39;</span><span class="p">):</span>
+        <span class="n">extra_update_ops</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">GraphKeys</span><span class="o">.</span><span class="n">UPDATE_OPS</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">(</span><span class="n">extra_update_ops</span><span class="p">):</span>
+            <span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">train_cost_reg_tf</span><span class="p">,</span>
+                                          <span class="n">global_step_tf</span><span class="p">)</span>
+
+    <span class="n">train_arrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">valid_arrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">phs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_ph</span><span class="p">:</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_ph</span><span class="p">:</span><span class="n">y_train</span><span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">ph</span><span class="p">,</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">feed_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">train_arr</span><span class="p">,</span> <span class="n">valid_arr</span> <span class="o">=</span> <span class="n">split_arr</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">randomize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">phs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+        <span class="n">train_arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_arr</span><span class="p">)</span>
+        <span class="n">valid_arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_arr</span><span class="p">)</span>
+
+    <span class="n">iter_train</span> <span class="o">=</span> <span class="n">SequentialIterator</span><span class="p">(</span><span class="o">*</span><span class="n">train_arrs</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="n">batchsize</span><span class="p">)</span>
+    <span class="n">iter_valid</span> <span class="o">=</span> <span class="n">SequentialIterator</span><span class="p">(</span><span class="o">*</span><span class="n">valid_arrs</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="n">batchsize</span><span class="p">)</span>
+
+
+    <span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+
+    <span class="n">Holder_trainloss</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_epochs</span>
+    <span class="n">Holder_validloss</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_epochs</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_epochs</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">batches</span> <span class="ow">in</span> <span class="n">iter_train</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">fd</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">phs</span><span class="p">,</span> <span class="n">batches</span><span class="p">))</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">invloss</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">train_cost_reg_tf</span><span class="p">,</span> <span class="n">train_invLoss_tf</span><span class="p">],</span>
+                                        <span class="n">feed_dict</span><span class="o">=</span><span class="n">fd</span><span class="p">)</span>
+            <span class="n">Holder_trainloss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">loss</span>
+
+            <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="n">print_period</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch i: </span><span class="si">%d</span><span class="s2">, j: </span><span class="si">%d</span><span class="s2">, Training loss: </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+
+        <span class="n">Holder_trainloss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">j</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Completed training all batches in epoch </span><span class="si">%d</span><span class="s2">. Performing validation...&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">batches</span> <span class="ow">in</span> <span class="n">iter_valid</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">fd</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">phs</span><span class="p">,</span> <span class="n">batches</span><span class="p">))</span>
+            <span class="n">valid_loss</span><span class="p">,</span> <span class="n">valid_invloss</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">valid_cost_reg_tf</span><span class="p">,</span> <span class="n">valid_invLoss_tf</span><span class="p">],</span>
+                                                 <span class="n">feed_dict</span><span class="o">=</span><span class="n">fd</span><span class="p">)</span>
+            <span class="n">Holder_validloss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">valid_loss</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validation loss is </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">valid_loss</span><span class="p">))</span>
+
+        <span class="n">Holder_validloss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">k</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Avg train loss for epoch </span><span class="si">%d</span><span class="s2">: </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Holder_trainloss</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Avg valid loss for epoch </span><span class="si">%d</span><span class="s2">: </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Holder_validloss</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

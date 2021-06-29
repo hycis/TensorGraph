@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorgraph.models_zoo package &mdash; TensorGraph  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="tensorgraph.models_zoo.airnet package" href="tensorgraph.models_zoo.airnet.html" />
+    <link rel="prev" title="tensorgraph.layers package" href="tensorgraph.layers.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TensorGraph
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tensorgraph.html">tensorgraph package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tensorgraph.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.dataset.html">tensorgraph.dataset package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tensorgraph.layers.html">tensorgraph.layers package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tensorgraph.models_zoo package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html">tensorgraph.models_zoo.airnet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html">tensorgraph.models_zoo.attention_unet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html">tensorgraph.models_zoo.densenet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html">tensorgraph.models_zoo.hed_modified package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html">tensorgraph.models_zoo.heteronet package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="tensorgraph.models_zoo.unet.html">tensorgraph.models_zoo.unet package</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#module-tensorgraph.models_zoo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.cost">tensorgraph.cost module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.data_iterator">tensorgraph.data_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.graph">tensorgraph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.node">tensorgraph.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.progbar">tensorgraph.progbar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.sequential">tensorgraph.sequential module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.stopper">tensorgraph.stopper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.trainobject">tensorgraph.trainobject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph.utils">tensorgraph.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.html#module-tensorgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TensorGraph</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tensorgraph.html">tensorgraph package</a> &raquo;</li>
+        
+      <li>tensorgraph.models_zoo package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/tensorgraph.models_zoo.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorgraph-models-zoo-package">
+<h1>tensorgraph.models_zoo package<a class="headerlink" href="#tensorgraph-models-zoo-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html">tensorgraph.models_zoo.airnet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet.model">tensorgraph.models_zoo.airnet.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet.train">tensorgraph.models_zoo.airnet.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.airnet.html#module-tensorgraph.models_zoo.airnet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html">tensorgraph.models_zoo.attention_unet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet.model">tensorgraph.models_zoo.attention_unet.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet.train">tensorgraph.models_zoo.attention_unet.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.attention_unet.html#module-tensorgraph.models_zoo.attention_unet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html">tensorgraph.models_zoo.densenet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet.model">tensorgraph.models_zoo.densenet.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet.train">tensorgraph.models_zoo.densenet.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.densenet.html#module-tensorgraph.models_zoo.densenet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html">tensorgraph.models_zoo.hed_modified package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified.model">tensorgraph.models_zoo.hed_modified.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified.train">tensorgraph.models_zoo.hed_modified.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.hed_modified.html#module-tensorgraph.models_zoo.hed_modified">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html">tensorgraph.models_zoo.heteronet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.layers">tensorgraph.models_zoo.heteronet.layers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.model">tensorgraph.models_zoo.heteronet.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet.train">tensorgraph.models_zoo.heteronet.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.heteronet.html#module-tensorgraph.models_zoo.heteronet">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tensorgraph.models_zoo.unet.html">tensorgraph.models_zoo.unet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet.model">tensorgraph.models_zoo.unet.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet.train">tensorgraph.models_zoo.unet.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tensorgraph.models_zoo.unet.html#module-tensorgraph.models_zoo.unet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-tensorgraph.models_zoo">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tensorgraph.models_zoo" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tensorgraph.models_zoo.airnet.html" class="btn btn-neutral float-right" title="tensorgraph.models_zoo.airnet package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tensorgraph.layers.html" class="btn btn-neutral" title="tensorgraph.layers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, BioMind.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
