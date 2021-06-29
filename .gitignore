@@ -1,11 +1,8 @@
 *pyc
 .DS_Store
-<<<<<<< HEAD
 doctrees/
 .buildinfo
 .remote-sync.json
 *tensorboard*
 .coverage.*
 __pycache__/
-=======
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
