@@ -5,12 +5,19 @@ from tensorgraph import __version__
 
 setup(
     name='tensorgraph',
-    url='https://github.com/hycis/TensorGraphX',
-    download_url = 'https://github.com/hycis/TensorGraphX/tarball/{}'.format(__version__),
+    version=__version__,
+    author='Joe Wu',
+    url='https://github.com/hycis/TensorGraph',
+    download_url = 'https://github.com/hycis/TensorGraph/tarball/{}'.format(__version__),
     license='Apache 2.0, see LICENCE',
     description='A high level tensorflow library for building deep learning models',
     long_description=open('README.md').read(),
     packages=find_packages(),
     zip_safe=False,
-    include_package_data=True
+    include_package_data=True,
+    install_requires=['numpy>=1.7.1',
+                      'six>=1.9.0',
+                      'scikit-learn>=0.17',
+                      'pandas>=0.17',
+                      'scipy>=0.17'],
 )
