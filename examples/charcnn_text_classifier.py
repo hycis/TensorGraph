@@ -1,11 +1,20 @@
 
 import tensorflow as tf
+<<<<<<< HEAD
 import tensorgraph as tg
 from tensorgraph.layers import Reshape, Embedding, Conv2D, RELU, Linear, Flatten, ReduceSum, Softmax
 from nltk.tokenize import RegexpTokenizer
 from nlpbox import CharNumberEncoder, CatNumberEncoder
 from tensorgraph.utils import valid, split_df, make_one_hot
 from tensorgraph.cost import entropy, accuracy
+=======
+import tensorgraphx as tg
+from tensorgraphx.layers import Reshape, Embedding, Conv2D, RELU, Linear, Flatten, ReduceSum, Softmax
+from nltk.tokenize import RegexpTokenizer
+from nlpbox import CharNumberEncoder, CatNumberEncoder
+from tensorgraphx.utils import valid, split_df, make_one_hot
+from tensorgraphx.cost import entropy, accuracy
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 import pandas
 import numpy as np
 
@@ -14,6 +23,14 @@ def model(word_len, sent_len, nclass):
     unicode_size = 1000
     ch_embed_dim = 20
 
+<<<<<<< HEAD
+=======
+    h, w = valid(ch_embed_dim, word_len, stride=(1,1), kernel_size=(ch_embed_dim,5))
+    h, w = valid(h, w, stride=(1,1), kernel_size=(1,5))
+    h, w = valid(h, w, stride=(1,2), kernel_size=(1,5))
+    conv_out_dim = int(h * w * 60)
+
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     X_ph = tf.placeholder('int32', [None, sent_len, word_len])
     input_sn = tg.StartNode(input_vars=[X_ph])
     charcnn_hn = tg.HiddenNode(prev=[input_sn],
@@ -22,6 +39,7 @@ def model(word_len, sent_len, nclass):
                                               encode_dim=ch_embed_dim,
                                               zero_pad=True),
                                     Reshape(shape=(-1, ch_embed_dim, word_len, 1)),
+<<<<<<< HEAD
                                     Conv2D(num_filters=20, padding='VALID',
                                            kernel_size=(ch_embed_dim,5), stride=(1,1)),
                                     RELU(),
@@ -33,6 +51,19 @@ def model(word_len, sent_len, nclass):
                                     RELU(),
                                     Flatten(),
                                     Linear(nclass),
+=======
+                                    Conv2D(input_channels=1, num_filters=20, padding='VALID',
+                                           kernel_size=(ch_embed_dim,5), stride=(1,1)),
+                                    RELU(),
+                                    Conv2D(input_channels=20, num_filters=40, padding='VALID',
+                                           kernel_size=(1,5), stride=(1,1)),
+                                    RELU(),
+                                    Conv2D(input_channels=40, num_filters=60, padding='VALID',
+                                           kernel_size=(1,5), stride=(1,2)),
+                                    RELU(),
+                                    Flatten(),
+                                    Linear(conv_out_dim, nclass),
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
                                     Reshape((-1, sent_len, nclass)),
                                     ReduceSum(1),
                                     Softmax()
@@ -70,7 +101,11 @@ def tweets(word_len, sent_len, train_valid_ratio=[5,1]):
 
 
 def train():
+<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
+=======
+    from tensorgraphx.trainobject import train as mytrain
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     with tf.Session() as sess:
         word_len = 20
         sent_len = 50

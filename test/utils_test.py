@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from tensorgraph.utils import MakeTFRecords,MakeTFRecords_tfdata
+=======
+from tensorgraphx.utils import MakeTFRecords
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 import numpy as np
 import tensorflow as tf
 
@@ -14,6 +18,10 @@ def test_make_tfrecords():
             print(record.shape)
         print('\n')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 def test_fetch_queue_tfrecords():
     tfrecords = MakeTFRecords()
     tfrecords_filename = './arr.tfrecords'
@@ -35,6 +43,7 @@ def test_fetch_queue_tfrecords():
         coord.request_stop()
         coord.join(threads)
 
+<<<<<<< HEAD
 def test_make_tfrecords_tfdata():
     tfrecords = MakeTFRecords_tfdata()
     data_records = {'X':np.random.rand(100,50,30), 'y':np.random.rand(100,10),'name':['a']*20+['b']*20+['c']*20+['d']*40}
@@ -68,9 +77,14 @@ def test_fetch_queue_tfrecords_tfdata():
                     print (key, arrs[index].shape)
                     print('\n')
 
+=======
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
 if __name__ == '__main__':
     test_make_tfrecords()
     test_fetch_queue_tfrecords()
+<<<<<<< HEAD
     test_make_tfrecords_tfdata()
     test_fetch_queue_tfrecords_tfdata()
+=======
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5

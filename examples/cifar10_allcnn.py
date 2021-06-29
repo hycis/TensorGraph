@@ -7,6 +7,7 @@ https://arxiv.org/pdf/1412.6806.pdf
 
 from __future__ import division, print_function, absolute_import
 
+<<<<<<< HEAD
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
                                Softmax, Flatten, Linear, AvgPooling, \
                                Lambda, BatchNormalization, IdentityBlock, \
@@ -16,6 +17,17 @@ import tensorgraph as tg
 import tensorflow as tf
 from tensorgraph.cost import entropy, accuracy, mse
 from tensorgraph.dataset import Mnist, Cifar10
+=======
+from tensorgraphx.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
+                               Softmax, Flatten, Linear, AvgPooling, \
+                               Lambda, BatchNormalization, IdentityBlock, \
+                               TransitionLayer, DenseNet
+from tensorgraphx.utils import same, valid, same_nd, valid_nd
+import tensorgraphx as tg
+import tensorflow as tf
+from tensorgraphx.cost import entropy, accuracy, mse
+from tensorgraphx.dataset import Mnist, Cifar10
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 from tensorflow.python.framework import ops
 import numpy as np
 
@@ -23,6 +35,7 @@ import numpy as np
 def model(nclass, h, w, c):
     with tf.name_scope('Cifar10AllCNN'):
         seq = tg.Sequential()
+<<<<<<< HEAD
         seq.add(Conv2D(num_filters=96, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
         seq.add(RELU())
         seq.add(BatchNormalization())
@@ -60,6 +73,54 @@ def model(nclass, h, w, c):
         seq.add(BatchNormalization())
 
         seq.add(AvgPooling(poolsize=(8, 8), stride=(1,1), padding='VALID'))
+=======
+        seq.add(Conv2D(input_channels=c, num_filters=96, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(BatchNormalization(input_shape=[h,w,96]))
+
+        seq.add(Conv2D(input_channels=96, num_filters=96, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=96, num_filters=96, kernel_size=(3, 3), stride=(2, 2), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(3,3))
+        seq.add(BatchNormalization(input_shape=[h,w,96]))
+
+        seq.add(Conv2D(input_channels=96, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(BatchNormalization(input_shape=[h,w,192]))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(2, 2), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(3,3))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
+        seq.add(BatchNormalization(input_shape=[h,w,192]))
+
+        seq.add(Conv2D(input_channels=192, num_filters=192, kernel_size=(1, 1), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(1,1))
+        seq.add(Dropout(0.5))
+
+        seq.add(Conv2D(input_channels=192, num_filters=nclass, kernel_size=(1, 1), stride=(1, 1), padding='SAME'))
+        seq.add(RELU())
+        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(1,1))
+        seq.add(BatchNormalization(input_shape=[h,w,nclass]))
+
+        seq.add(AvgPooling(poolsize=(h, w), stride=(1,1), padding='VALID'))
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         seq.add(Flatten())
         seq.add(Softmax())
     return seq
@@ -149,7 +210,11 @@ def train():
 
 
 def train_with_trainobject():
+<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
+=======
+    from tensorgraphx.trainobject import train as mytrain
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -178,7 +243,11 @@ def train_with_trainobject():
 
 
 def train_with_VGG():
+<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
+=======
+    from tensorgraphx.trainobject import train as mytrain
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -187,12 +256,21 @@ def train_with_VGG():
         _, nclass = y_train.shape
         print('X max', np.max(X_train))
         print('X min', np.min(X_train))
+<<<<<<< HEAD
         from tensorgraph.layers import VGG19
         seq = tg.Sequential()
         layer = VGG19()
         seq.add(layer)
         seq.add(Flatten())
         seq.add(Linear(nclass))
+=======
+        from tensorgraphx.layers import VGG19
+        seq = tg.Sequential()
+        layer = VGG19(input_channels=c, input_shape=(h,w))
+        seq.add(layer)
+        seq.add(Flatten())
+        seq.add(Linear(512,nclass))
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         seq.add(Softmax())
         X_ph = tf.placeholder('float32', [None, h, w, c])
         y_ph = tf.placeholder('float32', [None, nclass])
@@ -214,7 +292,11 @@ def train_with_VGG():
 
 
 def train_with_Resnet():
+<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
+=======
+    from tensorgraphx.trainobject import train as mytrain
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -224,12 +306,28 @@ def train_with_Resnet():
         print('X max', np.max(X_train))
         print('X min', np.min(X_train))
         seq = tg.Sequential()
+<<<<<<< HEAD
         seq.add(IdentityBlock(nlayers=4, filters=[32, 64]))
         seq.add(TransitionLayer(16))
         seq.add(IdentityBlock(nlayers=4, filters=[64, 128]))
         seq.add(TransitionLayer(16))
         seq.add(Flatten())
         seq.add(Linear(nclass))
+=======
+        id1 = IdentityBlock(input_channels=c, input_shape=(h,w), nlayers=4, filters=[32, 64])
+        seq.add(id1)
+        trans1 = TransitionLayer(input_channels=id1.output_channels, input_shape=id1.output_shape)
+        seq.add(trans1)
+
+        id2 = IdentityBlock(input_channels=trans1.output_channels, input_shape=trans1.output_shape,
+                            nlayers=4, filters=[64, 128])
+        seq.add(id2)
+        trans2 = TransitionLayer(input_channels=id2.output_channels, input_shape=id2.output_shape)
+        seq.add(trans2)
+        seq.add(Flatten())
+        ldim = trans2.output_channels * np.prod(trans2.output_shape)
+        seq.add(Linear(ldim,nclass))
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         seq.add(Softmax())
 
         X_ph = tf.placeholder('float32', [None, h, w, c])
@@ -252,7 +350,11 @@ def train_with_Resnet():
 
 
 def train_with_Densenet():
+<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
+=======
+    from tensorgraphx.trainobject import train as mytrain
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config = config) as sess:
@@ -262,9 +364,17 @@ def train_with_Densenet():
         print('X max', np.max(X_train))
         print('X min', np.min(X_train))
         seq = tg.Sequential()
+<<<<<<< HEAD
         seq.add(DenseNet(ndense=3, growth_rate=4, nlayer1blk=4))
         seq.add(Flatten())
         seq.add(Linear(nclass))
+=======
+        dense = DenseNet(input_channels=c, input_shape=(h,w), ndense=3, growth_rate=4, nlayer1blk=4)
+        seq.add(dense)
+        seq.add(Flatten())
+        ldim = dense.output_channels
+        seq.add(Linear(ldim,nclass))
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         seq.add(Softmax())
 
         X_ph = tf.placeholder('float32', [None, h, w, c])

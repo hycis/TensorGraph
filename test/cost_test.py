@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import tensorgraph as tg
 import tensorflow as tf
 import numpy as np
 from tensorgraph.utils import make_one_hot
+=======
+import tensorgraphx as tg
+import tensorflow as tf
+import numpy as np
+from tensorgraphx.utils import make_one_hot
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 from sklearn.metrics import f1_score
 
 def test_binary_f1():

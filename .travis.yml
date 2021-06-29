@@ -9,17 +9,29 @@ install:
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       pip install --only-binary=numpy,scipy numpy nose scipy pytest sklearn;
       pip install tensorflow;
+<<<<<<< HEAD
       pip install git+https://github.com/hycis/TensorGraph.git@master;
+=======
+      pip install git+https://github.com/hycis/TensorGraphX.git@master;
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     fi
 
   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
       pip3 install --only-binary=numpy,scipy numpy nose scipy pytest sklearn;
       pip3 install tensorflow;
+<<<<<<< HEAD
       pip3 install git+https://github.com/hycis/TensorGraph.git@master;
     fi
 
 script:
   - echo "TensorGraph Testing.."
+=======
+      pip3 install git+https://github.com/hycis/TensorGraphX.git@master;
+    fi
+
+script:
+  - echo "TensorGraphX Testing.."
+>>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       python -m pytest test;
     fi
