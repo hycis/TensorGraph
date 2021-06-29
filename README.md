@@ -20,10 +20,6 @@ building, and someone who don't want to rewrite the standard layers in tensorflo
 constantly. Also for enterprise users who want to share deep learning models
 easily between teams.
 
-## Documentation
-
-You can check out the documentation [https://skymed.ai/pages/AI-Platform/TensorGraph/](https://skymed.ai/pages/AI-Platform/TensorGraph/)
-
 -----
 ## Install
 
@@ -31,11 +27,11 @@ First you need to install [tensorflow](https://www.tensorflow.org/versions/r0.9/
 
 To install tensorgraph for bleeding edge version via pip
 ```bash
-sudo pip install --upgrade git+https://skymed.ai/AI-Platform/TensorGraph.git@master
+sudo pip install --upgrade git+https://github.com/hycis/TensorGraph.git@master
 ```
 or simply clone and add to `PYTHONPATH`.
 ```bash
-git clone https://skymed.ai/AI-Platform/TensorGraph.git
+git clone https://github.com/hycis/TensorGraph.git
 export PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH
 ```
 in order for the install to persist via export `PYTHONPATH`. Add `PYTHONPATH=/path/to/TensorGraph:$PYTHONPATH` to your `.bashrc` for linux or
@@ -400,7 +396,6 @@ o2_mse = tf.reduce_mean((y2 - o2)**2)
 mse = o1_mse + o2_mse
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(mse)
 ```
-<<<<<<< HEAD
 
 -----
 ## TensorGraph on Multiple GPUS
