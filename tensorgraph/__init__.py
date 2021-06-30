@@ -1,5 +1,5 @@
 
-__version__ = "7.0.1"
+__version__ = "7.0.2"
 
 from .stopper import EarlyStopper
 from .sequential import Sequential
