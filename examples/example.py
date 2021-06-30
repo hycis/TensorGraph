@@ -1,15 +1,9 @@
 
 import tensorflow as tf
 import numpy as np
-<<<<<<< HEAD
 from tensorgraph import Graph, StartNode, HiddenNode, EndNode
 from tensorgraph.layers import Linear, RELU, Concat, Mean, Sum
 from tensorgraph import ProgressBar, SequentialIterator
-=======
-from tensorgraphx import Graph, StartNode, HiddenNode, EndNode
-from tensorgraphx.layers import Linear, RELU, Concat, Mean, Sum
-from tensorgraphx import ProgressBar, SequentialIterator
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
 
 def model():
@@ -25,21 +19,12 @@ def model():
 
     h1 = HiddenNode(prev=[start1, start2],
                     input_merge_mode=Concat(),
-<<<<<<< HEAD
                     layers=[Linear(y2_dim), RELU()])
     h2 = HiddenNode(prev=[start2],
                     layers=[Linear(y2_dim), RELU()])
     h3 = HiddenNode(prev=[h1, h2],
                     input_merge_mode=Sum(),
                     layers=[Linear(y1_dim), RELU()])
-=======
-                    layers=[Linear(y1_dim+y2_dim, y2_dim), RELU()])
-    h2 = HiddenNode(prev=[start2],
-                    layers=[Linear(y2_dim, y2_dim), RELU()])
-    h3 = HiddenNode(prev=[h1, h2],
-                    input_merge_mode=Sum(),
-                    layers=[Linear(y2_dim, y1_dim), RELU()])
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     e1 = EndNode(prev=[h3])
     e2 = EndNode(prev=[h2])
 
@@ -74,11 +59,7 @@ def train():
                 n_exp += len(y1_batch)
                 pbar.update(n_exp)
             print('end')
-<<<<<<< HEAD
         # saver.save(sess, 'test.tf')
-=======
-        saver.save(sess, 'test.tf')
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
 
 if __name__ == '__main__':

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import tensorgraph as tg
-=======
-import tensorgraphx as tg
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 import numpy as np
 import time
 

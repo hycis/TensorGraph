@@ -1,18 +1,10 @@
 
 from tensorflow.python.layers.normalization import BatchNormalization as TFBatchNorm
-<<<<<<< HEAD
 from tensorgraph.layers import Conv2D, BatchNormalization, RELU, Linear, Flatten, \
                                BaseModel, Sum
 import tensorflow as tf
 import numpy as np
 import tensorgraph as tg
-=======
-from tensorgraphx.layers import Conv2D, BatchNormalization, RELU, Linear, Flatten, \
-                               BaseModel, Sum
-import tensorflow as tf
-import numpy as np
-import tensorgraphx as tg
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 from tensorflow.python.framework import ops
 import os
 
@@ -21,7 +13,6 @@ class CBR(BaseModel):
     def __init__(self, h, w, c):
 
         layers1 = []
-<<<<<<< HEAD
         layers1.append(Conv2D(num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME'))
         layers1.append(BatchNormalization())
         layers1.append(RELU())
@@ -29,15 +20,6 @@ class CBR(BaseModel):
         layers2 = []
         layers2.append(Conv2D(num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME'))
         layers2.append(BatchNormalization())
-=======
-        layers1.append(Conv2D(input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME'))
-        layers1.append(BatchNormalization(input_shape=[h,w,1]))
-        layers1.append(RELU())
-
-        layers2 = []
-        layers2.append(Conv2D(input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME'))
-        layers2.append(BatchNormalization(input_shape=[h,w,1]))
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         layers2.append(RELU())
 
         self.startnode = tg.StartNode(input_vars=[None])
@@ -54,11 +36,7 @@ class TGModel(BaseModel):
         layers = []
         layers.append(CBR(h,w,c))
         layers.append(Flatten())
-<<<<<<< HEAD
         layers.append(Linear(nclass))
-=======
-        layers.append(Linear(1*h*w, nclass))
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
         self.startnode = tg.StartNode(input_vars=[None])
         hn = tg.HiddenNode(prev=[self.startnode], layers=layers)
@@ -78,17 +56,10 @@ def conv_layer(state_below, input_channels, num_filters, kernel_size, stride, pa
     return tf.nn.bias_add(conv_out, _b)
 
 
-<<<<<<< HEAD
 def batchnorm(state_below, input_shape, scope=None, training=True):
     bn = TFBatchNorm(name=scope)
     bn.build(input_shape=[None] + list(input_shape))
     return bn.apply(state_below, training=training)
-=======
-def batchnorm(state_below, input_shape):
-    bn = TFBatchNorm()
-    bn.build(input_shape=[None] + list(input_shape))
-    return bn.apply(state_below, training=True)
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
 
 
@@ -112,7 +83,6 @@ def data(n_exp, h, w, c, nclass, batch_size):
     return dict(nr_train)
 
 
-<<<<<<< HEAD
 def TFModel(state_below, h, w, c, nclass, scope=None, training=True):
     state_below1 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
     state_below1 = batchnorm(state_below1, input_shape=[h,w,1], scope=scope, training=training)
@@ -120,15 +90,6 @@ def TFModel(state_below, h, w, c, nclass, scope=None, training=True):
 
     state_below2 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
     state_below2 = batchnorm(state_below2, input_shape=[h,w,1], scope=scope, training=training)
-=======
-def TFModel(state_below, h, w, c, nclass):
-    state_below1 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
-    state_below1 = batchnorm(state_below1, input_shape=[h,w,1])
-    state_below1 = tf.nn.relu(state_below1)
-
-    state_below2 = conv_layer(state_below, input_channels=c, num_filters=1, kernel_size=(2,2), stride=(1,1), padding='SAME')
-    state_below2 = batchnorm(state_below2, input_shape=[h,w,1])
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     state_below2 = tf.nn.relu(state_below2)
 
     state_below = state_below1 + state_below2
@@ -150,11 +111,7 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
         y_ph = tf.placeholder('float32', [None, nclass])
 
         if tgmodel:
-<<<<<<< HEAD
             # tensorgraph model
-=======
-            # tensorgraphx model
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
             print('..using graph model')
             seq = TGModel(h, w, c, nclass)
             y_train_sb = seq.train_fprop(X_ph)
@@ -200,16 +157,11 @@ def train(n_exp, h, w, c, nclass, batch_size=100, tgmodel=True):
             print('epoch {}, train loss {}'.format(epoch, ttl_train_loss))
 
 
-<<<<<<< HEAD
 def compare_total_nodes(train_mode=True):
-=======
-def test_compare_total_nodes():
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     h, w, c, nclass = 20, 20, 5, 2
     X_ph = tf.placeholder('float32', [None, h, w, c])
     with tf.name_scope('tgmodel'):
         seq = TGModel(h, w, c, nclass)
-<<<<<<< HEAD
         if train_mode:
             seq.train_fprop(X_ph)
         else:
@@ -236,18 +188,6 @@ def test_compare_total_nodes():
     compare_total_nodes(train_mode=True)
     compare_total_nodes(train_mode=False)
 
-=======
-        y_train_sb = seq.train_fprop(X_ph)
-        num_tg_nodes = [x for x in tf.get_default_graph().get_operations() if x.name.startswith('tgmodel/')]
-        print('num tg nodes:', len(num_tg_nodes))
-    with tf.name_scope('tfmodel'):
-        y_train_sb = TFModel(X_ph, h, w, c, nclass)
-        num_tf_nodes = [x for x in tf.get_default_graph().get_operations() if x.name.startswith('tfmodel/')]
-        print('num tf nodes:', len(num_tf_nodes))
-    assert len(num_tg_nodes) == len(num_tf_nodes)
-
-
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 def test_models():
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=False)
     train(n_exp=10, h=20, w=20, c=5, nclass=2, batch_size=1, tgmodel=True)
@@ -255,10 +195,6 @@ def test_models():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     # test_models()
     # print('train mode')
-=======
-    test_models()
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     test_compare_total_nodes()

@@ -11,7 +11,6 @@ Links:
 
 from __future__ import division, print_function, absolute_import
 
-<<<<<<< HEAD
 from tensorgraph.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
                                Softmax, Flatten, Linear, BatchNormalization
 from tensorgraph.utils import same
@@ -19,21 +18,11 @@ import tensorgraph as tg
 import tensorflow as tf
 from tensorgraph.cost import entropy, accuracy
 from tensorgraph.dataset import Mnist
-=======
-from tensorgraphx.layers import Conv2D, RELU, MaxPooling, LRN, Tanh, Dropout, \
-                               Softmax, Flatten, Linear, BatchNormalization
-from tensorgraphx.utils import same
-import tensorgraphx as tg
-import tensorflow as tf
-from tensorgraphx.cost import entropy, accuracy
-from tensorgraphx.dataset import Mnist
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 from tensorflow.python.framework import ops
 
 def model():
     with tf.name_scope('MnistCNN'):
         seq = tg.Sequential()
-<<<<<<< HEAD
         seq.add(Conv2D(num_filters=32, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
         seq.add(BatchNormalization())
         seq.add(RELU())
@@ -57,35 +46,6 @@ def model():
         seq.add(Tanh())
         seq.add(Dropout(0.8))
         seq.add(Linear(10))
-=======
-        seq.add(Conv2D(input_channels=1, num_filters=32, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
-        h, w = same(in_height=28, in_width=28, stride=(1,1), kernel_size=(3,3))
-        seq.add(BatchNormalization(input_shape=[h,w,32]))
-        seq.add(RELU())
-
-        seq.add(MaxPooling(poolsize=(2, 2), stride=(2,2), padding='SAME'))
-        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(2,2))
-        seq.add(LRN())
-
-        seq.add(Conv2D(input_channels=32, num_filters=64, kernel_size=(3, 3), stride=(1, 1), padding='SAME'))
-        h, w = same(in_height=h, in_width=w, stride=(1,1), kernel_size=(3,3))
-        seq.add(BatchNormalization(input_shape=[h,w,64]))
-        seq.add(RELU())
-
-        seq.add(MaxPooling(poolsize=(2, 2), stride=(2,2), padding='SAME'))
-        h, w = same(in_height=h, in_width=w, stride=(2,2), kernel_size=(2,2))
-        seq.add(LRN())
-        seq.add(Flatten())
-        seq.add(Linear(int(h*w*64), 128))
-        seq.add(BatchNormalization(input_shape=[128]))
-        seq.add(Tanh())
-        seq.add(Dropout(0.8))
-        seq.add(Linear(128, 256))
-        seq.add(BatchNormalization(input_shape=[256]))
-        seq.add(Tanh())
-        seq.add(Dropout(0.8))
-        seq.add(Linear(256, 10))
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
         seq.add(Softmax())
     return seq
 
@@ -171,11 +131,7 @@ def train():
 
 
 def train_with_trainobject():
-<<<<<<< HEAD
     from tensorgraph.trainobject import train as mytrain
-=======
-    from tensorgraphx.trainobject import train as mytrain
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
     with tf.Session() as sess:
         seq = model()
         X_train, y_train, X_test, y_test = Mnist(flatten=False, onehot=True, binary=True, datadir='.')

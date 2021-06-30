@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 from tensorgraph.node import StartNode, HiddenNode, EndNode
 import tensorflow as tf
 from tensorgraph.layers.linear import Linear
@@ -8,16 +7,7 @@ from tensorgraph.layers.merge import Concat, Mean, Sum
 from tensorgraph.graph import Graph
 import numpy as np
 from tensorgraph.data_iterator import SequentialIterator
-=======
-from tensorgraphx.node import StartNode, HiddenNode, EndNode
-import tensorflow as tf
-from tensorgraphx.layers.linear import Linear
-from tensorgraphx.layers.activation import RELU, Softmax
-from tensorgraphx.layers.merge import Concat, Mean, Sum
-from tensorgraphx.graph import Graph
-import numpy as np
-from tensorgraphx.data_iterator import SequentialIterator
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
+
 
 ## params
 x_dim = 50
@@ -35,15 +25,9 @@ y3_ph = tf.placeholder('float32', [None, component_dim])
 # define the graph model structure
 start = StartNode(input_vars=[x_ph])
 
-<<<<<<< HEAD
 h1 = HiddenNode(prev=[start], layers=[Linear(component_dim), Softmax()])
 h2 = HiddenNode(prev=[h1], layers=[Linear(component_dim), Softmax()])
 h3 = HiddenNode(prev=[h2], layers=[Linear(component_dim), Softmax()])
-=======
-h1 = HiddenNode(prev=[start], layers=[Linear(x_dim, component_dim), Softmax()])
-h2 = HiddenNode(prev=[h1], layers=[Linear(component_dim, component_dim), Softmax()])
-h3 = HiddenNode(prev=[h2], layers=[Linear(component_dim, component_dim), Softmax()])
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 
 
 e1 = EndNode(prev=[h1], input_merge_mode=Sum())

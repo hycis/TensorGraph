@@ -1,12 +1,7 @@
 
 import tensorflow as tf
-<<<<<<< HEAD
 import tensorgraph as tg
 from tensorgraph.layers import SequenceMask, MaskSoftmax, SelectedMaskSoftmax
-=======
-import tensorgraphx as tg
-from tensorgraphx.layers import SequenceMask, MaskSoftmax, SelectedMaskSoftmax
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 import numpy as np
 
 def test_SequenceMask():

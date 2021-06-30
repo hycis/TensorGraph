@@ -1,13 +1,7 @@
 
-<<<<<<< HEAD
 import tensorgraph as tg
 import tensorflow as tf
 from tensorgraph.layers import OneHot
-=======
-import tensorgraphx as tg
-import tensorflow as tf
-from tensorgraphx.layers import OneHot
->>>>>>> e55a706e1467da7b7c54b6d04055aba847f5a2b5
 import numpy as np
 
 def test_OneHot():
@@ -24,5 +18,5 @@ def test_OneHot():
         print(sess.run(y2, feed_dict={X2:np.random.random_integers(0, 2, [5,6,7,8])}).shape)
 
 if __name__ == '__main__':
-    
+
     test_OneHot()
